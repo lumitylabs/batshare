@@ -1,7 +1,7 @@
 
 function Home() {
   return (
-    <div>home</div>
+    <div className="font-BeVietnamPro font-medium text-3xl">How it Works?</div>
   )
 }
 
