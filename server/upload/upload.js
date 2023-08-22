@@ -6,6 +6,7 @@ const { getStorage, getDownloadURL, ref} = require('firebase-admin/storage');
 const UUID = require("uuid-v4");
 
 function upload(req, res, bucket){
+    console.log(req.headers)
   const busboy = new Busboy({ headers: req.headers });
     const tmpdir = os.tmpdir();
     const fields = {};
@@ -41,7 +42,7 @@ function upload(req, res, bucket){
         var url;
         await Promise.all(fileWrites);
         for (const file in uploads) {
-            //console.log(uploads[file]);
+            console.log(uploads[file]);
             let uuid = UUID();
             let options = {
                 metadata: {
@@ -64,7 +65,7 @@ function upload(req, res, bucket){
         }
     });
  
-    busboy.end(req.rawBody);
+    busboy.end(req.body);
 }
 
 module.exports = {upload}

@@ -1,34 +1,48 @@
-// index.js
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const responseTime = require("response-time");
 const rateLimit = require("express-rate-limit");
-const { upload } = require("./upload/upload");
+
 const { initializeApp } = require("firebase-admin/app");
 var admin = require("firebase-admin");
 const { getStorage } = require("firebase-admin/storage");
-const app = express();
+
 var serviceAccount = require("./config.json");
-
-
-const limiter = rateLimit({
-  windowMs: 20 * 60 * 1000, // 20 minutes
-  max: 400, // Limit each IP to 100 requests per `window` (here, per 20 minutes)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.DATABASE_URL,
+  storageBucket: process.env.STORAGE_BUCKET,
 });
+const app = express();
+app.use(express.raw({ type: 'multipart/*' }));
+const bucket = getStorage().bucket();
+const { upload } = require("./upload/upload");
+var db = admin.database();
+
 
 app.use(cors());
 
 app.use(responseTime());
 app.use(
-  rateLimit({
-    windowMs: 1 * 60 * 60 * 1000, // 12 hour duration in milliseconds
-    max: 600,
-    message: "You exceeded requests hour limit!",
-    headers: true,
-  })
-);
+    rateLimit({
+      windowMs: 1 * 60 * 60 * 1000, // 12 hour duration in milliseconds
+      max: 600,
+      message: "You exceeded requests hour limit!",
+      headers: true,
+    })
+  );
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
+
 
 const PORT = 4000;
 
