@@ -5,7 +5,7 @@ import { Footer } from "../../components/general/Footer";
 
 function Home() {
   return (
-    <div className="bg-[url('..\src\assets\background_home.webp')] bg-cover h-screen">
+    <div className="bg-[url('.\assets\background_home.webp')] bg-cover h-screen">
       <div className="flex justify-center select-none">
         <NavBar />
       </div>
