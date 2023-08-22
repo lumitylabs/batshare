@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        BalooDa2: ["Baloo Da 2", ...defaultTheme.fontFamily.sans],
-        BeVietnamPro: ["Be Vietnam Pro", ...defaultTheme.fontFamily.sans],
+        BalooDa2: ['"Baloo Da 2"', ...defaultTheme.fontFamily.sans],
+        BeVietnamPro: ['"Be Vietnam Pro"', ...defaultTheme.fontFamily.sans],
       },
       screens: {
         iphone5: "320px",
