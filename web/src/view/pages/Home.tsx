@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import { NavBar } from "../../components/general/navbar/NavBar";
 import { InfoCard } from "../../components/home/InfoCard";
 import { Footer } from "../../components/general/Footer";
+import backgroundHome from '../../assets/background_home.webp'
 
 function Home() {
   return (
-    <div className="bg-[url('.\assets\background_home.webp')] bg-cover h-screen">
+    <div style={{ backgroundImage: `url('${backgroundHome}')`, backgroundSize: 'cover', height: '100vh' }}>
       <div className="flex justify-center select-none">
         <NavBar />
       </div>
