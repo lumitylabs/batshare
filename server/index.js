@@ -8,7 +8,10 @@ const { initializeApp } = require("firebase-admin/app");
 var admin = require("firebase-admin");
 const { getStorage } = require("firebase-admin/storage");
 
-var serviceAccount = require("./config.json");
+const serviceAccountBase64 = process.env.SERVICE_ACCOUNT_BASE64;
+const serviceAccount = JSON.parse(Buffer.from(serviceAccountBase64, 'base64').toString('utf8'));
+
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: process.env.DATABASE_URL,
