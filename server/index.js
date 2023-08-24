@@ -53,15 +53,12 @@ app.listen(PORT, () => {
 });
 
 app.post("/", (req, res) => {
-  res.send({"response":"Hey this is my API running 🥳"});
+  res.send({ response: "Hey this is my API running 🥳" });
 });
 
 app.post("/upload", (req, res) => {
   upload(req, res, bucket);
 });
-
-
-
 
 app.post("/create-update", (req, res) => {
   var creator = req.body.wallet;
@@ -72,29 +69,38 @@ app.post("/create-update", (req, res) => {
   var nft = req.body.nft;
   var ref = db.ref("/updates/" + url);
   var newRef = ref.push();
-  newRef.set({ creator: creator, timestamp: timestamp, description: description, nft: nft, images: images });
+  newRef.set({
+    creator: creator,
+    timestamp: timestamp,
+    description: description,
+    nft: nft,
+    images: images,
+  });
   res.json({ msg: "success" });
 });
 
 app.post("/get-projects", (req, res) => {
   var ref = db.ref("/projects-small");
-  ref.orderByChild("status").equalTo("active").once("value", function(snapshot) {
-    res.json(snapshot.val());
-  });
+  ref
+    .orderByChild("status")
+    .equalTo("active")
+    .once("value", function (snapshot) {
+      res.json(snapshot.val());
+    });
 });
 
 app.post("/get-project", (req, res) => {
   var url = req.body.url;
   var ref = db.ref("/projects/" + url);
-  ref.once("value", function(snapshot) {
+  ref.once("value", function (snapshot) {
     res.json(snapshot.val());
   });
 });
-  
+
 app.post("/get-updates", (req, res) => {
   var url = req.body.url;
   var ref = db.ref("/updates/" + url);
-  ref.once("value", function(snapshot) {
+  ref.once("value", function (snapshot) {
     res.json(snapshot.val());
   });
 });
@@ -102,7 +108,7 @@ app.post("/get-updates", (req, res) => {
 app.post("/get-comments", (req, res) => {
   var url = req.body.url;
   var ref = db.ref("/comments/" + url);
-  ref.once("value", function(snapshot) {
+  ref.once("value", function (snapshot) {
     res.json(snapshot.val());
   });
 });
@@ -110,7 +116,7 @@ app.post("/get-comments", (req, res) => {
 app.post("/get-user", (req, res) => {
   var wallet = req.body.wallet;
   var ref = db.ref("/users/" + wallet);
-  ref.once("value", function(snapshot) {
+  ref.once("value", function (snapshot) {
     res.json(snapshot.val());
   });
 });
@@ -118,12 +124,13 @@ app.post("/get-user", (req, res) => {
 app.post("/get-user-projects", (req, res) => {
   var wallet = req.body.wallet;
   var ref = db.ref("/projects-small");
-  ref.orderByChild("creator").equalTo(wallet).once("value", function(snapshot) {
-    res.json(snapshot.val());
-  });
+  ref
+    .orderByChild("creator")
+    .equalTo(wallet)
+    .once("value", function (snapshot) {
+      res.json(snapshot.val());
+    });
 });
-
-
 
 app.post("/create-project", (req, res) => {
   var creator = req.body.wallet;
@@ -132,12 +139,20 @@ app.post("/create-project", (req, res) => {
   var category = req.body.category;
   var description = req.body.description;
   var image = req.body.image;
-  var nft = req.body.nft;
+  var nft_id = req.body.nft_id;
+  var nft_image = req.body.nft_image;
   var link = req.body.link;
   var next_steps = req.body.next_steps;
+  var round = 1;
   var status = "active";
-  var url = title.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9-]/g, "").toLowerCase() + "-" + creator.substring(0, 5);
-  var links = req.body.links;
+  var url =
+    title
+      .replace(/\s+/g, "-")
+      .replace(/[^a-zA-Z0-9-]/g, "")
+      .toLowerCase() +
+    "-" +
+    creator.substring(0, 5);
+  var socials = req.body.socials;
   var ref = db.ref("/projects/" + url);
   ref
     .once("value")
@@ -152,13 +167,15 @@ app.post("/create-project", (req, res) => {
           category: category,
           description: description,
           image: image,
-          nft: nft,
+          nft_id: nft_id,
+          nft_image: nft_image,
           status: status,
           link: link,
           next_steps: next_steps,
-          links: links,
+          socials: socials,
+          round: round,
         });
-        var ProjectsSmallRef = db.ref("/projects-small/"+url);
+        var ProjectsSmallRef = db.ref("/projects-small/" + url);
         ProjectsSmallRef.set({
           creator: creator,
           title: title,
@@ -167,9 +184,9 @@ app.post("/create-project", (req, res) => {
           nft: nft,
           status: status,
         });
-        var userProjectsRef = db.ref("/user-projects/"+creator);
+        var userProjectsRef = db.ref("/user-projects/" + creator);
         userProjectsRef.update({
-          [url]: true
+          [url]: true,
         });
         res.json({ msg: "success" });
       }
@@ -179,13 +196,12 @@ app.post("/create-project", (req, res) => {
     });
 });
 
-
 app.post("/create-comment", (req, res) => {
   var wallet = req.body.wallet;
   var url = req.body.url;
   var timestamp = Date.now();
   var comment = req.body.comment;
-  var ref = db.ref("/comments/"+url);
+  var ref = db.ref("/comments/" + url);
   var newRef = ref.push();
   newRef.set({ comment: comment, user: wallet, timestamp: timestamp });
   res.json({ msg: "success" });
@@ -202,7 +218,7 @@ app.post("/create-user", (req, res) => {
   ];
   var rank = 0;
   var wallet = req.body.wallet;
-  var avatarSort = Math.floor(Math.random() * avatars.length)
+  var avatarSort = Math.floor(Math.random() * avatars.length);
   var avatar = avatars[avatarSort];
   var ref = db.ref("/users/" + wallet);
 
@@ -212,7 +228,7 @@ app.post("/create-user", (req, res) => {
       if (snapshot.exists()) {
         res.json({ msg: "user already exists" });
       } else {
-        ref.set({ avatar: avatar, username: "unnamed", rank:rank });
+        ref.set({ avatar: avatar, username: "unnamed", rank: rank });
         res.json({ msg: "success" });
       }
     })
@@ -221,51 +237,111 @@ app.post("/create-user", (req, res) => {
     });
 });
 
-app.post("/donate", async (req, res) => {
-  var wallet = req.body.wallet;
-  var amount = parseFloat(req.body.amount);
-  var url = req.body.url;
+// Function to extract the date
+function getDate() {
   var now = new Date();
-  var day = now.getDate();
-  var month = now.getMonth() + 1;
-  var year = now.getFullYear();
+  return {
+    day: now.getDate(),
+    month: now.getMonth() + 1,
+    year: now.getFullYear()
+  };
+}
+
+// Function to handle the transaction
+async function transactionHandler(ref, amount, callback) {
+  ref.transaction(
+    (currentData) => {
+      if (currentData === null) {
+        return { amount: amount };
+      } else {
+        currentData.amount += amount;
+        return currentData;
+      }
+    },
+    callback
+  );
+}
+
+// Function to add donation to the record
+async function addDonationRecord(year, month, day, url, wallet, amount, now) {
+  var recordPath = `/user-donations-record/${year}/${month}/${day}/${url}/${wallet}`;
+  var refRecord = await db.ref(recordPath).push();
+  await refRecord.set({
+    amount: amount,
+    timestamp: now.getTime(),
+    wallet: wallet,
+  });
+}
+
+// Function to handle NFT
+async function handleNFT(wallet, nft_id, url) {
+  var nftPath = `/inventory/${wallet}/${nft_id}`;
+  var nftRef = db.ref(nftPath);
+
+  await nftRef
+    .once("value")
+    .then(async (snapshot) => {
+      if (!snapshot.exists()) {
+        var projectPath = `/projects/${url}`;
+        await db
+          .ref(projectPath)
+          .once("value")
+          .then(async (projectSnapshot) => {
+            if (projectSnapshot.exists()) {
+              await nftRef
+                .set({
+                  category: projectSnapshot.val().category,
+                  image: projectSnapshot.val().nft_image,
+                  title: projectSnapshot.val().title,
+                  id: url,
+                  round: projectSnapshot.val().round,
+                  visible: true,
+                  timestamp: Date.now(),
+                });
+            }
+          });
+      }
+    });
+}
+
+app.post("/donate", async (req, res) => {
+  var { wallet, amount: rawAmount, url, nft_id } = req.body;
+  var amount = parseFloat(rawAmount);
+  var { day, month, year } = getDate();
+  var now = new Date();
 
   var donationPath = `/user-donations/${year}/${month}/${day}/${url}/${wallet}`;
   var ref = db.ref(donationPath);
 
-  ref.transaction((currentData) => {
-    if (currentData === null) {
-      return { amount: amount }; // Initial value
-    } else {
-      currentData.amount += amount; // Add to existing value
-      return currentData;
-    }
-  }, async (error, committed, snapshot) => {
+  transactionHandler(ref, amount, async (error, committed, snapshot) => {
     if (error) {
       console.log("Transaction failed", error);
       res.status(500).send("Transaction failed");
     } else if (committed) {
-      var base_amount = snapshot.val() ? (snapshot.val().amount - amount) : 0;
+      var base_amount = snapshot.val() ? snapshot.val().amount - amount : 0;
       await addDonationToProject(year, month, day, url, amount, base_amount);
-
-      var recordPath = `/user-donations-record/${year}/${month}/${day}/${url}/${wallet}`;
-      var refRecord = await db.ref(recordPath).push();
-      await refRecord.set({ amount: amount, timestamp: now.getTime(), wallet: wallet });
+      await addDonationRecord(year, month, day, url, wallet, amount, now);
+      await handleNFT(wallet, nft_id, url);
 
       res.status(200).send("Donation added");
     }
   });
 });
 
-
-
-async function addDonationToProject(year, month, day, url, amount, base_amount) {
+async function addDonationToProject(
+  year,
+  month,
+  day,
+  url,
+  amount,
+  base_amount
+) {
   var projectPath = `/project-raised/${year}/${month}/${day}/${url}`;
   var ref = db.ref(projectPath);
 
-  await ref.once("value").then(snapshot => {
+  await ref.once("value").then((snapshot) => {
     if (snapshot.exists()) {
-      ref.transaction(()=> {
+      ref.transaction(() => {
         var quadratic_amount = Math.sqrt(amount + base_amount);
         var past_quadratic_amount = Math.sqrt(base_amount);
         var new_amount = quadratic_amount - past_quadratic_amount;
