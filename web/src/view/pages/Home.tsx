@@ -1,16 +1,15 @@
 import { motion } from "framer-motion";
 import { InfoCard } from "../../components/home/InfoCard";
-import { Footer } from "../../components/general/Footer";
+
 import backgroundHome from "../../assets/background_home.webp";
 import ConnectWalletModal from "../../components/general/navbar/ConnectWalletModal";
 import { useState } from "react";
 import NavBar from "../../components/general/navbar/NavBar";
-
+import { Footer } from "../../components/general/Footer";
 
 function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-
 
   return (
     <>
@@ -64,6 +63,7 @@ function Home() {
             <motion.button
               whileHover={{ scale: 0.95 }}
               transition={{ ease: "easeInOut", duration: 0.3 }}
+              onClick={() => (window.location.href = "/projects")}
               className="h-[60px] w-[250px] bg-gradient-to-l from-[#8F3CA3]/60 to-[#FEF9FF]/20 rounded-[12px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)]  hover:from-[#8F3CA3]/90 hover:to-[#FEF9FF]/70"
             >
               <span className=" text-white text-[24px] px-[60px] py-2  font-BalooDa2 font-regular tracking-[-0.05em]">
@@ -113,7 +113,7 @@ function Home() {
           />
         </div>
         <div className="flex justify-center mt-52 select-none">
-          <Footer></Footer>
+          <Footer style={"light"}></Footer>
         </div>
       </div>
     </>

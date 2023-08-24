@@ -20,8 +20,12 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
       className = "h-[28px] w-[28px]";
       break;
 
-    case "icons-button":
+    case "icons-navbutton":
       className = "h-[16px] w-[16px]";
+      break;
+
+    case "icons-button":
+      className = "h-[26px] w-[26px]";
       break;
 
     case "brave-modal":
@@ -43,6 +47,10 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
     case "info-cards":
       className =
         "h-[320px] w-[320px] rounded-[40px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)] object-contain";
+      break;
+
+    case "nft-cards":
+      className = "w-[200px] rounded-l-[12px] object-cover";
       break;
   }
   return (

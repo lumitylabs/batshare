@@ -67,7 +67,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
         </div>
         <div className="flex h-full items-center">
           <motion.div animate={{ rotate: isHovered ? 180 : 0 }}>
-            <ImgComponent name={"chevrondown_ic"} type={"icons-button"} />
+            <ImgComponent name={"chevrondown_ic"} type={"icons-navbutton"} />
           </motion.div>
         </div>
       </button>

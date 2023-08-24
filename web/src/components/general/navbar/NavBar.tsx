@@ -11,7 +11,10 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = (props) => {
   return (
     <nav className="flex fixed top-[15px] left-50 bg-[#4E607E] bg-opacity-20 p-2 rounded-[12px] backdrop-blur-md select-none">
-      <button className="flex items-center ml-2 gap-1">
+      <button
+        onClick={() => (window.location.href = "/")}
+        className="flex items-center ml-2 gap-1"
+      >
         <div className="flex h-[30px] w-[30px] items-center justify-center bg-white rounded-full">
           <ImgComponent name={"batsharelogo"} type={"nav-logo"}></ImgComponent>
         </div>
@@ -29,7 +32,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
           How it Works?
         </a>
         <a
-          href="#"
+          href="/projects"
           className="text-[#FFFFFF] font-BeVietnamPro font-regular tracking-[-0.05em] hover:text-[#B5CAFF]"
         >
           Projects
