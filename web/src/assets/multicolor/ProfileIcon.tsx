@@ -1,9 +1,9 @@
-type IconProps = {
+type ProfileIconProps = {
   fill: string;
   classParameters: string;
 };
 
-const ProfileIcon: React.FC<IconProps> = ({ fill, classParameters }) => (
+const ProfileIcon: React.FC<ProfileIconProps> = ({ fill, classParameters }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
