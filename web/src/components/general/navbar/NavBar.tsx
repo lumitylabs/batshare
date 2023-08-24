@@ -1,7 +1,14 @@
 import ImgComponent from "../manager/img-manager/ImgComponent";
-import { ConnectWalletButton } from "./ConnectWalletButton";
+import ConnectWalletButton from "./ConnectWalletButton";
 
-export function NavBar() {
+interface NavBarProps {
+  modalIsOpen: any;
+  setModalIsOpen: any;
+  isConnected: any;
+  setIsConnected: any;
+}
+
+const NavBar: React.FC<NavBarProps> = (props) => {
   return (
     <nav className="flex fixed top-[15px] left-50 bg-[#4E607E] bg-opacity-20 p-2 rounded-[12px] backdrop-blur-md select-none">
       <button className="flex items-center ml-2 gap-1">
@@ -27,8 +34,15 @@ export function NavBar() {
         >
           Projects
         </a>
-        <ConnectWalletButton></ConnectWalletButton>
+
+        <ConnectWalletButton
+          modalIsOpen={props.modalIsOpen}
+          setModalIsOpen={props.setModalIsOpen}
+          isConnected={props.isConnected}
+          setIsConnected={props.setIsConnected}
+        ></ConnectWalletButton>
       </div>
     </nav>
   );
-}
+};
+export default NavBar;
