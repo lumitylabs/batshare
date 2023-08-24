@@ -53,13 +53,15 @@ app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
 });
 
-app.get("/", (req, res) => {
-  res.send("Hey this is my API running 🥳");
+app.post("/", (req, res) => {
+  res.send({"response":"Hey this is my API running 🥳"});
 });
 
 app.post("/upload", (req, res) => {
   upload(req, res, bucket);
 });
+
+
 
 
 app.post("/create-update", (req, res) => {
@@ -74,7 +76,54 @@ app.post("/create-update", (req, res) => {
   newRef.set({ creator: creator, timestamp: timestamp, description: description, nft: nft, images: images });
   res.json({ msg: "success" });
 });
+
+app.post("/get-projects", (req, res) => {
+  var ref = db.ref("/projects-small");
+  ref.orderByChild("status").equalTo("active").once("value", function(snapshot) {
+    res.json(snapshot.val());
+  });
+});
+
+app.post("/get-project", (req, res) => {
+  var url = req.body.url;
+  var ref = db.ref("/projects/" + url);
+  ref.once("value", function(snapshot) {
+    res.json(snapshot.val());
+  });
+});
   
+app.post("/get-updates", (req, res) => {
+  var url = req.body.url;
+  var ref = db.ref("/updates/" + url);
+  ref.once("value", function(snapshot) {
+    res.json(snapshot.val());
+  });
+});
+
+app.post("/get-comments", (req, res) => {
+  var url = req.body.url;
+  var ref = db.ref("/comments/" + url);
+  ref.once("value", function(snapshot) {
+    res.json(snapshot.val());
+  });
+});
+
+app.post("/get-user", (req, res) => {
+  var wallet = req.body.wallet;
+  var ref = db.ref("/users/" + wallet);
+  ref.once("value", function(snapshot) {
+    res.json(snapshot.val());
+  });
+});
+
+app.post("/get-user-projects", (req, res) => {
+  var wallet = req.body.wallet;
+  var ref = db.ref("/projects-small");
+  ref.orderByChild("creator").equalTo(wallet).once("value", function(snapshot) {
+    res.json(snapshot.val());
+  });
+});
+
 
 
 app.post("/create-project", (req, res) => {
@@ -85,10 +134,9 @@ app.post("/create-project", (req, res) => {
   var description = req.body.description;
   var image = req.body.image;
   var nft = req.body.nft;
-  var status = req.body.status;
   var link = req.body.link;
   var next_steps = req.body.next_steps;
-  var status = "pending";
+  var status = "active";
   // url = title without spaces, withtout simbols, lowercase
   var url = title.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9-]/g, "").toLowerCase() + "-" + creator.substring(0, 5);
   var links = req.body.links;
@@ -111,6 +159,19 @@ app.post("/create-project", (req, res) => {
           link: link,
           next_steps: next_steps,
           links: links,
+        });
+        var ProjectsSmallRef = db.ref("/projects-small/"+url);
+        ProjectsSmallRef.set({
+          creator: creator,
+          title: title,
+          category: category,
+          description: description,
+          nft: nft,
+          status: status,
+        });
+        var userProjectsRef = db.ref("/user-projects/"+creator);
+        userProjectsRef.update({
+          [url]: true
         });
         res.json({ msg: "success" });
       }
