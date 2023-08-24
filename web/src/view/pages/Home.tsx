@@ -3,16 +3,14 @@ import { InfoCard } from "../../components/home/InfoCard";
 import { Footer } from "../../components/general/Footer";
 import backgroundHome from "../../assets/background_home.webp";
 import ConnectWalletModal from "../../components/general/navbar/ConnectWalletModal";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import NavBar from "../../components/general/navbar/NavBar";
-import { useInView } from "framer-motion";
+
 
 function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
 
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
 
   return (
     <>
