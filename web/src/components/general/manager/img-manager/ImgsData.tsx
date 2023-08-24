@@ -8,6 +8,12 @@ import github_ic from "../../../../assets/github_ic.svg";
 import youtube_ic from "../../../../assets/youtube_ic.svg";
 import instagram_ic from "../../../../assets/instagram_ic.svg";
 import instagramw_ic from "../../../../assets/instagramw_ic.svg";
+import close_ic from "../../../../assets/close_ic.svg";
+import metamask_logo from "../../../../assets/metamask_logo.webp";
+import brave_logo from "../../../../assets/brave_logo.webp";
+import avatar from "../../../../assets/avatar.webp";
+import chevrondown_ic from "../../../../assets/chevrondown_ic.svg";
+import profile_ic from "../../../../assets/profile_ic.svg";
 
 const ImagesData: Record<string, string> = {
   batlogo: bat_logo,
@@ -20,6 +26,12 @@ const ImagesData: Record<string, string> = {
   youtube_ic: youtube_ic,
   instagram_ic: instagram_ic,
   instagramw_ic: instagramw_ic,
+  close_ic: close_ic,
+  metamasklogo: metamask_logo,
+  bravelogo: brave_logo,
+  avatar: avatar,
+  chevrondown_ic: chevrondown_ic,
+  profile_ic: profile_ic,
 };
 
 export default ImagesData;
