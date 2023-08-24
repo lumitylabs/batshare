@@ -21,7 +21,7 @@ function upload(req, res, bucket){
  
     // This code will process each file uploaded.
     busboy.on('file', (fieldname, file, filename) => {
-        //console.log(`Processed file ${filename}`);
+        console.log(`Processed file ${filename}`);
         const filepath = path.join(tmpdir, filename);
         uploads[fieldname] = filepath;
  
@@ -39,33 +39,36 @@ function upload(req, res, bucket){
     });
  
     busboy.on('finish', async () => {
-        var url;
-        await Promise.all(fileWrites);
-        for (const file in uploads) {
+        try {
+          var url;
+          await Promise.all(fileWrites);
+          for (const file in uploads) {
             console.log(uploads[file]);
             let uuid = UUID();
             let options = {
+              metadata: {
                 metadata: {
-                    metadata: {
-                        firebaseStorageDownloadTokens: uuid,
-                        cacheControl: 'public,max-age=12600'
-                    }
+                  firebaseStorageDownloadTokens: uuid,
+                  cacheControl: 'public,max-age=12600'
                 }
+              }
             };
-
-			const path = bucket.upload(uploads[file], options)
-            path.then(result=>{
-				bucket_url = result[0]['metadata']['bucket']
-				file_name = result[0]['metadata']['name']
-                url = "https://firebasestorage.googleapis.com/v0/b/"+bucket_url+"/o/"+file_name+"?alt=media&token="+uuid
-                res.send({"url":url});
-			})
-            //fs.unlinkSync(uploads[file]);
- 
+    
+            const path = await bucket.upload(uploads[file], options);
+            const bucket_url = path[0]['metadata']['bucket'];
+            const file_name = path[0]['metadata']['name'];
+            url = "https://firebasestorage.googleapis.com/v0/b/" + bucket_url + "/o/" + file_name + "?alt=media&token=" + uuid;
+            res.send({ "url": url });
+    
+            fs.unlinkSync(uploads[file]);
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Internal Server Error');
         }
-    });
- 
-    busboy.end(req.body);
-}
-
-module.exports = {upload}
+      });
+    
+      busboy.end(req.rawBody); // Use rawBody instead of body
+    }
+    
+    module.exports = { upload }
