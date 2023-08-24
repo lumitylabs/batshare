@@ -21,7 +21,6 @@ admin.initializeApp({
   storageBucket: process.env.STORAGE_BUCKET,
 });
 const app = express();
-app.use(express.json());
 app.use(authMiddleware);
 app.use(express.raw({ type: "multipart/*" }));
 const bucket = getStorage().bucket();
@@ -137,7 +136,6 @@ app.post("/create-project", (req, res) => {
   var link = req.body.link;
   var next_steps = req.body.next_steps;
   var status = "active";
-  // url = title without spaces, withtout simbols, lowercase
   var url = title.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9-]/g, "").toLowerCase() + "-" + creator.substring(0, 5);
   var links = req.body.links;
   var ref = db.ref("/projects/" + url);
@@ -219,10 +217,68 @@ app.post("/create-user", (req, res) => {
       }
     })
     .catch((error) => {
-      // Tratar qualquer erro que possa ocorrer
       res.status(500).json({ msg: "error", details: error.message });
     });
 });
+
+app.post("/donate", async (req, res) => {
+  var wallet = req.body.wallet;
+  var amount = parseFloat(req.body.amount);
+  var url = req.body.url;
+  var now = new Date();
+  var day = now.getDate();
+  var month = now.getMonth() + 1;
+  var year = now.getFullYear();
+
+  var donationPath = `/user-donations/${year}/${month}/${day}/${url}/${wallet}`;
+  var ref = db.ref(donationPath);
+
+  ref.transaction((currentData) => {
+    if (currentData === null) {
+      return { amount: amount }; // Initial value
+    } else {
+      currentData.amount += amount; // Add to existing value
+      return currentData;
+    }
+  }, async (error, committed, snapshot) => {
+    if (error) {
+      console.log("Transaction failed", error);
+      res.status(500).send("Transaction failed");
+    } else if (committed) {
+      var base_amount = snapshot.val() ? (snapshot.val().amount - amount) : 0;
+      await addDonationToProject(year, month, day, url, amount, base_amount);
+
+      var recordPath = `/user-donations-record/${year}/${month}/${day}/${url}/${wallet}`;
+      var refRecord = await db.ref(recordPath).push();
+      await refRecord.set({ amount: amount, timestamp: now.getTime(), wallet: wallet });
+
+      res.status(200).send("Donation added");
+    }
+  });
+});
+
+
+
+async function addDonationToProject(year, month, day, url, amount, base_amount) {
+  var projectPath = `/project-raised/${year}/${month}/${day}/${url}`;
+  var ref = db.ref(projectPath);
+
+  await ref.once("value").then(snapshot => {
+    if (snapshot.exists()) {
+      ref.transaction(()=> {
+        var quadratic_amount = Math.sqrt(amount + base_amount);
+        var past_quadratic_amount = Math.sqrt(base_amount);
+        var new_amount = quadratic_amount - past_quadratic_amount;
+        return { amount: snapshot.val().amount + new_amount };
+      });
+    } else {
+      var quadratic_amount = Math.sqrt(amount + base_amount);
+      var past_quadratic_amount = Math.sqrt(base_amount);
+      var new_amount = quadratic_amount - past_quadratic_amount;
+      ref.set({ amount: new_amount });
+    }
+  });
+}
 
 // Export the Express API
 module.exports = app;
