@@ -41,6 +41,7 @@ module.exports = async (req, res) => {
             next_steps: next_steps,
             socials: socials,
             round: round,
+            donations: 0,
           });
           var ProjectsSmallRef = db.ref("/projects-small/" + url);
           ProjectsSmallRef.set({
