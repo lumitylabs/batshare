@@ -1,7 +1,7 @@
 import React from "react";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import { motion } from "framer-motion";
-import { useMetaMask } from "../../../model/useMetaMask";
+import { useMetaMask } from "../../model/useMetaMask";
 
 interface ConnectWalletModalProps {
   modalIsOpen: any;
