@@ -22,6 +22,7 @@ const connectWallet = async (
   const isLogged: any = localStorage.getItem("batshare_logged");
   if (isLogged !== null) {
     setIsLoading(true);
+    console.log(wallet)
 
     try {
       const username: any = localStorage.getItem("batshare_username" + wallet);

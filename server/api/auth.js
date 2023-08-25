@@ -18,13 +18,13 @@ module.exports = async (req, res) => {
   if (action === "create-update") {
     await createUpdate(req, res);
   }
-  if (action === "create-update") {
+  if (action === "create-user") {
     await createUser(req, res);
   }
-  if (action === "create-user") {
+  if (action === "donate") {
     await donate(req, res);
   }
-  if (action === "donate") {
+  if (action === "upload") {
     await upload(req, res);
   }
 };
