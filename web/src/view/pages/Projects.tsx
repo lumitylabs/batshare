@@ -1,5 +1,5 @@
 import backgroundHome from "../../assets/background_home.webp";
-import ConnectWalletModal from "../../components/general/navbar/ConnectWalletModal";
+import ConnectWalletModal from "../../components/home/ConnectWalletModal";
 import NavBar from "../../components/general/navbar/NavBar";
 import { useState } from "react";
 import Divider from "../../components/general/Divider";

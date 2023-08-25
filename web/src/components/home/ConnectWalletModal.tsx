@@ -1,5 +1,5 @@
 import React from "react";
-import ImgComponent from "../manager/img-manager/ImgComponent";
+import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import { motion } from "framer-motion";
 
 interface ConnectWalletModalProps {
@@ -34,8 +34,8 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
               Connect Wallet
             </p>
             <p className="text-center font-BeVietnamPro font-regular text-[#5E5A5A] text-[14px]">
-              If you don't have a wallet, you can select a provider and{" "}
-              <br></br> create one now.{" "}
+              If you don't have a wallet, you can select a provider and
+              <br></br>create one now.{" "}
               <a
                 href="#"
                 className="text-blue-600 cursor-pointer hover:text-blue-500"

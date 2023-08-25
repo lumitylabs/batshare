@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { InfoCard } from "../../components/home/InfoCard";
 
 import backgroundHome from "../../assets/background_home.webp";
-import ConnectWalletModal from "../../components/general/navbar/ConnectWalletModal";
+import ConnectWalletModal from "../../components/home/ConnectWalletModal";
 import { useState } from "react";
 import NavBar from "../../components/general/navbar/NavBar";
 import { Footer } from "../../components/general/Footer";
