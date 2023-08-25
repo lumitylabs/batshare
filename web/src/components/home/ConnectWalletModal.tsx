@@ -11,7 +11,7 @@ interface ConnectWalletModalProps {
 }
 
 const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
-  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask()
+  const { isConnecting, connectMetaMask } = useMetaMask()
   return props.modalIsOpen ? (
     <div
       onClick={() => props.setModalIsOpen(false)}

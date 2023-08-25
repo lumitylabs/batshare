@@ -52,7 +52,7 @@ const disconnectWallet = async (wallet: any, setUsername: any) => {
 };
 
 const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
-  const { wallet, hasProvider, isConnecting, connectMetaMask, logout } =
+  const { wallet } =
     useMetaMask();
   const [isHovered, setIsHovered] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
