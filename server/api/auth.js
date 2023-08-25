@@ -4,9 +4,9 @@ const createUpdate = require("./_create-update");
 const createUser = require("./_create-user");
 const donate = require("./_donate");
 const upload = require("./_upload");
+const cors = require("../config/cors").default;
 
-
-module.exports = async (req, res) => {
+module.exports = cors( async (req, res) =>{
   const action = req.query.action;
 
   if (action === "create-comment") {
@@ -27,4 +27,4 @@ module.exports = async (req, res) => {
   if (action === "upload") {
     await upload(req, res);
   }
-};
+});
