@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
     var { day, month, year } = getDate();
     var bat_value = 0
     var amount = 0
+    res.setHeader('Cache-Control', 's-maxage=86400');
   try {
     var url = req.body.url;
     const ref = db.ref(`/total-raised-daily/${year}/${month}/${day}/`);

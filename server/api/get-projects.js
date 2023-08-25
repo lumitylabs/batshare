@@ -1,6 +1,7 @@
 const { db } = require('../config/firebase');
 
 module.exports = async (req, res) => {
+  res.setHeader('Cache-Control', 's-maxage=86400');
   try {
     const ref = db.ref("/projects-small");
     ref
