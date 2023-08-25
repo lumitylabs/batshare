@@ -1,6 +1,7 @@
 import React from "react";
 import ImgComponent from "../manager/img-manager/ImgComponent";
 import { motion } from "framer-motion";
+import { useMetaMask } from "../../../model/useMetaMask";
 
 interface ConnectWalletModalProps {
   modalIsOpen: any;
@@ -10,6 +11,7 @@ interface ConnectWalletModalProps {
 }
 
 const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
+  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask()
   return props.modalIsOpen ? (
     <div
       onClick={() => props.setModalIsOpen(false)}
@@ -48,9 +50,13 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
           <div className="flex flex-col gap-2">
             <button
               onClick={() => {
+                
+                connectMetaMask();
                 props.setIsConnected(true);
                 props.setModalIsOpen(false);
+                localStorage.setItem("batshare_logged", "true");
               }}
+              disabled={isConnecting}
               className="flex py-3 items-center justify-center gap-2 border border-[#DFDFDF] rounded-full hover:bg-[#e1ecfc] hover:border-[#878e9b]"
             >
               <ImgComponent
@@ -64,8 +70,10 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
 
             <button
               onClick={() => {
+                connectMetaMask();
                 props.setIsConnected(true);
                 props.setModalIsOpen(false);
+                localStorage.setItem("batshare_logged", "true");
               }}
               className="flex py-3 items-center justify-center gap-2 border border-[#DFDFDF] rounded-full hover:bg-[#e1ecfc] hover:border-[#878e9b]"
             >
