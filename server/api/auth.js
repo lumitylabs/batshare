@@ -5,6 +5,13 @@ const createUser = require("./_create-user");
 const donate = require("./_donate");
 const upload = require("./_upload");
 
+export​ ​const​ ​config​ ​=​ ​{​
+    ​api​: ​{​
+        ​bodyParser​: ​false​,​
+        ​externalResolver​: ​true​,​
+    ​}​,​
+  ​}​;​
+
 module.exports = async (req, res) => {
   const action = req.query.action;
 
