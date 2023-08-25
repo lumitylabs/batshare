@@ -22,7 +22,6 @@ const connectWallet = async (
   const isLogged: any = localStorage.getItem("batshare_logged");
   if (isLogged !== null) {
     setIsLoading(true);
-    setUsername("unnamed");
 
     try {
       const username: any = localStorage.getItem("batshare_username" + wallet);
@@ -66,6 +65,15 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
     }
   }, [wallet, props.isConnected]);
 
+  useEffect(() => {
+    const isLogged: any = localStorage.getItem("batshare_logged");
+    if(isLogged !== null){
+      setIsLoading(true);
+    }
+    
+
+  }, []);
+
   let hoverTimeout: any;
 
   const handleMouseEnter = () => {
@@ -80,7 +88,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
     }, 100); // 300ms de atraso
   };
 
-  return username == null ? (
+  return username == null && !isLoading ? (
     <motion.button
       onClick={() => props.setModalIsOpen(true)}
       className="flex justify-center items-center rounded-[12px] h-[50px] w-[200px] bg-white hover:shadow-lg"
@@ -117,12 +125,12 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
                 "Collaborator"
               )}
             </span>
-            <p className="font-BalooDa2 font-medium text-[18px] leading-[18px] tracking-[-0.02em] ">
+            <p className="font-BalooDa2 font-medium text-[18px] leading-[18px] tracking-[-0.02em] flex">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#903DA4] to-[#EA6846] hover:from-[#EA6846] hover:to-[#903DA4] line-clamp-1">
                 {isLoading ? (
                   <Skeleton height={12} width={90}></Skeleton>
-                ) : username.length > 13 ? (
-                  `${username.slice(0, 13)}...`
+                ) : username!.length > 13 ? (
+                  `${username!.slice(0, 13)}...`
                 ) : (
                   username
                 )}
