@@ -1,7 +1,7 @@
-import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import { LinkButton } from "./LinkButton";
 import { WalletChip } from "./WalletChip";
 import SocialButton from "./SocialButton";
+import Skeleton from "react-loading-skeleton";
 
 interface HeaderDetailsComponentProps {
   status: string;
@@ -11,6 +11,7 @@ interface HeaderDetailsComponentProps {
   avatar: string;
   wallet: string;
   social: string;
+  link: string;
 }
 
 const HeaderDetailsComponent: React.FC<HeaderDetailsComponentProps> = (
@@ -34,7 +35,7 @@ const HeaderDetailsComponent: React.FC<HeaderDetailsComponentProps> = (
         </div>
 
         <div className="flex">
-          <LinkButton></LinkButton>
+          <LinkButton link={props.link}></LinkButton>
         </div>
       </div>
 
@@ -44,7 +45,7 @@ const HeaderDetailsComponent: React.FC<HeaderDetailsComponentProps> = (
 
       <div className="flex flex-col justify-center pl-16">
         <div className="flex gap-2">
-          <ImgComponent name={props.avatar} type={"avatar"}></ImgComponent>
+          {props.avatar === "" ? (<Skeleton height={60} width={60} borderRadius={300}></Skeleton>) : (<img src={props.avatar} className="h-[60px] w-[60px] rounded-full"></img>)}
           <div className="flex justify-center flex-col">
             <span className="font-BeVietnamPro text-[14px] font-medium leading-[14px] text-[#828282]">
               Created by
@@ -56,7 +57,7 @@ const HeaderDetailsComponent: React.FC<HeaderDetailsComponentProps> = (
         </div>
 
         <div className="flex mt-8 space-x-2">
-          <WalletChip></WalletChip>
+          <WalletChip wallet={props.wallet}></WalletChip>
           <SocialButton icon={"x_ic"}></SocialButton>
           <SocialButton icon={"instagram_ic"}></SocialButton>
           <SocialButton icon={"discord_ic"}></SocialButton>

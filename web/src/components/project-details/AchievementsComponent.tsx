@@ -41,25 +41,12 @@ export function AchievementsComponent() {
           <div className="flex flex-row">
             <motion.div
               initial={{
-                rotateX: 0,
-                rotateY: 0,
                 scale: 1,
                 translateY: 0,
               }}
-              whileHover={{
-                rotateX: 0,
-                rotateY: 5,
-                scale: 1.02,
-                translateY: -2,
-                // Ajuste este valor para tornar o movimento mais sutil
-                transition: {
-                  duration: 0.3,
-                },
-              }}
+
               animate={{
-                rotateY: [0, 20, 0, -20, 0],
-                scale: [1, 1.01, 1, 1.01, 1],
-                translateY: [0, -2, 0, -2, 0], // Ajuste este valor também
+                translateY: [0, -4, 0, -4, 0],
               }}
               transition={{
                 duration: 6,
@@ -128,8 +115,8 @@ export function AchievementsComponent() {
                     transition={{
                       duration: 0.2,
                     }}
-                    className="flex  w-[310px] py-[10px] px-4  justify-center rounded-[10px] bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF]  hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg "
-                  >
+                    className="flex w-[310px] py-[10px] px-4 justify-center rounded-[10px] bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg transition-all duration-300"
+                    >
                     <span className="font-BalooDa2 font-medium text-[20px] text-white">
                       Donate
                     </span>

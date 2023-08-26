@@ -5,25 +5,38 @@ import Return from "../../components/general/Return";
 import DetailsComponent from "../../components/project-details/DetailsComponent";
 import { AchievementsComponent } from "../../components/project-details/AchievementsComponent";
 import { useParams } from "react-router-dom";
-import { getProject } from "../../model/calls";
+import { getProject, getUser } from "../../model/calls";
 
 function ProjectDetails() {
+  const projectDefault = {title: "Project Title",
+  description: "Project Description",
+  next_steps: "Project Next Steps",
+  category: "Project Category",
+  status: "Project Status",
+  creator: "0x000000000000000000000000000000000000",
+  link:"github.com",
+  image:""};
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const { project_id } = useParams();
-  const [project, setProject] = useState({
-    title: "Project Title",
-    description: "Project Description",
-    next_steps: "Project Next Steps",
-    category: "Project Category",
-    status: "Project Status",
-  });
+  const [project, setProject] = useState(projectDefault);
+  const [user,setUser]  = useState({avatar:"",username:""});
 
   useEffect(() => {
     getProject({url:project_id}).then((res: any) => {
       setProject(res);
     });
   }, []);
+
+  useEffect(() => {
+    if(project.creator != "0x000000000000000000000000000000000000")
+    {
+      getUser({wallet:project.creator.toLowerCase()}).then((res: any) => {
+        setUser(res);
+      });
+    }
+    
+  },[project]);
 
   return (
     <>
@@ -49,15 +62,16 @@ function ProjectDetails() {
       <div className="flex justify-center bg-white h-full gap-6 pb-14">
         <DetailsComponent
           status={"Active"}
-          username={"Luciano Ferreira"}
-          avatar={"avatar"}
-          wallet={"0x9e4...BC3a"}
+          username={user.username}
+          avatar={user.avatar}
+          wallet={project.creator}
           social={""}
           title={project.title}
           category={project.category}
-          img={"imgdetails"}
+          img={project.image}
           text={project.description}
           nextsteps={project.next_steps}
+          link={project.link}
         ></DetailsComponent>
 
         <AchievementsComponent></AchievementsComponent>

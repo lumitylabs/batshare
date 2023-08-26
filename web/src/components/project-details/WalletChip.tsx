@@ -1,10 +1,27 @@
 import MulticolorComponent from "../../components/general/manager/svg-manager/MulticolorComponent";
 
-export function WalletChip() {
+
+function truncateWallet(wallet:string, startLength = 6, endLength = 4) {
+  const truncatedPart = '...';
+  if (wallet.length > startLength + endLength) {
+    return wallet.substring(0, startLength) + truncatedPart + wallet.substring(wallet.length - endLength);
+  }
+  return wallet;
+}
+
+function copyToClipboard(text:string) {
+  navigator.clipboard.writeText(text).then(function() {
+    console.log('Copying to clipboard was successful!');
+  }, function(err) {
+    console.error('Could not copy text: ', err);
+  });
+}
+
+export function WalletChip(props:{wallet:string}) {
   return (
-    <div className="flex gap-2 py-[2px] px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer">
+    <div className="flex gap-2 py-[2px] px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer" onClick={()=>copyToClipboard(props.wallet)}>
       <span className="flex items-center font-BalooDa2 font-medium text-[16px] text-[#2F7DCD]">
-        0x6e4...AC9a
+        {truncateWallet(props.wallet, 6, 4)}
       </span>
       <MulticolorComponent
         name={"CopyIcon"}
