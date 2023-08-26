@@ -1,5 +1,5 @@
-import { MiniProjectModel, ProjectData } from "../../model/MiniProjectModel";
-import ImgComponent from "../general/manager/img-manager/ImgComponent";
+import { ProjectData } from "../../model/MiniProjectModel";
+
 import MulticolorComponent from "../general/manager/svg-manager/MulticolorComponent";
 
 type ProjectCardProps = {
