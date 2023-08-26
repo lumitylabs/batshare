@@ -1,13 +1,29 @@
 import ConnectWalletModal from "../../components/home/ConnectWalletModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../../components/general/navbar/NavBar";
 import Return from "../../components/general/Return";
 import DetailsComponent from "../../components/project-details/DetailsComponent";
 import { AchievementsComponent } from "../../components/project-details/AchievementsComponent";
+import { useParams } from "react-router-dom";
+import { getProject } from "../../model/calls";
 
 function ProjectDetails() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const { project_id } = useParams();
+  const [project, setProject] = useState({
+    title: "Project Title",
+    description: "Project Description",
+    next_steps: "Project Next Steps",
+    category: "Project Category",
+    status: "Project Status",
+  });
+
+  useEffect(() => {
+    getProject({url:project_id}).then((res: any) => {
+      setProject(res);
+    });
+  }, []);
 
   return (
     <>
@@ -37,15 +53,11 @@ function ProjectDetails() {
           avatar={"avatar"}
           wallet={"0x9e4...BC3a"}
           social={""}
-          title={"Blockchain & CO2"}
-          category={"Environment"}
+          title={project.title}
+          category={project.category}
           img={"imgdetails"}
-          text={
-            "Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability and sustainability. Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability and sustainability."
-          }
-          nextsteps={
-            "Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability and sustainability. Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability and sustainability."
-          }
+          text={project.description}
+          nextsteps={project.next_steps}
         ></DetailsComponent>
 
         <AchievementsComponent></AchievementsComponent>

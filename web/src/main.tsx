@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/projects" element={<Projects />} />
-      <Route path="/project-details" element={<ProjectDetails />} />
+      <Route path="/project-details/:project_id" element={<ProjectDetails />} />
     </Routes>
   </Router>
   </MetaMaskContextProvider>

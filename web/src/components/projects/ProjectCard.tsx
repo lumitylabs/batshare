@@ -35,7 +35,7 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
           <div className="flex justify-end mt-10">
             <div className="flex">
               <button
-                onClick={() => (window.location.href = "/project-details")}
+                onClick={() => (window.location.href = "/project-details/"+ props.url)}
                 className="flex justify-center  items-center h-[45px] w-[150px] px-4 py-3 border rounded-full border-[#DFDFDF]  hover:bg-gray-50"
               >
                 <div className="flex justify-center items-center gap-2">
