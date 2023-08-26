@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { endpoint_create_user, endpoint_get_user, server } from './repository';
+import { endpoint_create_user, endpoint_get_projects, endpoint_get_user, server } from './repository';
 
 export async function endpointCall(data:any, endpoint:string) {
 	const requestOptions = {
@@ -22,3 +22,8 @@ export async function getUser(data:any) {
 export async function createUser(data:any) {
 	return endpointCall(data, endpoint_create_user)
 }
+
+export async function getProjects(data:any) {
+	return endpointCall(data, endpoint_get_projects)
+}
+

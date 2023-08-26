@@ -1,16 +1,22 @@
 const { db } = require('../config/firebase');
 
 module.exports = async (req, res) => {
-  res.setHeader('Cache-Control', 's-maxage=86400');
+  res.setHeader('Cache-Control', 'max-age=86400, public');
   try {
     const ref = db.ref("/projects-small");
-    ref
+    const start = Date.now();
+    
+    const snapshot = await ref
       .orderByChild("status")
       .equalTo("active")
-      .once("value", (snapshot) => {
-        res.json(snapshot.val());
-      });
+      .once("value");
+      
+    const end = Date.now();
+    console.log("Tempo de Consulta:", end - start, "ms");
+
+    res.json(snapshot.val());
   } catch (error) {
+    console.error("Erro:", error);
     res.status(500).send('Erro ao buscar os projetos.');
   }
 };
