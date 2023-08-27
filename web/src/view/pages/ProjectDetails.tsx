@@ -5,7 +5,7 @@ import Return from "../../components/general/Return";
 import DetailsComponent from "../../components/project-details/DetailsComponent";
 import { AchievementsComponent } from "../../components/project-details/AchievementsComponent";
 import { useParams } from "react-router-dom";
-import { getProject, getUser } from "../../model/calls";
+import { getProject, getProjectRaised, getUser } from "../../model/calls";
 
 function ProjectDetails() {
   const projectDefault = {title: "Project Title",
@@ -21,6 +21,7 @@ function ProjectDetails() {
   const { project_id } = useParams();
   const [project, setProject] = useState(projectDefault);
   const [user,setUser]  = useState({avatar:"",username:""});
+  const [dailyRaised, setDailyRaised] = useState({projectQuadratic:0,bat_value:0,amount:0});
 
   useEffect(() => {
     getProject({url:project_id}).then((res: any) => {
@@ -33,6 +34,9 @@ function ProjectDetails() {
     {
       getUser({wallet:project.creator.toLowerCase()}).then((res: any) => {
         setUser(res);
+      });
+      getProjectRaised({url:project_id}).then((res: any) => {
+        setDailyRaised(res);
       });
     }
     
@@ -74,7 +78,7 @@ function ProjectDetails() {
           link={project.link}
         ></DetailsComponent>
 
-        <AchievementsComponent></AchievementsComponent>
+        <AchievementsComponent dailyRaised={dailyRaised}></AchievementsComponent>
       </div>
     </>
   );

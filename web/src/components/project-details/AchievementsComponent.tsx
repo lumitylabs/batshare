@@ -1,10 +1,20 @@
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import { motion } from "framer-motion";
 import DonateModal from "./DonateModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
-export function AchievementsComponent() {
+export function AchievementsComponent(props: { dailyRaised: any }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [raised, setRaised] = useState(-1);
+  useEffect(() => {
+    if (props.dailyRaised.amount > 0) {
+      setRaised(
+        (props.dailyRaised.projectQuadratic/props.dailyRaised.amount) *
+          props.dailyRaised.bat_value
+      );
+    }
+  }, [props.dailyRaised]);
 
   return (
     <>
@@ -44,7 +54,6 @@ export function AchievementsComponent() {
                 scale: 1,
                 translateY: 0,
               }}
-
               animate={{
                 translateY: [0, -4, 0, -4, 0],
               }}
@@ -62,7 +71,7 @@ export function AchievementsComponent() {
                 <div className="flex flex-col w-[48%]">
                   <div className="flex flex-start">
                     <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
-                      15-Day Raised
+                      Daily Raised
                     </span>
                   </div>
 
@@ -75,9 +84,9 @@ export function AchievementsComponent() {
                     </div>
 
                     <div className="border w-px h-[40px] border-[#C98AFF]"></div>
-
+                    
                     <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                      30.00
+                    {raised === -1 ? <Skeleton width={60} height={22}></Skeleton> : "≅"+ raised.toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -100,7 +109,7 @@ export function AchievementsComponent() {
                     <div className="border w-px h-[40px] border-[#FFE662]"></div>
 
                     <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                      30.00
+                      0.0
                     </span>
                   </div>
                 </div>
@@ -116,7 +125,7 @@ export function AchievementsComponent() {
                       duration: 0.2,
                     }}
                     className="flex w-[310px] py-[10px] px-4 justify-center rounded-[10px] bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg transition-all duration-300"
-                    >
+                  >
                     <span className="font-BalooDa2 font-medium text-[20px] text-white">
                       Donate
                     </span>
