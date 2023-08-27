@@ -1,6 +1,7 @@
 const { db } = require('../config/firebase');
+const cors = require("../config/cors").default;
 
-module.exports = async (req, res) => {
+module.exports = cors(async (req, res) => {
   res.setHeader('Cache-Control', 'max-age=86400, public');
   try {
     const ref = db.ref("/projects-small");
@@ -19,4 +20,4 @@ module.exports = async (req, res) => {
     console.error("Erro:", error);
     res.status(500).send('Erro ao buscar os projetos.');
   }
-};
+});

@@ -1,7 +1,8 @@
 const { db } = require("../config/firebase");
 const getDate = require("../utils/utils");
+const cors = require("../config/cors").default;
 
-module.exports = async (req, res) => {
+module.exports = cors(async (req, res) => {
     var { day, month, year } = getDate();
     var bat_value = 0
     var amount = 0
@@ -36,4 +37,4 @@ module.exports = async (req, res) => {
   } catch (error) {
     res.status(500).send("Error getting inventory");
   }
-};
+});
