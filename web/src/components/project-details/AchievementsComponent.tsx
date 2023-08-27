@@ -4,7 +4,7 @@ import DonateModal from "./DonateModal";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
-export function AchievementsComponent(props: { dailyRaised: any }) {
+export function AchievementsComponent(props: { dailyRaised: any, nft_image:string}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [raised, setRaised] = useState(-1);
   useEffect(() => {
@@ -63,8 +63,9 @@ export function AchievementsComponent(props: { dailyRaised: any }) {
               }}
               className="relative p-[5px] w-[165px]"
             >
-              <div className="absolute inset-0 rounded-[12px] bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl"></div>
-              <ImgComponent name={"nft_donate"} type={"nft-donate"} />
+             
+              {props.nft_image === "" ? (<Skeleton height={160} width={160} borderRadius={12} style={{zIndex:10, position:"relative"}}></Skeleton>) : ( <><div className="absolute inset-0 rounded-[12px] bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl"></div><img src={props.nft_image} className="w-[160px] h-[160px] rounded-[12px] object-cover z-10 relative"></img></>)}
+              
             </motion.div>
             <div className="flex flex-col justify-center flex-grow">
               <div className="flex justify-center gap-3 pl-3">

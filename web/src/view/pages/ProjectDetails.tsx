@@ -15,6 +15,7 @@ function ProjectDetails() {
   status: "Project Status",
   creator: "0x000000000000000000000000000000000000",
   link:"github.com",
+  nft_image:"",
   image:""};
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
@@ -78,7 +79,7 @@ function ProjectDetails() {
           link={project.link}
         ></DetailsComponent>
 
-        <AchievementsComponent dailyRaised={dailyRaised}></AchievementsComponent>
+        <AchievementsComponent dailyRaised={dailyRaised} nft_image={project.nft_image}></AchievementsComponent>
       </div>
     </>
   );
