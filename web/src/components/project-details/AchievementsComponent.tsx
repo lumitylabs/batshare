@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import DonateModal from "./DonateModal";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import { formatBalance } from "../../model/utils";
+
 
 export function AchievementsComponent(props: {
   dailyRaised: any;
@@ -102,7 +104,7 @@ export function AchievementsComponent(props: {
                     {raised === -1 ? (
                       <Skeleton width={60} height={22}></Skeleton>
                     ) : (
-                      raised.toFixed(2)
+                      parseFloat(formatBalance(raised.toString())).toFixed(2)
                     )}
                   </span>
                 </div>

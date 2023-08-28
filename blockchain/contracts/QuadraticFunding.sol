@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+// Import the ERC20 interface
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 contract QuadraticFunding {
     struct Project {
         address creator;
@@ -35,8 +38,11 @@ contract QuadraticFunding {
     event ProjectRegistered(string projectId, address indexed creator);
     event Withdrawn(string projectId, uint256 amount);
 
-    constructor() {
+    IERC20 public token;
+
+    constructor(address _tokenAddress) {
         startTimestamp = block.timestamp;
+        token = IERC20(_tokenAddress);
     }
 
     function getCurrentDay() public view returns (uint256) {
@@ -55,42 +61,34 @@ contract QuadraticFunding {
         emit ProjectRegistered(projectId, msg.sender);
     }
 
-    function donate(string memory projectId) public payable {
-        require(msg.value > 0, "Donation amount must be greater than 0");
-        require(
-            projects[projectId].creator != address(0),
-            "Project doesn't exist"
-        );
+    function donate(string memory projectId, uint256 amount) public {
+        require(amount > 0, "Donation amount must be greater than 0");
+        require(projects[projectId].creator != address(0), "Project doesn't exist");
 
         uint256 currentDay = getCurrentDay();
         Project storage project = projects[projectId];
 
-        uint256 previousQuadraticValue = babylonianSqrt(
-            project.dayTotalAmount[currentDay]
-        );
-        uint256 newDonationAmount = project.dayTotalAmount[currentDay] +
-            msg.value;
+        uint256 previousQuadraticValue = babylonianSqrt(project.dayTotalAmount[currentDay]);
+        uint256 newDonationAmount = project.dayTotalAmount[currentDay] + amount;
         uint256 newQuadraticValue = babylonianSqrt(newDonationAmount);
 
-        uint256 quadraticDifference = newQuadraticValue -
-            previousQuadraticValue;
+        uint256 quadraticDifference = newQuadraticValue - previousQuadraticValue;
 
-        project.totalAmount += msg.value;
+        require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
+
+        project.totalAmount += amount;
         project.quadraticAmount += quadraticDifference;
-        project.dayTotalAmount[currentDay] += msg.value;
+        project.dayTotalAmount[currentDay] += amount;
         project.dayQuadraticAmount[currentDay] += quadraticDifference;
 
-        dayTotalAmount[currentDay] += msg.value;
+        dayTotalAmount[currentDay] += amount;
         dayQuadraticAmount[currentDay] += quadraticDifference;
 
-        emit DonationReceived(msg.sender, projectId, msg.value, currentDay);
+        emit DonationReceived(msg.sender, projectId, amount, currentDay);
     }
 
     function withdraw(string memory projectId) public {
-        require(
-            msg.sender == projects[projectId].creator,
-            "Only the project creator can withdraw"
-        );
+        require(msg.sender == projects[projectId].creator, "Only the project creator can withdraw");
         uint256 startDay = projects[projectId].lastWithdrawDay ==
             type(uint256).max
             ? 0
@@ -108,6 +106,8 @@ contract QuadraticFunding {
         projects[projectId].lastWithdrawDay = currentDay - 1;
 
         payable(msg.sender).transfer(amountToWithdraw);
+
+        require(token.transfer(msg.sender, amountToWithdraw), "Transfer failed");
 
         emit Withdrawn(projectId, amountToWithdraw);
     }
