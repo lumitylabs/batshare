@@ -10,7 +10,7 @@ import MyProjectsFragment from "../../components/profile/MyProjectsFragment";
 function Profile() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(1);
   const [isOn, setIsOn] = useState(false); // <- switch
 
   const handleToggle = () => {

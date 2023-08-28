@@ -1,10 +1,24 @@
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import { motion } from "framer-motion";
 import DonateModal from "./DonateModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
-export function AchievementsComponent() {
+export function AchievementsComponent(props: {
+  dailyRaised: any;
+  nft_image: string;
+  donations: any;
+}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [raised, setRaised] = useState(-1);
+  useEffect(() => {
+    if (props.dailyRaised.amount > 0) {
+      setRaised(
+        (props.dailyRaised.projectQuadratic / props.dailyRaised.amount) *
+          props.dailyRaised.bat_value
+      );
+    }
+  }, [props.dailyRaised]);
 
   return (
     <>
@@ -25,7 +39,7 @@ export function AchievementsComponent() {
               type={"icon-buttons"}
             ></ImgComponent>
             <span className="font-BeVietnamPro font-bold text-[18px] tracking-[-0.05em]">
-              4K
+              {props.donations}
             </span>
           </div>
         </div>
@@ -43,25 +57,11 @@ export function AchievementsComponent() {
           <div className="flex flex-row">
             <motion.div
               initial={{
-                rotateX: 0,
-                rotateY: 0,
                 scale: 1,
                 translateY: 0,
               }}
-              whileHover={{
-                rotateX: 0,
-                rotateY: 5,
-                scale: 1.02,
-                translateY: -2,
-                // Ajuste este valor para tornar o movimento mais sutil
-                transition: {
-                  duration: 0.3,
-                },
-              }}
               animate={{
-                rotateY: [0, 20, 0, -20, 0],
-                scale: [1, 1.01, 1, 1.01, 1],
-                translateY: [0, -2, 0, -2, 0], // Ajuste este valor também
+                translateY: [0, -4, 0, -4, 0],
               }}
               transition={{
                 duration: 6,
@@ -99,7 +99,11 @@ export function AchievementsComponent() {
                   <div className="border w-px h-[40px] border-[#C98AFF]"></div>
 
                   <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                    30.00
+                    {raised === -1 ? (
+                      <Skeleton width={60} height={22}></Skeleton>
+                    ) : (
+                      raised.toFixed(2)
+                    )}
                   </span>
                 </div>
               </div>
@@ -122,7 +126,7 @@ export function AchievementsComponent() {
                   <div className="border w-px h-[40px] border-[#FFE662]"></div>
 
                   <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                    30.00
+                    0.00
                   </span>
                 </div>
               </div>

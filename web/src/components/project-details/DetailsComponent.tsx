@@ -1,4 +1,4 @@
-import ImgComponent from "../general/manager/img-manager/ImgComponent";
+import Skeleton from "react-loading-skeleton";
 import HeaderDetailsComponent from "./HeaderDetailsComponent";
 
 interface DetailsComponentProps {
@@ -12,6 +12,7 @@ interface DetailsComponentProps {
   avatar: string;
   wallet: string;
   social: string;
+  link: string;
 }
 
 const DetailsComponent: React.FC<DetailsComponentProps> = (props) => {
@@ -25,9 +26,11 @@ const DetailsComponent: React.FC<DetailsComponentProps> = (props) => {
         avatar={props.avatar}
         wallet={props.wallet}
         social={props.social}
+        link={props.link}
       ></HeaderDetailsComponent>
       <div className="w-full mt-6">
-        <ImgComponent name={props.img} type={"img-details"}></ImgComponent>
+      {props.img === "" ? (<Skeleton height={300} width={1080} borderRadius={12}></Skeleton>) : (<img src={props.img} className="w-[1080px] h-[300px] rounded-[12px] object-cover"></img>)}
+
       </div>
 
       <div className="h-full mt-4">

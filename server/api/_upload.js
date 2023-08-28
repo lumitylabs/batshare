@@ -1,13 +1,6 @@
 const { upload } = require('../upload/upload'); // Adjust the path as needed
 const { bucket } = require('../config/firebase'); // Adjust the path for Firebase initialization
 
-export​ ​const​ ​config​ ​=​ ​{​
-  ​api​: ​{​
-      ​bodyParser​: ​false​,​
-      ​externalResolver​: ​true​,​
-  ​}​,​
-​}​;​
-
 module.exports = async (req, res) => {
   try {
     // Gere um nome de arquivo único

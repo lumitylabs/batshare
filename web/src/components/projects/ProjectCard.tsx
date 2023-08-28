@@ -1,37 +1,41 @@
-import ImgComponent from "../general/manager/img-manager/ImgComponent";
+import { ProjectData } from "../../model/MiniProjectModel";
+
 import MulticolorComponent from "../general/manager/svg-manager/MulticolorComponent";
 
-interface ProjectCardProps {
-  category: string;
-  title: string;
-  description: string;
-  img: string;
-}
+type ProjectCardProps = {
+  project: ProjectData;
+  url: string;
+};
 
 const ProjectCard: React.FC<ProjectCardProps> = (props) => {
   return (
     <div className="flex h-[320px] w-[550px] rounded-[15px] bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)]">
       <div className="flex h-full w-full">
-        <ImgComponent name={props.img} type={"nft-cards"}></ImgComponent>
+        <img
+          src={props.project.nft_image}
+          className="w-[200px] rounded-l-[12px] object-cover"
+        />
 
         <div className="flex flex-col py-8 px-6 gap-2">
           <div className="flex flex-col">
             <h2 className="font-BeVietnamPro font-medium text-[14px] leading-[14px] text-[#828282] tracking-[-0.05em]">
-              {props.category}
+              {props.project.category}
             </h2>
             <h1 className="font-BeVietnamPro font-bold text-[18px] tracking-[-0.05em]">
-              {props.title}
+              {props.project.title}
             </h1>
           </div>
 
-          <p className="font-BeVietnamPro font-regular text-[16px]  text-[#5E5A5A] tracking-[-0.04em]">
-            {props.description}
-          </p>
+          <div className="font-BeVietnamPro font-regular text-[16px] text-[#5E5A5A] tracking-[-0.04em] w-[300px] h-[300px]">
+            {props.project.description!.length > 200
+              ? `${props.project.description!.slice(0, 200)}...`
+              : props.project.description}
+          </div>
 
           <div className="flex justify-end mt-10">
             <div className="flex">
               <button
-                onClick={() => (window.location.href = "/project-details")}
+                onClick={() => (window.location.href = "/project-details/"+ props.url)}
                 className="flex justify-center  items-center h-[45px] w-[150px] px-4 py-3 border rounded-full border-[#DFDFDF]  hover:bg-gray-50"
               >
                 <div className="flex justify-center items-center gap-2">

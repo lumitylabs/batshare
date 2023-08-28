@@ -1,6 +1,8 @@
 const { db } = require("../config/firebase");
+const cors = require("../config/cors").default;
 
-module.exports = async (req, res) => {
+module.exports = cors(async (req, res) => {
+  res.setHeader('Cache-Control', 's-maxage=86400');
   try {
     var wallet = req.body.wallet;
     const ref = db.ref(`/inventory/${wallet}/`);
@@ -11,4 +13,4 @@ module.exports = async (req, res) => {
   } catch (error) {
     res.status(500).send("Error getting inventory");
   }
-};
+});

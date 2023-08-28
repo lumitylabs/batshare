@@ -22,7 +22,7 @@ const connectWallet = async (
   const isLogged: any = localStorage.getItem("batshare_logged");
   if (isLogged !== null) {
     setIsLoading(true);
-    setUsername("unnamed");
+    console.log(wallet);
 
     try {
       const username: any = localStorage.getItem("batshare_username" + wallet);
@@ -53,8 +53,7 @@ const disconnectWallet = async (wallet: any, setUsername: any) => {
 };
 
 const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
-  const { wallet, hasProvider, isConnecting, connectMetaMask, logout } =
-    useMetaMask();
+  const { wallet } = useMetaMask();
   const [isHovered, setIsHovered] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +64,13 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
       connectWallet(wallet.accounts[0], setUsername, setIsLoading);
     }
   }, [wallet, props.isConnected]);
+
+  useEffect(() => {
+    const isLogged: any = localStorage.getItem("batshare_logged");
+    if (isLogged !== null) {
+      setIsLoading(true);
+    }
+  }, []);
 
   let hoverTimeout: any;
 
@@ -80,7 +86,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
     }, 100); // 300ms de atraso
   };
 
-  return username == null ? (
+  return username == null && !isLoading ? (
     <motion.button
       onClick={() => props.setModalIsOpen(true)}
       className="flex justify-center items-center rounded-[12px] h-[50px] w-[200px] bg-white hover:shadow-lg"
@@ -134,8 +140,8 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
               >
                 {isLoading ? (
                   <Skeleton height={12} width={90}></Skeleton>
-                ) : username.length > 13 ? (
-                  `${username.slice(0, 13)}...`
+                ) : username!.length > 13 ? (
+                  `${username!.slice(0, 13)}...`
                 ) : (
                   username
                 )}

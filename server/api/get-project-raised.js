@@ -1,10 +1,13 @@
 const { db } = require("../config/firebase");
-const { getDate } = require("../utils/getDate");
+const getDate = require("../utils/utils");
+const cors = require("../config/cors").default;
 
-module.exports = async (req, res) => {
+module.exports = cors(async (req, res) => {
     var { day, month, year } = getDate();
     var bat_value = 0
     var amount = 0
+    var projectQuadratic = 0
+    res.setHeader('Cache-Control', 's-maxage=86400');
   try {
     var url = req.body.url;
     const ref = db.ref(`/total-raised-daily/${year}/${month}/${day}/`);
@@ -12,15 +15,21 @@ module.exports = async (req, res) => {
         if (snapshot.exists()) {
             bat_value = snapshot.val().bat_value
             amount = snapshot.val().amount
-            const projectRaised = db.ref(`/project-raised/${year}/${month}/${day}/`);
+            const projectRaised = db.ref(`/project-raised/${year}/${month}/${day}/${url}`);
             await projectRaised.once("value", function (projectSnapshot) {
                 if (projectSnapshot.exists()) {
                     projectQuadratic = projectSnapshot.val().amount;
                     res.send({projectQuadratic, bat_value, amount});
 
-                }});
+                }
+                else{
+                  res.send({projectQuadratic: 0, bat_value, amount});
+              }
+            });
+                
             
         } else {
+            res.send({projectQuadratic, bat_value, amount});
         }
         
       });
@@ -28,4 +37,4 @@ module.exports = async (req, res) => {
   } catch (error) {
     res.status(500).send("Error getting inventory");
   }
-};
+});

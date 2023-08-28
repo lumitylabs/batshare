@@ -2,20 +2,75 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import Divider from "../general/Divider";
+import contractJSON from "../../model/QuadraticFunding.json";
+import { contractAddress } from "../../model/ContractData";
+import { Contract } from '@ethersproject/contracts';
+import { useParams } from "react-router-dom";
+import { Web3Provider } from '@ethersproject/providers';
+import { donate } from "../../model/calls";
+import { SpinAnimation } from "../general/SpinAnimation";
 
 interface DonateModalProps {
   modalIsOpen: any;
   setModalIsOpen: any;
 }
 
+function etherStringToWei(etherString:string) {
+
+  const parts = etherString.split('.');
+
+  let beforeDecimal = parts[0];
+
+  let afterDecimal = parts[1] || '';
+
+  if (afterDecimal.length > 18) {
+    afterDecimal = afterDecimal.slice(0, 18);
+  }
+
+  while (afterDecimal.length < 18) {
+    afterDecimal += '0';
+  }
+  const weiString = beforeDecimal + afterDecimal;
+
+  return weiString;
+}
+
+
+
 const DonateModal: React.FC<DonateModalProps> = (props) => {
-  const [donationValue, setDonationValue] = useState("30.00");
+  const [donationValue, setDonationValue] = useState("1.00");
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const {project_id} = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  
+
+  async function handleDonate() {
+    if (window.ethereum) {
+      const provider = new Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new Contract(contractAddress, contractJSON.abi, signer);
+
+      try {
+        setIsLoading(true);
+        const transaction = await contract.donate(project_id, { value: etherStringToWei(donationValue) });
+        await donate({transactionHash:transaction.hash});
+        props.setModalIsOpen(false);
+        window.location.reload();
+        
+
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      alert('Web3 provider not found');
+    }
+  }
+
 
   return props.modalIsOpen ? (
     <div
-      onClick={() => props.setModalIsOpen(false)}
+      onClick={() => isLoading ? null : props.setModalIsOpen(false)}
       className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
     >
       <motion.div
@@ -26,7 +81,7 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
         className="bg-white w-[28%] h-[50%] rounded-[30px] relative"
       >
         <button
-          onClick={() => props.setModalIsOpen(false)}
+          onClick={() => isLoading ? null : props.setModalIsOpen(false)}
           className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-100 transition duration-300"
         >
           <ImgComponent name={"close_ic"} type={"icons-modal"}></ImgComponent>
@@ -115,14 +170,16 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
 
           <div className="flex w-[70%] flex-col gap-2">
             <motion.button
-              onClick={() => {
-                props.setModalIsOpen(false);
-              }}
-              className="flex py-3 items-center justify-center gap-2 border bg-[#636BC1] rounded-full hover:bg-[#7f87df] hover:border-[#878e9b]"
+              onClick={
+                //props.setModalIsOpen(false);
+                handleDonate
+            }
+              className={`flex py-3 items-center justify-center gap-2 border rounded-full ${isLoading ? "bg-[#d4d4d4]" : "bg-[#636BC1] hover:bg-[#7f87df] hover:border-[#878e9b]"  }`}
             >
               <span className="font-BeVietnamPro font-medium  text-[#fff] text-[16px]">
                 Send
               </span>
+              {isLoading ? <SpinAnimation></SpinAnimation> : <></>}
             </motion.button>
           </div>
         </div>

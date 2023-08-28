@@ -1,7 +1,20 @@
 import { WalletChip } from "../general/WalletChip";
 import SocialButton from "../general/SocialButton";
+import { useMetaMask } from "../../model/useMetaMask";
+import { useEffect, useState } from "react";
 
 export function ProfileHeader() {
+  const { wallet } = useMetaMask();
+  const [userWallet, setUserWallet] = useState(
+    "0x0000000000000000000000000000000000000000"
+  );
+
+  useEffect(() => {
+    if (wallet.accounts.length > 0) {
+      setUserWallet(wallet.accounts[0]);
+    }
+  }, [wallet]);
+
   return (
     <div className="flex flex-col">
       <span className="font-BeVietnamPro text-[15px] font-medium leading-[15px] text-[#828282]">
@@ -13,7 +26,7 @@ export function ProfileHeader() {
 
       <div className="flex mt-2 gap-2">
         <div>
-          <WalletChip></WalletChip>
+          <WalletChip wallet={userWallet}></WalletChip>
         </div>
         <div className="flex space-x-3">
           <SocialButton icon={"email_ic"}></SocialButton>

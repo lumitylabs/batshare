@@ -1,17 +1,27 @@
 import backgroundHome from "../../assets/background_home.webp";
 import ConnectWalletModal from "../../components/home/ConnectWalletModal";
 import NavBar from "../../components/general/navbar/NavBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Divider from "../../components/general/Divider";
 import { FilterButton } from "../../components/projects/FilterButton";
 import { NewProjectButton } from "../../components/projects/NewProjectButton";
 import { SearchButton } from "../../components/projects/SearchButton";
 import { Footer } from "../../components/general/Footer";
 import ProjectCard from "../../components/projects/ProjectCard";
+import { getProjects } from "../../model/calls";
+import { MiniProjectModel } from "../../model/MiniProjectModel";
+import ProjectCardSkeleton from "../../components/projects/ProjectCardSkeleton";
 
 function Projects() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const [projects, setProjects] = useState<MiniProjectModel>({});
+
+  useEffect(() => {
+    getProjects({}).then((res: any) => {
+      setProjects(res);
+    });
+  }, []);
 
   return (
     <>
@@ -65,41 +75,18 @@ function Projects() {
             {/*Card*/}
             <div className="flex justify-center">
               <div className="grid gap-16 grid-cols-2 pt-9">
-                <ProjectCard
-                  category={"Environment"}
-                  title={"Blockchain & CO2"}
-                  description={
-                    "Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability..."
-                  }
-                  img={"nft_card"}
-                ></ProjectCard>
-
-                <ProjectCard
-                  category={"Environment"}
-                  title={"Blockchain & CO2"}
-                  description={
-                    "Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability..."
-                  }
-                  img={"nft_card"}
-                ></ProjectCard>
-
-                <ProjectCard
-                  category={"Environment"}
-                  title={"Blockchain & CO2"}
-                  description={
-                    "Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability..."
-                  }
-                  img={"nft_card"}
-                ></ProjectCard>
-
-                <ProjectCard
-                  category={"Environment"}
-                  title={"Blockchain & CO2"}
-                  description={
-                    "Utilizing blockchain technology to ensure transparent tracking and management of carbon emissions, the 'Blockchain & CO2' project aims to create a verifiable and secure system to foster accountability..."
-                  }
-                  img={"nft_card"}
-                ></ProjectCard>
+                {Object.keys(projects).length === 0
+                  ? 
+                    Array.from({ length: 4 }, (_, index) => (
+                      <ProjectCardSkeleton key={index} />
+                    ))
+                  : Object.keys(projects).map((url) => (
+                      <ProjectCard
+                        project={projects[url]}
+                        url={url}
+                        key={url}
+                      />
+                    ))}
               </div>
             </div>
           </div>
