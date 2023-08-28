@@ -1,8 +1,10 @@
 const { db } = require("../config/firebase");
+const { ethers, Interface } = require('ethers');
+const contractJSON = require('../config/QuadraticFunding.json');
 
-module.exports = (req, res) => {
-  var { wallet, amount: rawAmount, url, nft_id } = req.body;
-  var amount = parseFloat(rawAmount);
+module.exports = async (req, res) => {
+  var { wallet, amount, url } = await extractDonationData(req.body.transactionHash);
+  var nft_id = "";
   var { day, month, year } = getDate();
   var now = new Date();
 
@@ -12,17 +14,43 @@ module.exports = (req, res) => {
   transactionHandler(ref, amount, async (error, committed, snapshot) => {
     if (error) {
       console.log("Transaction failed", error);
-      res.status(500).send("Transaction failed");
+      res.status(500).send({status:"Transaction failed"});
     } else if (committed) {
       var base_amount = snapshot.val() ? snapshot.val().amount - amount : 0;
       await addDonationToProject(year, month, day, url, amount, base_amount);
       await addDonationRecord(year, month, day, url, wallet, amount, now);
+      nft_id = await getProjectNftId(wallet, nft_id, url);
       await handleNFT(wallet, nft_id, url);
-
-      res.status(200).send("Donation added");
+      res.status(200).send({status:"Donation added"});
     }
   });
 };
+
+
+async function extractDonationData(transactionHash) {
+
+  const provider = new ethers.JsonRpcProvider("https://sepolia.infura.io/v3/"+process.env.INFURA)
+  const transaction = await provider.getTransaction(transactionHash);
+  const contractAbi = contractJSON.abi;
+  const contract = new ethers.Contract(transaction.to, contractAbi, provider);
+  const iface = contract.interface;
+  const parsed = iface.parseTransaction({ data: transaction.data });
+  
+  if (parsed.name !== 'donate') {
+      throw new Error('Transaction is not a donation.');
+  }
+  const url = parsed.args[0];  
+  const wallet = transaction.from;
+  const amount = parseFloat(ethers.formatEther(transaction.value));  
+
+  return {
+      wallet,
+      amount,
+      url
+  };
+}
+
+
 
 function getDate() {
   var now = new Date();
@@ -33,6 +61,18 @@ function getDate() {
   };
 }
 
+async function getProjectNftId(url) {
+  var nftPath = `/project/${url}`;
+  var nftRef = db.ref(nftPath);
+  var nft_id = "";
+  await nftRef.once("value").then(async (snapshot) => {
+    if (snapshot.exists()) {
+      nft_id = snapshot.val().nft_id;
+    }
+  });
+  return nft_id;
+
+}
 // Function to handle the transaction
 async function transactionHandler(ref, amount, callback) {
   ref.transaction((currentData) => {

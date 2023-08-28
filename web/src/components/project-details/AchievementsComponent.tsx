@@ -4,7 +4,7 @@ import DonateModal from "./DonateModal";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
-export function AchievementsComponent(props: { dailyRaised: any, nft_image:string}) {
+export function AchievementsComponent(props: { dailyRaised: any, nft_image:string, donations:any}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [raised, setRaised] = useState(-1);
   useEffect(() => {
@@ -35,7 +35,7 @@ export function AchievementsComponent(props: { dailyRaised: any, nft_image:strin
               type={"icon-buttons"}
             ></ImgComponent>
             <span className="font-BeVietnamPro font-bold text-[18px] tracking-[-0.05em]">
-              4K
+              {props.donations}
             </span>
           </div>
         </div>
@@ -110,7 +110,7 @@ export function AchievementsComponent(props: { dailyRaised: any, nft_image:strin
                     <div className="border w-px h-[40px] border-[#FFE662]"></div>
 
                     <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                      0.0
+                      -
                     </span>
                   </div>
                 </div>
