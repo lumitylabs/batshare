@@ -71,6 +71,7 @@ function Home() {
               </span>
             </motion.button>
             <motion.button
+              onClick={() => (window.location.href = "/new-project")}
               whileHover={{ scale: 0.95 }}
               transition={{ ease: "easeInOut", duration: 0.3 }}
               className="h-[60px] w-[250px] bg-gradient-to-l from-[#E96745]/60 to-[#FFFFFF]/20 rounded-[12px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)]  hover:from-[#E96745]/90 hover:to-[#FFFFFF]/70"

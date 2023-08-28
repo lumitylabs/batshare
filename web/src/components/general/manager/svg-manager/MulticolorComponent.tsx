@@ -6,7 +6,7 @@ interface MulticolorComponentProps {
   baseColor: string;
   selectedColor: string;
   isSelected: boolean;
-  classParameters?: string;
+  classParameters: string;
 }
 
 const MulticolorComponent: React.FC<MulticolorComponentProps> = ({

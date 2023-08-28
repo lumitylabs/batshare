@@ -52,6 +52,10 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
       className = " h-[60px] w-[60px] rounded-full";
       break;
 
+    case "profile-avatar":
+      className = " h-[190px] w-[190px] rounded-[12px] shadow-2xl";
+      break;
+
     case "info-cards":
       className =
         "h-[320px] w-[320px] rounded-[40px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)] object-contain";
@@ -59,6 +63,10 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
 
     case "nft-cards":
       className = "w-[200px] rounded-l-[12px] object-cover";
+      break;
+
+    case "nft-achievements":
+      className = "w-[350px] h-[350px] rounded-[12px] object-cover";
       break;
 
     case "bat-icon":
@@ -70,12 +78,11 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
       break;
 
     case "nft-donate":
-      className =
-        "relative z-10 w-[160px] h-[160px] rounded-[12px] object-cover ";
+      className = "w-[160px] h-[160px] rounded-[12px] object-cover ";
       break;
 
     case "img-details":
-      className = "w-[1080px] h-[300px] rounded-[12px] object-cover";
+      className = "w-full h-[300px] rounded-[12px] object-cover";
       break;
   }
   return (

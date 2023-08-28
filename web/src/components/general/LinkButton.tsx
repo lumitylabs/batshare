@@ -1,4 +1,4 @@
-import ImgComponent from "../../components/general/manager/img-manager/ImgComponent";
+import ImgComponent from "./manager/img-manager/ImgComponent";
 
 export function LinkButton() {
   return (

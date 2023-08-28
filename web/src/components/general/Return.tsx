@@ -17,6 +17,12 @@ const Return: React.FC<ReturnProps> = (props) => {
       backLocation = "/";
       break;
     }
+
+    case "new-project": {
+      title = "Back";
+      backLocation = "/";
+      break;
+    }
   }
 
   return (

@@ -37,7 +37,9 @@ export function AchievementsComponent() {
             days remaining
           </span>
         </div>
-        <div className="flex flex-col">
+
+        {/*Parte 1 Imagem*/}
+        <div className="flex">
           <div className="flex flex-row">
             <motion.div
               initial={{
@@ -65,82 +67,87 @@ export function AchievementsComponent() {
                 duration: 6,
                 repeat: Infinity,
               }}
-              className="relative p-[5px] w-[165px]"
+              className=""
             >
-              <div className="absolute inset-0 rounded-[12px] bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl"></div>
-              <ImgComponent name={"nft_donate"} type={"nft-donate"} />
+              <div className="flex justify-center items-center bg-gradient-to-tl  from-[#71BDFF] via-[#f8f6f6] to-[#C98AFF] rounded-[12px] w-[170px] h-[170px]">
+                <ImgComponent
+                  name={"nft_donate"}
+                  type={"nft-donate"}
+                ></ImgComponent>
+              </div>
             </motion.div>
-            <div className="flex flex-col justify-center flex-grow">
-              <div className="flex justify-center gap-3 pl-3">
-                <div className="flex flex-col w-[48%]">
-                  <div className="flex flex-start">
-                    <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
-                      15-Day Raised
-                    </span>
-                  </div>
+          </div>
 
-                  <div className="flex items-center justify-start border-2 bg-[#FCFCFF] border-[#C98AFF] rounded-[8px]">
-                    <div className="flex px-2 items-center justify-center">
-                      <ImgComponent
-                        name={"batlogo"}
-                        type={"icons-button"}
-                      ></ImgComponent>
-                    </div>
-
-                    <div className="border w-px h-[40px] border-[#C98AFF]"></div>
-
-                    <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                      30.00
-                    </span>
-                  </div>
+          {/*Parte 2 values*/}
+          <div className="flex flex-col justify-center flex-grow ml-3">
+            <div className="flex justify-center gap-3">
+              <div className="flex flex-col w-[48%]">
+                <div className="flex flex-start">
+                  <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
+                    15-Day Raised
+                  </span>
                 </div>
 
-                <div className="flex flex-col w-[48%]">
-                  <div className="flex flex-start">
-                    <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
-                      Total
-                    </span>
+                <div className="flex items-center justify-start border-2 bg-[#FCFCFF] border-[#C98AFF] rounded-[8px]">
+                  <div className="flex px-2 items-center justify-center">
+                    <ImgComponent
+                      name={"batlogo"}
+                      type={"icons-button"}
+                    ></ImgComponent>
                   </div>
 
-                  <div className="flex items-center justify-start border-2 bg-[#FFFDDA] border-[#FFE662] rounded-[8px]  ">
-                    <div className="flex px-2 items-center justify-center">
-                      <ImgComponent
-                        name={"batlogo"}
-                        type={"icons-button"}
-                      ></ImgComponent>
-                    </div>
+                  <div className="border w-px h-[40px] border-[#C98AFF]"></div>
 
-                    <div className="border w-px h-[40px] border-[#FFE662]"></div>
-
-                    <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                      30.00
-                    </span>
-                  </div>
+                  <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
+                    30.00
+                  </span>
                 </div>
               </div>
-              <div className="flex flex-col">
-                <div className="flex justify-center mt-[26px] ml-2">
-                  <motion.button
-                    onClick={() => setModalIsOpen(true)}
-                    whileHover={{
-                      scale: 0.95,
-                    }}
-                    transition={{
-                      duration: 0.2,
-                    }}
-                    className="flex  w-[310px] py-[10px] px-4  justify-center rounded-[10px] bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF]  hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg "
-                  >
-                    <span className="font-BalooDa2 font-medium text-[20px] text-white">
-                      Donate
-                    </span>
-                  </motion.button>
+
+              <div className="flex flex-col w-[48%]">
+                <div className="flex flex-start">
+                  <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
+                    Total
+                  </span>
                 </div>
-                <div className="flex mt-1 justify-center">
-                  <p className="font-thin italic">
-                    Donate and unlock this{" "}
-                    <span className="font-bold">NFT</span>
-                  </p>
+
+                <div className="flex items-center justify-start border-2 bg-[#FFFDDA] border-[#FFE662] rounded-[8px]  ">
+                  <div className="flex px-2 items-center justify-center">
+                    <ImgComponent
+                      name={"batlogo"}
+                      type={"icons-button"}
+                    ></ImgComponent>
+                  </div>
+
+                  <div className="border w-px h-[40px] border-[#FFE662]"></div>
+
+                  <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
+                    30.00
+                  </span>
                 </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex justify-center mt-[26px]">
+                <motion.button
+                  onClick={() => setModalIsOpen(true)}
+                  whileHover={{
+                    scale: 0.95,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                  className="flex  w-[310px] py-[10px] px-4  justify-center rounded-[10px] bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF]  hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg "
+                >
+                  <span className="font-BalooDa2 font-medium text-[20px] text-white">
+                    Donate
+                  </span>
+                </motion.button>
+              </div>
+              <div className="flex mt-1 justify-center">
+                <p className="font-thin italic">
+                  Donate and unlock this <span className="font-bold">NFT</span>
+                </p>
               </div>
             </div>
           </div>

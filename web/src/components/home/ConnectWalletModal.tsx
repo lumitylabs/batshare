@@ -11,7 +11,7 @@ interface ConnectWalletModalProps {
 }
 
 const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
-  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask()
+  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
   return props.modalIsOpen ? (
     <div
       onClick={() => props.setModalIsOpen(false)}
@@ -50,7 +50,6 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
           <div className="flex flex-col gap-2">
             <button
               onClick={() => {
-                
                 connectMetaMask();
                 props.setIsConnected(true);
                 props.setModalIsOpen(false);

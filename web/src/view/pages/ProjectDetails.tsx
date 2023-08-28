@@ -25,7 +25,7 @@ function ProjectDetails() {
           setIsConnected={setIsConnected}
         />
       </div>
-      <div className="h-[140px] bg-gradient-to-l from-[#7E49AB] to-[#626CC2]"></div>
+      <div className="h-[140px] bg-gradient-to-l from-[#626CC2] to-[#7E49AB]"></div>
       <div className="flex pl-20 pt-12 pb-7">
         <Return currencyPage="project-details"></Return>
       </div>

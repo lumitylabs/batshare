@@ -2,7 +2,7 @@ import MulticolorComponent from "../../components/general/manager/svg-manager/Mu
 
 export function WalletChip() {
   return (
-    <div className="flex gap-2 py-[2px] px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer">
+    <div className="inline-flex gap-2 py-[2px] px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer">
       <span className="flex items-center font-BalooDa2 font-medium text-[16px] text-[#2F7DCD]">
         0x6e4...AC9a
       </span>

@@ -58,10 +58,10 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isConnectHovered, setIsConnectHovered] = useState(false);
 
   useEffect(() => {
     if (wallet.accounts.length > 0) {
-      
       connectWallet(wallet.accounts[0], setUsername, setIsLoading);
     }
   }, [wallet, props.isConnected]);
@@ -84,11 +84,19 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
     <motion.button
       onClick={() => props.setModalIsOpen(true)}
       className="flex justify-center items-center rounded-[12px] h-[50px] w-[200px] bg-white hover:shadow-lg"
+      onMouseEnter={() => setIsConnectHovered(true)}
+      onMouseLeave={() => setIsConnectHovered(false)}
       whileHover={{ scale: 0.95 }}
       transition={{ duration: 0.2 }}
     >
       <p className="font-BalooDa2 font-medium text-[20px] tracking-[-0.02em]">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#903DA4] to-[#EA6846] hover:from-[#EA6846] hover:to-[#903DA4]">
+        <span
+          className={`bg-clip-text text-transparent ${
+            isConnectHovered
+              ? "bg-gradient-to-r from-[#EA6846] to-[#903DA4]"
+              : "bg-gradient-to-r from-[#903DA4] to-[#EA6846]"
+          }`}
+        >
           Connect Wallet
         </span>
       </p>
@@ -102,12 +110,11 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
       <button className="flex gap-1 rounded-[12px] px-2 h-[50px] w-[200px] bg-white hover:shadow-lg">
         <div className="flex w-full h-full items-center">
           <div className="flex mr-1.5">
-          {isLoading ? (
-                <Skeleton height={40} width={40} borderRadius={100}></Skeleton>
-              ) : (
-                <ImgComponent name={"avatar"} type={"avatar-button"} />
-              )}
-            
+            {isLoading ? (
+              <Skeleton height={40} width={40} borderRadius={100}></Skeleton>
+            ) : (
+              <ImgComponent name={"avatar"} type={"avatar-button"} />
+            )}
           </div>
           <div className="flex flex-col">
             <span className="flex font-BeVietnamPro font-regular text-[12px] leading-[12px] text-[#828282] tracking-[-0.02em]">
@@ -118,7 +125,13 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
               )}
             </span>
             <p className="font-BalooDa2 font-medium text-[18px] leading-[18px] tracking-[-0.02em] ">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#903DA4] to-[#EA6846] hover:from-[#EA6846] hover:to-[#903DA4] line-clamp-1">
+              <span
+                className={`bg-clip-text text-transparent line-clamp-1 ${
+                  isHovered
+                    ? "bg-gradient-to-r from-[#EA6846] to-[#903DA4]"
+                    : "bg-gradient-to-r from-[#903DA4] to-[#EA6846]"
+                }`}
+              >
                 {isLoading ? (
                   <Skeleton height={12} width={90}></Skeleton>
                 ) : username.length > 13 ? (
@@ -142,7 +155,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
             <NavDropDownButton
               title={"Profile"}
               description={"Customize your profile"}
-              onClick={undefined}
+              onClick={() => (window.location.href = "/profile")}
               icon={"ProfileIcon"}
             ></NavDropDownButton>
 

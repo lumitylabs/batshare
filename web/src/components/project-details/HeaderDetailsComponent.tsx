@@ -1,7 +1,7 @@
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
-import { LinkButton } from "./LinkButton";
-import { WalletChip } from "./WalletChip";
-import SocialButton from "./SocialButton";
+import { LinkButton } from "../general/LinkButton";
+import { WalletChip } from "../general/WalletChip";
+import SocialButton from "../general/SocialButton";
 
 interface HeaderDetailsComponentProps {
   status: string;

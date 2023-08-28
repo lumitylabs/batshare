@@ -37,3 +37,11 @@
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+.gradient-border {
+  border-width: 4px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #7d4aac, #5e71c6);
+  border-image-slice: 1;
+  border-radius: 12px;
+}
