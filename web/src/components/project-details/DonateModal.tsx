@@ -63,7 +63,7 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
           );
           return;
         }
-        setIsLoading(true);
+        setIsRedeeming(true);
         
         const signer = provider.getSigner();
         const tokenContract = new Contract(
@@ -72,7 +72,7 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
           signer
         );
         await tokenContract.autoMint();
-        setIsLoading(false);
+        setIsRedeeming(false);
       }
       else{
         alert(
