@@ -2,18 +2,21 @@ import { ChangeEvent, DragEvent, useState } from "react";
 
 interface InputNFTProps {
   onImageSelect?: (image: File) => void;
+  setNftImage: (image: File) => void;
 }
 
-export function InputNFTImage({ onImageSelect }: InputNFTProps) {
+export function InputNFTImage({ onImageSelect, setNftImage}: InputNFTProps) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [showModal, setShowModal] = useState(false);
 
-  const handleImageSelect = (file: File | null) => {
+
+  const handleImageSelect = async (file: File | null) => {
     if (file && file.size <= 300 * 1024) {
       setSelectedImage(file);
       onImageSelect?.(file);
+      setNftImage(file);
+
     } else {
-      setShowModal(true);
+      alert("Image size must be less than 300kb!")
     }
   };
 
@@ -66,7 +69,6 @@ export function InputNFTImage({ onImageSelect }: InputNFTProps) {
           )}
         </div>
       </label>
-      {showModal && "<ModalImage>Error</ModalImageError>"}
     </>
   );
 }

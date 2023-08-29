@@ -2,30 +2,30 @@ import React, { useState, useRef, useEffect } from "react";
 
 interface InputTextAreaProps {
   placeholder: string;
+  name: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+
 }
 
-const InputTextArea: React.FC<InputTextAreaProps> = ({ placeholder }) => {
+const InputTextArea: React.FC<InputTextAreaProps> = ({ placeholder, name, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [inputValue, setInputValue] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(event.target.value);
-  };
+
 
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto"; // Reset the height
       textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Set the height to scrollHeight
     }
-  }, [inputValue]);
+   }, [onChange]);
 
   return (
     <div className="w-full">
       <textarea
+      name={name}
         ref={textAreaRef}
-        value={inputValue}
-        onChange={handleInputChange}
+        onChange={onChange}
         className={`w-full border-b border-gray-300 placeholder-[#AAAAAA] font-BeVietnamPro text-[16px] ${
           isFocused
             ? "font-BeVietnamPro text-black"
@@ -41,6 +41,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({ placeholder }) => {
           overflow: "hidden",
           minHeight: "20px",
         }}
+        
       />
     </div>
   );

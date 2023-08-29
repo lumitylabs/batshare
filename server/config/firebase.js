@@ -13,7 +13,7 @@ admin.initializeApp({
 });
 
 const db = admin.database();
-
+// start bucket on path /nft
 const bucket = getStorage().bucket();
 
 

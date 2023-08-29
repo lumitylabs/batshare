@@ -20,6 +20,9 @@ export function AchievementsComponent(props: {
           props.dailyRaised.bat_value
       );
     }
+    else{
+      setRaised(0);
+    }
   }, [props.dailyRaised]);
 
   return (
@@ -72,10 +75,7 @@ export function AchievementsComponent(props: {
               className=""
             >
               <div className="flex justify-center items-center bg-gradient-to-tl  from-[#71BDFF] via-[#f8f6f6] to-[#C98AFF] rounded-[12px] w-[170px] h-[170px]">
-                <ImgComponent
-                  name={"nft_donate"}
-                  type={"nft-donate"}
-                ></ImgComponent>
+              {props.nft_image === "" ? (<Skeleton height={160} width={160} borderRadius={12} style={{zIndex:10, position:"relative"}}></Skeleton>) : ( <><div className="absolute inset-0 rounded-[12px] bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl"></div><img src={props.nft_image} className="w-[160px] h-[160px] rounded-[12px] object-cover z-10 relative"></img></>)}
               </div>
             </motion.div>
           </div>

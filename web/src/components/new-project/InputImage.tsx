@@ -1,19 +1,23 @@
 import { ChangeEvent, DragEvent, useState } from "react";
+import { upload, uploadFile } from "../../model/calls";
 
 interface InputImageProps {
   onImageSelect?: (image: File) => void;
+  setProjectImage: (image: File) => void;
 }
 
-export function InputProductImage({ onImageSelect }: InputImageProps) {
+export function InputImage({ onImageSelect, setProjectImage }: InputImageProps) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [showModal, setShowModal] = useState(false);
 
-  const handleImageSelect = (file: File | null) => {
+
+  const handleImageSelect = async (file: File | null) => {
     if (file && file.size <= 300 * 1024) {
       setSelectedImage(file);
       onImageSelect?.(file);
+      setProjectImage(file);
+
     } else {
-      setShowModal(true);
+      alert("Image size must be less than 300kb!")
     }
   };
 
@@ -66,7 +70,7 @@ export function InputProductImage({ onImageSelect }: InputImageProps) {
           )}
         </div>
       </label>
-      {showModal && "<ModalImage>Error</ModalImageError>"}
+
     </>
   );
 }
