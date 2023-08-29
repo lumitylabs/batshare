@@ -27,6 +27,8 @@ import nft_donate from "../../../../assets/nft_base.webp";
 import heart_ic from "../../../../assets/heart_ic.svg";
 import arrowdown_ic from "../../../../assets/arrowdown_ic.svg";
 
+import longrightarrow_ic from "../../../../assets/longrightarrow_ic.svg";
+
 const ImagesData: Record<string, string> = {
   batlogo: bat_logo,
   batsharelogo: batshare_logo,
@@ -56,6 +58,7 @@ const ImagesData: Record<string, string> = {
   nft_donate: nft_donate,
   heart_ic: heart_ic,
   arrowdown_ic: arrowdown_ic,
+  longrightarrow_ic: longrightarrow_ic,
 };
 
 export default ImagesData;

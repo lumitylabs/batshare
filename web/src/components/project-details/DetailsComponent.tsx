@@ -29,8 +29,14 @@ const DetailsComponent: React.FC<DetailsComponentProps> = (props) => {
         link={props.link}
       ></HeaderDetailsComponent>
       <div className="w-full mt-6">
-      {props.img === "" ? (<Skeleton height={300} width={1080} borderRadius={12}></Skeleton>) : (<img src={props.img} className="w-[1080px] h-[300px] rounded-[12px] object-cover"></img>)}
-
+        {props.img === "" ? (
+          <Skeleton height={300} width={1080} borderRadius={12}></Skeleton>
+        ) : (
+          <img
+            src={props.img}
+            className="w-[1080px] h-[300px] rounded-[12px] object-cover"
+          ></img>
+        )}
       </div>
 
       <div className="h-full mt-4">

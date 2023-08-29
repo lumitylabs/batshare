@@ -141,7 +141,7 @@ export function AchievementsComponent(props: {
                   transition={{
                     duration: 0.2,
                   }}
-                  className="flex  w-[310px] py-[10px] px-4  justify-center rounded-[10px] bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF]  hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg "
+                  className="flex w-[310px] py-[10px] px-4 items-center  justify-center rounded-[10px] bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF]  hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg "
                 >
                   <span className="font-BalooDa2 font-medium text-[20px] text-white">
                     Donate

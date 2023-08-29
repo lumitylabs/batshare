@@ -77,6 +77,10 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
       className = "w-[20px] h-[30px]";
       break;
 
+    case "long-arrow-right":
+      className = "w-[30px] h-[30px]";
+      break;
+
     case "nft-donate":
       className = "w-[160px] h-[160px] rounded-[12px] object-cover ";
       break;
