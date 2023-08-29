@@ -2,10 +2,13 @@ async function main() {
     const [deployer] = await ethers.getSigners();
   
     console.log("Deploying contracts with the account:", deployer.address);
-  
-    const QuadraticFunding = await ethers.deployContract("QuadraticFunding");
-  
-    console.log("Token address:", await QuadraticFunding.getAddress());
+    const initialSupply = ethers.parseEther("100000000");
+    const BatToken = await ethers.deployContract("BatToken",[initialSupply]);
+    await BatToken.getAddress()
+    console.log("BatToken address:", await BatToken.getAddress());
+    const QuadraticFunding = await ethers.deployContract("QuadraticFunding",[BatToken.getAddress()]);
+
+    console.log("QuadraticFunding address:", await QuadraticFunding.getAddress());
   }
   
   main()

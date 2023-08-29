@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import Divider from "../general/Divider";
 import contractJSON from "../../model/QuadraticFunding.json";
-import { contractAddress } from "../../model/ContractData";
+import tokenContractJSON from "../../model/BatToken.json";
+
+import {
+  contractAddress,
+  tokenContractAddress,
+} from "../../model/ContractData";
 import { Contract } from "@ethersproject/contracts";
 import { useParams } from "react-router-dom";
 import { Web3Provider } from "@ethersproject/providers";
@@ -40,23 +45,56 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const { project_id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("Send");
+
+  useEffect(() => {
+    setMessage("Send");
+  }, [props.modalIsOpen]);
 
   async function handleDonate() {
     if (window.ethereum) {
       const provider = new Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new Contract(contractAddress, contractJSON.abi, signer);
+      const tokenContract = new Contract(
+        tokenContractAddress,
+        tokenContractJSON.abi,
+        signer
+      );
 
       try {
         setIsLoading(true);
-        const transaction = await contract.donate(project_id, {
-          value: etherStringToWei(donationValue),
-        });
+        const approvedAmount = await tokenContract.allowance(
+          await signer.getAddress(),
+          contractAddress
+        );
+        console.log("approvedAmount:", approvedAmount.toString());
+
+        const requiredAmount = etherStringToWei(donationValue);
+
+        if (approvedAmount.lt(requiredAmount)) {
+          setMessage("Setting approval...");
+          const approveTx = await tokenContract.approve(
+            contractAddress,
+            requiredAmount
+          );
+          setMessage("Pending...");
+          await approveTx.wait();
+        }
+        setMessage("Waiting transaction...");
+        const transaction = await contract.donate(project_id, requiredAmount);
+        setMessage("Pending...");
+        await transaction.wait();
+
         await donate({ transactionHash: transaction.hash });
+        setMessage("Finalizing...");
+
         props.setModalIsOpen(false);
         window.location.reload();
       } catch (error) {
         console.error("Error:", error);
+        setMessage("Error :(");
+        setIsLoading(false);
       }
     } else {
       alert("Web3 provider not found");
@@ -176,8 +214,9 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
               }`}
             >
               <span className="font-BeVietnamPro font-medium  text-[#fff] text-[16px]">
-                Send
+                {message}
               </span>
+
               {isLoading ? <SpinAnimation></SpinAnimation> : <></>}
             </motion.button>
 

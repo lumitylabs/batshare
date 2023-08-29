@@ -39,9 +39,10 @@ async function extractDonationData(transactionHash) {
   if (parsed.name !== 'donate') {
       throw new Error('Transaction is not a donation.');
   }
+  console.log(parsed.args)
   const url = parsed.args[0];  
   const wallet = transaction.from;
-  const amount = parseFloat(ethers.formatEther(transaction.value));  
+  const amount = parseInt(parsed.args[1]);  
 
   return {
       wallet,
@@ -141,6 +142,7 @@ async function addDonationToProject(
 ) {
   var projectPath = `/project-raised/${year}/${month}/${day}/${url}`;
   var ref = db.ref(projectPath);
+
   var quadratic_amount = Math.sqrt(amount + base_amount);
   var past_quadratic_amount = Math.sqrt(base_amount);
   var new_amount = quadratic_amount - past_quadratic_amount;

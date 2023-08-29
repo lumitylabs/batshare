@@ -1,5 +1,5 @@
-//export const server = "http://127.0.0.1:3000/api/"
-export const server = "https://batshareapi.lumitylabs.com/api/"
+export const server = "http://127.0.0.1:3000/api/"
+//export const server = "https://batshareapi.lumitylabs.com/api/"
 export const endpoint_get_user = "get-user"
 export const endpoint_get_projects = "get-projects"
 export const endpoint_get_project = "get-project"
