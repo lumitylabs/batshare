@@ -1,5 +1,4 @@
 import { ChangeEvent, DragEvent, useState } from "react";
-import { upload, uploadFile } from "../../model/calls";
 
 interface InputImageProps {
   onImageSelect?: (image: File) => void;
