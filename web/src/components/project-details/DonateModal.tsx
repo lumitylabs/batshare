@@ -5,10 +5,13 @@ import Divider from "../general/Divider";
 import contractJSON from "../../model/QuadraticFunding.json";
 import tokenContractJSON from "../../model/BatToken.json";
 
-import { contractAddress, tokenContractAddress } from "../../model/ContractData";
-import { Contract } from '@ethersproject/contracts';
+import {
+  contractAddress,
+  tokenContractAddress,
+} from "../../model/ContractData";
+import { Contract } from "@ethersproject/contracts";
 import { useParams } from "react-router-dom";
-import { Web3Provider } from '@ethersproject/providers';
+import { Web3Provider } from "@ethersproject/providers";
 import { donate } from "../../model/calls";
 import { SpinAnimation } from "../general/SpinAnimation";
 
@@ -17,87 +20,90 @@ interface DonateModalProps {
   setModalIsOpen: any;
 }
 
-function etherStringToWei(etherString:string) {
-
-  const parts = etherString.split('.');
+function etherStringToWei(etherString: string) {
+  const parts = etherString.split(".");
 
   let beforeDecimal = parts[0];
 
-  let afterDecimal = parts[1] || '';
+  let afterDecimal = parts[1] || "";
 
   if (afterDecimal.length > 18) {
     afterDecimal = afterDecimal.slice(0, 18);
   }
 
   while (afterDecimal.length < 18) {
-    afterDecimal += '0';
+    afterDecimal += "0";
   }
   const weiString = beforeDecimal + afterDecimal;
 
   return weiString;
 }
 
-
-
 const DonateModal: React.FC<DonateModalProps> = (props) => {
   const [donationValue, setDonationValue] = useState("1.00");
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const {project_id} = useParams();
+  const { project_id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [message,setMessage] = useState("Send");
+  const [message, setMessage] = useState("Send");
 
-  useEffect(()=>{
-    setMessage("Send")
-  },[props.modalIsOpen])
-  
+  useEffect(() => {
+    setMessage("Send");
+  }, [props.modalIsOpen]);
 
   async function handleDonate() {
     if (window.ethereum) {
       const provider = new Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new Contract(contractAddress, contractJSON.abi, signer);
-      const tokenContract = new Contract(tokenContractAddress, tokenContractJSON.abi, signer);
-      
+      const tokenContract = new Contract(
+        tokenContractAddress,
+        tokenContractJSON.abi,
+        signer
+      );
+
       try {
         setIsLoading(true);
-        const approvedAmount = await tokenContract.allowance(await signer.getAddress(), contractAddress);
-        console.log('approvedAmount:', approvedAmount.toString());
-  
+        const approvedAmount = await tokenContract.allowance(
+          await signer.getAddress(),
+          contractAddress
+        );
+        console.log("approvedAmount:", approvedAmount.toString());
+
         const requiredAmount = etherStringToWei(donationValue);
-  
+
         if (approvedAmount.lt(requiredAmount)) {
-          setMessage("Setting approval...")
-          const approveTx = await tokenContract.approve(contractAddress, requiredAmount);
+          setMessage("Setting approval...");
+          const approveTx = await tokenContract.approve(
+            contractAddress,
+            requiredAmount
+          );
           setMessage("Pending...");
           await approveTx.wait();
         }
-        setMessage("Waiting transaction...")
+        setMessage("Waiting transaction...");
         const transaction = await contract.donate(project_id, requiredAmount);
-        setMessage("Pending...")
-        await transaction.wait(); 
-        
-        
+        setMessage("Pending...");
+        await transaction.wait();
+
         await donate({ transactionHash: transaction.hash });
         setMessage("Finalizing...");
-  
+
         props.setModalIsOpen(false);
         window.location.reload();
-  
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         setMessage("Error :(");
         setIsLoading(false);
       }
     } else {
-      alert('Web3 provider not found');
+      alert("Web3 provider not found");
     }
   }
 
-
   return props.modalIsOpen ? (
     <div
-      onClick={() => isLoading ? null : props.setModalIsOpen(false)}
+      onClick={() => (isLoading ? null : props.setModalIsOpen(false))}
       className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
     >
       <motion.div
@@ -105,10 +111,10 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ ease: "easeOut", duration: 0.3, delay: 0.3 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-[28%] h-[50%] rounded-[30px] relative"
+        className="bg-white w-[28%] h-[53%] rounded-[30px] relative"
       >
         <button
-          onClick={() => isLoading ? null : props.setModalIsOpen(false)}
+          onClick={() => (isLoading ? null : props.setModalIsOpen(false))}
           className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-100 transition duration-300"
         >
           <ImgComponent name={"close_ic"} type={"icons-modal"}></ImgComponent>
@@ -200,17 +206,30 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
               onClick={
                 //props.setModalIsOpen(false);
                 handleDonate
-            }
-              className={`flex py-3 items-center justify-center gap-2 border rounded-full ${isLoading ? "bg-[#d4d4d4]" : "bg-[#636BC1] hover:bg-[#7f87df] hover:border-[#878e9b]"  }`}
+              }
+              className={`flex py-3 items-center justify-center gap-2 border rounded-full ${
+                isLoading
+                  ? "bg-[#d4d4d4]"
+                  : "bg-[#636BC1] hover:bg-[#7f87df] hover:border-[#878e9b]"
+              }`}
             >
               <span className="font-BeVietnamPro font-medium  text-[#fff] text-[16px]">
-              {message}
+                {message}
               </span>
-              
+
               {isLoading ? <SpinAnimation></SpinAnimation> : <></>}
-              
             </motion.button>
-            <p></p>
+
+            <div className="flex items-center justify-center gap-2 mt-1">
+              <p className="text-center font-BeVietnamPro font-regular text-[#5E5A5A] text-[15px] tracking-tighter">
+                Need BAT?{" "}
+              </p>
+              <button className="flex items-center justify-center">
+                <span className="font-BeVietnamPro text-center items-center justify-center font-regular text-[15px] text-[#2F7DCD]">
+                  Redeem Now
+                </span>
+              </button>
+            </div>
           </div>
         </div>
 
