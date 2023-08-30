@@ -10,7 +10,7 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = (props) => {
   return (
-    <nav className="flex fixed top-[15px] left-50 bg-[#4E607E] bg-opacity-20 p-2 rounded-[12px] backdrop-blur-md select-none">
+    <nav className="flex fixed top-[15px] left-50 bg-[#4E607E] bg-opacity-20 p-2 rounded-[12px] backdrop-blur-md select-none z-40">
       <button
         onClick={() => (window.location.href = "/")}
         className="flex items-center ml-2 gap-1"
