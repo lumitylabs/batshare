@@ -30,7 +30,7 @@ const DetailsComponent: React.FC<DetailsComponentProps> = (props) => {
       ></HeaderDetailsComponent>
       <div className="w-full mt-6">
         {props.img === "" ? (
-          <Skeleton height={300} width={1080} borderRadius={12}></Skeleton>
+          <Skeleton height={300} width={975} borderRadius={12}></Skeleton>
         ) : (
           <img
             src={props.img}

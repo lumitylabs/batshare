@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 
 export function UpdateSection() {
@@ -35,24 +36,38 @@ export function UpdateSection() {
               </div>
               {/*gallery*/}
               <div className="flex justify-center items-center gap-2">
-                <div className="cursor-pointer">
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ ease: "easeInOut", duration: 0.1 }}
+                  className="cursor-pointer"
+                >
                   <ImgComponent
                     name={"imgdetails"}
                     type={"update-gallery"}
                   ></ImgComponent>
-                </div>
-                <div className="cursor-pointer">
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ ease: "easeInOut", duration: 0.1 }}
+                  className="cursor-pointer"
+                >
                   <ImgComponent
                     name={"imgdetails"}
                     type={"update-gallery"}
                   ></ImgComponent>
-                </div>
-                <div className="cursor-pointer">
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ ease: "easeInOut", duration: 0.1 }}
+                  className="cursor-pointer"
+                >
                   <ImgComponent
                     name={"imgdetails"}
                     type={"update-gallery"}
                   ></ImgComponent>
-                </div>
+                </motion.div>
               </div>
             </div>
 
