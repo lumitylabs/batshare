@@ -71,11 +71,11 @@ const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
 
       <div className="flex justify-center p-10">
         <div className="grid grid-cols-2 gap-20 w-full mx-auto place-items-center">
-          {Object.keys(projects).length === 0
+          {projects != null && Object.keys(projects).length === 0
             ? Array.from({ length: 2 }, (_, index) => (
                 <Skeleton height={320} width={640} borderRadius={12} key={index}></Skeleton>
               ))
-            : Object.keys(projects).map((key) => (
+            : projects != null && Object.keys(projects).map((key) => (
                 <MyProjectCard title={projects[key].title}
                 category={projects[key].category} 
                 round={projects[key].round}

@@ -26,7 +26,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
 
       <div className="flex items-center justify-center ml-6 space-x-6">
         <a
-          href="#"
+          href="/"
           className="text-[#FFFFFF] font-BeVietnamPro font-regular tracking-[-0.05em] hover:text-[#B5CAFF] "
         >
           How it Works?
