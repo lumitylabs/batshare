@@ -1,6 +1,6 @@
 const { db } = require("../config/firebase");
 module.exports = async (req, res) => {
-    var wallet = req.body.wallet;
+    var wallet = req.body.wallet.toLowerCase();;
     var url = req.body.url;
     var timestamp = Date.now();
     var comment = req.body.comment;

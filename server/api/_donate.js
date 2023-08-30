@@ -4,6 +4,7 @@ const contractJSON = require('../config/QuadraticFunding.json');
 
 module.exports = async (req, res) => {
   var { wallet, amount, url } = await extractDonationData(req.body.transactionHash);
+  wallet = wallet.toLowerCase()
   var nft_id = "";
   var { day, month, year } = getDate();
   var now = new Date();
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
       var base_amount = snapshot.val() ? snapshot.val().amount - amount : 0;
       await addDonationToProject(year, month, day, url, amount, base_amount);
       await addDonationRecord(year, month, day, url, wallet, amount, now);
-      nft_id = await getProjectNftId(wallet, nft_id, url);
+      nft_id = await getProjectNftId(url);
       await handleNFT(wallet, nft_id, url);
       res.status(200).send({status:"Donation added"});
     }
@@ -63,14 +64,18 @@ function getDate() {
 }
 
 async function getProjectNftId(url) {
-  var nftPath = `/project/${url}`;
+  
+  var nftPath = `/projects/${url}`;
+  console.log(nftPath)
   var nftRef = db.ref(nftPath);
   var nft_id = "";
   await nftRef.once("value").then(async (snapshot) => {
+    console.log(snapshot.val())
     if (snapshot.exists()) {
       nft_id = snapshot.val().nft_id;
     }
   });
+  console.log(nft_id)
   return nft_id;
 
 }
@@ -100,6 +105,7 @@ async function addDonationRecord(year, month, day, url, wallet, amount, now) {
 // Function to handle NFT
 async function handleNFT(wallet, nft_id, url) {
   var nftPath = `/inventory/${wallet}/${nft_id}`;
+  console.log(nft_id)
   var nftRef = db.ref(nftPath);
 
   await nftRef.once("value").then(async (snapshot) => {
