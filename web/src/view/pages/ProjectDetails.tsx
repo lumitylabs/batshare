@@ -8,41 +8,45 @@ import { useParams } from "react-router-dom";
 import { getProject, getProjectRaised, getUser } from "../../model/calls";
 
 function ProjectDetails() {
-  const projectDefault = {title: "Project Title",
-  description: "Project Description",
-  next_steps: "Project Next Steps",
-  category: "Project Category",
-  status: "Project Status",
-  creator: "0x000000000000000000000000000000000000",
-  link:"github.com",
-  nft_image:"",
-  image:"",
-donations:0};
+  const projectDefault = {
+    title: "Project Title",
+    description: "Project Description",
+    next_steps: "Project Next Steps",
+    category: "Project Category",
+    status: "Project Status",
+    creator: "0x000000000000000000000000000000000000",
+    link: "github.com",
+    nft_image: "",
+    image: "",
+    donations: 0,
+  };
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const { project_id } = useParams();
   const [project, setProject] = useState(projectDefault);
-  const [user,setUser]  = useState({avatar:"",username:""});
-  const [dailyRaised, setDailyRaised] = useState({projectQuadratic:0,bat_value:0,amount:0});
+  const [user, setUser] = useState({ avatar: "", username: "" });
+  const [dailyRaised, setDailyRaised] = useState({
+    projectQuadratic: 0,
+    bat_value: 0,
+    amount: 0,
+  });
 
   useEffect(() => {
-    getProject({url:project_id}).then((res: any) => {
+    getProject({ url: project_id }).then((res: any) => {
       setProject(res);
     });
   }, []);
 
   useEffect(() => {
-    if(project.creator != "0x000000000000000000000000000000000000")
-    {
-      getUser({wallet:project.creator.toLowerCase()}).then((res: any) => {
+    if (project.creator != "0x000000000000000000000000000000000000") {
+      getUser({ wallet: project.creator.toLowerCase() }).then((res: any) => {
         setUser(res);
       });
-      getProjectRaised({url:project_id}).then((res: any) => {
+      getProjectRaised({ url: project_id }).then((res: any) => {
         setDailyRaised(res);
       });
     }
-    
-  },[project]);
+  }, [project]);
 
   return (
     <>
@@ -66,21 +70,29 @@ donations:0};
       </div>
 
       <div className="flex justify-center bg-white h-full gap-6 pb-14">
-        <DetailsComponent
-          status={"Active"}
-          username={user.username}
-          avatar={user.avatar}
-          wallet={project.creator}
-          social={""}
-          title={project.title}
-          category={project.category}
-          img={project.image}
-          text={project.description}
-          nextsteps={project.next_steps}
-          link={project.link}
-        ></DetailsComponent>
+        <div className="flex flex-col w-[60%] h-full">
+          <DetailsComponent
+            status={"Active"}
+            username={user.username}
+            avatar={user.avatar}
+            wallet={project.creator}
+            social={""}
+            title={project.title}
+            category={project.category}
+            img={project.image}
+            text={project.description}
+            nextsteps={project.next_steps}
+            link={project.link}
+          ></DetailsComponent>
 
-        <AchievementsComponent dailyRaised={dailyRaised} nft_image={project.nft_image} donations={project.donations}></AchievementsComponent>
+          {/*new section*/}
+        </div>
+
+        <AchievementsComponent
+          dailyRaised={dailyRaised}
+          nft_image={project.nft_image}
+          donations={project.donations}
+        ></AchievementsComponent>
       </div>
     </>
   );

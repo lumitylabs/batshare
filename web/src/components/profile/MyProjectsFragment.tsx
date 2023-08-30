@@ -3,10 +3,7 @@ import Divider from "../general/Divider";
 import MulticolorComponent from "../general/manager/svg-manager/MulticolorComponent";
 import MyProjectCard from "./MyProjectCard";
 
-interface MyProjectsFragmentProps {
-  isOn: boolean;
-  handleToggle: () => void;
-}
+interface MyProjectsFragmentProps {}
 
 const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
   return (

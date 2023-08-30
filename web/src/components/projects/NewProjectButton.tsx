@@ -1,8 +1,11 @@
+import { motion } from "framer-motion";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 
 export function NewProjectButton() {
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 0.95 }}
+      transition={{ ease: "easeInOut", duration: 0.3 }}
       onClick={() => (window.location.href = "/new-project")}
       className="flex justify-center items-center h-[60px] w-[200px] bg-[#fff]/20 rounded-[12px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
     >
@@ -13,6 +16,6 @@ export function NewProjectButton() {
       <div className="flex justify-center items-center mx-3">
         <ImgComponent name={"plus_ic"} type={"icons-button"}></ImgComponent>
       </div>
-    </button>
+    </motion.button>
   );
 }

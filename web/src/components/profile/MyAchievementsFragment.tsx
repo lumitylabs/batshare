@@ -16,7 +16,7 @@ const MyAchievementsFragment: React.FC<MyAchievementsFragmentProps> = (
       <div className="flex items-center justify-between px-16 py-10">
         <div className="flex flex-col">
           <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.04em]">
-            My Achievements
+            Achievements
           </h1>
           <h2 className="font-BeVietnamPro font-regular text-[16px] leading-[14px] text-[#828282] tracking-[-0.04em]">
             Explore your rewards and mint them

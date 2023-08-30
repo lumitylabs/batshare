@@ -17,7 +17,7 @@ interface DetailsComponentProps {
 
 const DetailsComponent: React.FC<DetailsComponentProps> = (props) => {
   return (
-    <div className="flex flex-col border w-[60%] border-gray-300 p-10 rounded-[12px]">
+    <div className="flex flex-col border border-gray-300 p-10 rounded-[12px]">
       <HeaderDetailsComponent
         status={props.status}
         username={props.username}

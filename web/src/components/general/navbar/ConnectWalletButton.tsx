@@ -159,8 +159,8 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
         <div className="absolute top-[100%] mt-2 right-[0] bg-white w-[230px] rounded-[10px] shadow-lg">
           <div className="flex flex-col p-4 w-full gap-4">
             <NavDropDownButton
-              title={"Profile"}
-              description={"Customize your profile"}
+              title={"My Account"}
+              description={"Manage your account"}
               onClick={() => (window.location.href = "/profile")}
               icon={"ProfileIcon"}
             ></NavDropDownButton>

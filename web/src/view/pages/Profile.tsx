@@ -6,6 +6,7 @@ import MulticolorComponent from "../../components/general/manager/svg-manager/Mu
 import { ProfileHeader } from "../../components/profile/ProfileHeader";
 import MyAchievementsFragment from "../../components/profile/MyAchievementsFragment";
 import MyProjectsFragment from "../../components/profile/MyProjectsFragment";
+import EditProfileFragment from "../../components/profile/EditProfileFragment";
 
 function Profile() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -31,9 +32,10 @@ function Profile() {
       break;
 
     case 2:
-      fragmentToRender = (
-        <MyProjectsFragment isOn={isOn} handleToggle={handleToggle} />
-      );
+      fragmentToRender = <MyProjectsFragment />;
+      break;
+    case 3:
+      fragmentToRender = <EditProfileFragment />;
   }
 
   return (
@@ -81,7 +83,7 @@ function Profile() {
                 }`}
               >
                 <span
-                  className={`font-BeVietnamPro font-medium text-[18px] leading-[22px] tracking-[-0.07em] ${
+                  className={`font-BeVietnamPro font-medium text-[18px] leading-[17px] tracking-[-0.07em] ${
                     selectedTab === 1
                       ? "text-transparent bg-clip-text bg-gradient-to-l from-[#7A90FF] to-[#B166FF]"
                       : "text-[#7A90FF]"
@@ -90,7 +92,7 @@ function Profile() {
                   Achievements
                 </span>
                 <span className="font-BeVietnamPro font-regular text-gray-400 text-[14px] tracking-[-0.04em]">
-                  Customize your profile
+                  Explore your rewards
                 </span>
               </div>
             </div>
@@ -116,13 +118,13 @@ function Profile() {
                 }`}
               >
                 <span
-                  className={`font-BeVietnamPro font-medium text-[18px] leading-[22px] tracking-[-0.07em] ${
+                  className={`font-BeVietnamPro font-medium text-[18px] leading-[17px] tracking-[-0.07em] ${
                     selectedTab === 2
                       ? "text-transparent bg-clip-text bg-gradient-to-l from-[#7A90FF] to-[#B166FF]"
                       : "text-[#7A90FF]"
                   } hover:from-[#699CFF] hover:to-[#B166FF]`}
                 >
-                  My Projects
+                  Projects
                 </span>
                 <span className="font-BeVietnamPro font-regular text-gray-400 text-[14px] tracking-[-0.04em]">
                   View your projects
@@ -151,16 +153,16 @@ function Profile() {
                 }`}
               >
                 <span
-                  className={`font-BeVietnamPro font-medium text-[18px] leading-[22px] tracking-[-0.07em] ${
+                  className={`font-BeVietnamPro font-medium text-[18px] leading-[17px] tracking-[-0.07em] ${
                     selectedTab === 3
                       ? "text-transparent bg-clip-text bg-gradient-to-l from-[#7A90FF]  to-[#B166FF]"
                       : "text-[#7A90FF]"
                   } hover:from-[#699CFF]  hover:to-[#B166FF]`}
                 >
-                  Edit Profile
+                  Profile
                 </span>
                 <span className="font-BeVietnamPro font-regular text-gray-400 text-[14px]  tracking-[-0.04em]">
-                  Customize your profile
+                  Edit your profile
                 </span>
               </div>
             </div>
