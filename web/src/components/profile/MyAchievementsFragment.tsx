@@ -5,6 +5,7 @@ import SwitchButton from "./SwitchButton";
 import { getInventory } from "../../model/calls";
 import { useMetaMask } from "../../model/useMetaMask";
 import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 interface MyAchievementsFragmentProps {
   isOn: boolean;

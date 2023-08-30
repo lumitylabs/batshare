@@ -16,12 +16,28 @@ function Projects() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [projects, setProjects] = useState<MiniProjectModel>({});
+  const projectKeys = Object.keys(projects);
 
   useEffect(() => {
     getProjects({}).then((res: any) => {
-      setProjects(res);
+      const projectKeys = Object.keys(res);
+      shuffle(projectKeys);
+
+      const shuffledProjects = projectKeys.reduce((acc:any, key) => {
+        acc[key] = res[key];
+        return acc;
+      }, {});
+
+      setProjects(shuffledProjects);
     });
   }, []);
+
+  function shuffle(array: any) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
 
   return (
     <>
@@ -47,8 +63,8 @@ function Projects() {
             setIsConnected={setIsConnected}
           />
         </div>
-        <div className="flex h-screen justify-center items-center">
-          <div className="flex mt-64 flex-col h-[1000px] w-[1350px] rounded-[70px] bg-gradient-to-t from-[#4F2F5D] to-[#904C5E]">
+        <div className="flex justify-center items-center">
+          <div className="flex mt-32 flex-col w-[1350px] rounded-[70px] bg-gradient-to-t from-[#4F2F5D] to-[#904C5E]">
             <div className="flex pt-14 px-14">
               <h1 className="font-BeVietnamPro font-bold text-white text-[40px] tracking-[-0.05em]">
                 Projects
@@ -73,11 +89,10 @@ function Projects() {
             <Divider classParameters={"mt-4 border-[#78425E]"}></Divider>
 
             {/*Card*/}
-            <div className="flex justify-center">
-              <div className="grid gap-16 grid-cols-2 pt-9">
+            <div className="flex justify-center mb-10">
+              <div className="grid gap-16 grid-cols-2 pt-9 ">
                 {Object.keys(projects).length === 0
-                  ? 
-                    Array.from({ length: 4 }, (_, index) => (
+                  ? Array.from({ length: 4 }, (_, index) => (
                       <ProjectCardSkeleton key={index} />
                     ))
                   : Object.keys(projects).map((url) => (
