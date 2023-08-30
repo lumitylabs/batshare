@@ -6,6 +6,7 @@ import { getUserProjects } from "../../model/calls";
 import { useMetaMask } from "../../model/useMetaMask";
 import Skeleton from "react-loading-skeleton";
 
+
 interface MyProjectsFragmentProps {}
 
 const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
@@ -28,6 +29,9 @@ const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
       });
     }
   }, [userWallet]);
+
+
+  
 
   return (
     <div className="flex flex-col border w-full border-gray-300 rounded-[12px] ">
@@ -83,6 +87,7 @@ const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
                 raised={projects[key].raised}
                 total={projects[key].total}
                 nft_img={projects[key].nft_image}
+                wallet={userWallet}
                   
                 ></MyProjectCard>
               ))}

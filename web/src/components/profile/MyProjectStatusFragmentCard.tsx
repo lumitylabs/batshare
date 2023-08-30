@@ -1,14 +1,17 @@
 import { motion } from "framer-motion";
+import { SpinAnimation } from "../general/SpinAnimation";
 
 interface MyProjectStatusFragmentCardProps {
   status: "active" | "disabled";
   activeDays?: string;
+  onClick: () => void;
+  isWithdrawing?: boolean;
 }
 
 const MyProjectStatusFragmentCard: React.FC<
   MyProjectStatusFragmentCardProps
 > = (props) => {
-  const { status, activeDays } = props;
+  const { status, activeDays, onClick, isWithdrawing } = props;
 
   const statusInfo = {
     active: {
@@ -87,18 +90,19 @@ const MyProjectStatusFragmentCard: React.FC<
         </motion.button>
         {status === "active" ? (
           <motion.button
-            onClick={() => "#"}
+            onClick={onClick}
             whileHover={{
               scale: 0.95,
             }}
             transition={{
               duration: 0.2,
             }}
-            className="flex w-[50%] py-[10px] px-4 items-center justify-center rounded-full bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg"
+            className="flex gap-2 w-[50%] py-[10px] px-4 items-center justify-center rounded-full bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg"
           >
             <span className="font-BalooDa2 font-medium text-[18px] text-white">
               Withdraw
             </span>
+            {isWithdrawing && <SpinAnimation></SpinAnimation>}
           </motion.button>
         ) : (
           <motion.button

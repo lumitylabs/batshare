@@ -1,5 +1,10 @@
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import MyProjectStatusFragmentCard from "./MyProjectStatusFragmentCard";
+import { Web3Provider } from "@ethersproject/providers";
+import { Contract } from "@ethersproject/contracts";
+import { contractAddress } from "../../model/ContractData";
+import contractJSON from "../../model/QuadraticFunding.json";
+import { useState } from "react";
 
 type MyProjectCardProps = {
   title: string;
@@ -9,9 +14,62 @@ type MyProjectCardProps = {
   total: string;
   nft_img: string;
   donations: string;
+  wallet: string;
 };
 
 const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
+
+  async function handleWithdraw() {
+    try {
+      if (window.ethereum) {
+        const provider = new Web3Provider(window.ethereum);
+        const network = await provider.getNetwork();
+        if (network.chainId !== 11155111) {
+          alert("Please switch to the correct testnet, Sepolia.");
+          return;
+        }
+        setIsWithdrawing(true);
+
+        const signer = provider.getSigner();
+        const contract = new Contract(
+          contractAddress,
+          contractJSON.abi,
+          signer
+        );
+        const project_id =
+          props.title
+            .replace(/\s+/g, "-")
+            .replace(/[^a-zA-Z0-9-]/g, "")
+            .toLowerCase() +
+          "-" +
+          props.wallet.substring(0, 5);
+          console.log(project_id)
+          console.log(props.wallet)
+          await contract.callStatic.withdraw(project_id);
+          const back = await contract.withdraw(project_id);
+        console.log(back)
+        setIsWithdrawing(false);
+      } else {
+        alert("Please install a web3 wallet like, Brave Wallet or Metamask.");
+        return;
+      }
+    } catch (error: any) {
+      console.log(error);
+      // Transação falhou; manipular o erro aqui
+      if (
+        error.toString().includes("No funds to withdraw")
+      ) {
+        alert("No funds to withdraw.");
+      } else {
+        alert("An error occurred.");
+        console.error(error);
+      }
+    } finally {
+      // Esconder indicador de carregamento
+    }
+  }
+
   return (
     <div className="relative flex h-[320px] w-[640px] rounded-[15px] bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)]">
       <div className="flex h-full w-full">
@@ -111,6 +169,8 @@ const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
           <MyProjectStatusFragmentCard
             status={"active"}
             activeDays={"10"}
+            onClick={() => handleWithdraw()}
+            isWithdrawing={isWithdrawing}
           ></MyProjectStatusFragmentCard>
         </div>
       </div>

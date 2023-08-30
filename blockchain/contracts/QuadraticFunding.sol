@@ -63,18 +63,27 @@ contract QuadraticFunding {
 
     function donate(string memory projectId, uint256 amount) public {
         require(amount > 0, "Donation amount must be greater than 0");
-        require(projects[projectId].creator != address(0), "Project doesn't exist");
+        require(
+            projects[projectId].creator != address(0),
+            "Project doesn't exist"
+        );
 
         uint256 currentDay = getCurrentDay();
         Project storage project = projects[projectId];
 
-        uint256 previousQuadraticValue = babylonianSqrt(project.dayTotalAmount[currentDay]);
+        uint256 previousQuadraticValue = babylonianSqrt(
+            project.dayTotalAmount[currentDay]
+        );
         uint256 newDonationAmount = project.dayTotalAmount[currentDay] + amount;
         uint256 newQuadraticValue = babylonianSqrt(newDonationAmount);
 
-        uint256 quadraticDifference = newQuadraticValue - previousQuadraticValue;
+        uint256 quadraticDifference = newQuadraticValue -
+            previousQuadraticValue;
 
-        require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
+        require(
+            token.transferFrom(msg.sender, address(this), amount),
+            "Transfer failed"
+        );
 
         project.totalAmount += amount;
         project.quadraticAmount += quadraticDifference;
@@ -88,7 +97,10 @@ contract QuadraticFunding {
     }
 
     function withdraw(string memory projectId) public {
-        require(msg.sender == projects[projectId].creator, "Only the project creator can withdraw");
+        require(
+            msg.sender == projects[projectId].creator,
+            "Only the project creator can withdraw"
+        );
         uint256 startDay = projects[projectId].lastWithdrawDay ==
             type(uint256).max
             ? 0
@@ -102,12 +114,17 @@ contract QuadraticFunding {
         }
 
         require(amountToWithdraw > 0, "No funds to withdraw");
+        require(
+            token.balanceOf(address(this)) >= amountToWithdraw,
+            "Insufficient contract balance"
+        );
 
         projects[projectId].lastWithdrawDay = currentDay - 1;
 
-        payable(msg.sender).transfer(amountToWithdraw);
-
-        require(token.transfer(msg.sender, amountToWithdraw), "Transfer failed");
+        require(
+            token.transfer(msg.sender, amountToWithdraw),
+            "Transfer failed"
+        );
 
         emit Withdrawn(projectId, amountToWithdraw);
     }
