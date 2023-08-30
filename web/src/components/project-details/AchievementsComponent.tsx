@@ -72,23 +72,26 @@ export function AchievementsComponent(props: {
               }}
               className=""
             >
-              <div className="flex justify-center items-center bg-gradient-to-tl  from-[#71BDFF] via-[#f8f6f6] to-[#C98AFF] rounded-[12px] w-[170px] h-[170px]">
-                {props.nft_image === "" ? (
-                  <Skeleton
-                    height={160}
-                    width={160}
-                    borderRadius={12}
-                    style={{ zIndex: 10, position: "relative" }}
-                  ></Skeleton>
-                ) : (
-                  <>
-                    <div className="absolute inset-0 rounded-[12px] bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl"></div>
+              <div className="relative w-[170px] h-[170px]">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl rounded-[12px]"></div>
+                <div className="flex justify-center items-center w-[170px] h-[170px] rounded-[12px]">
+                  {/* Ajuste o tamanho e o posicionamento da imagem */}
+                  {props.nft_image === "" ? (
+                    <Skeleton
+                      baseColor={"#fff"}
+                      height={160}
+                      width={160}
+                      borderRadius={12}
+                      style={{ zIndex: 10, position: "relative" }}
+                    ></Skeleton>
+                  ) : (
                     <img
                       src={props.nft_image}
-                      className="w-[160px] h-[160px] rounded-[12px] object-cover relative"
+                      className="w-[160px] h-[160px] rounded-[12px] object-cover"
+                      style={{ zIndex: 11, position: "relative" }}
                     ></img>
-                  </>
-                )}
+                  )}
+                </div>
               </div>
             </motion.div>
           </div>
