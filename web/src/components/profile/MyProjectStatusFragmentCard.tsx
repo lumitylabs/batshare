@@ -69,7 +69,7 @@ const MyProjectStatusFragmentCard: React.FC<
       <div className="flex justify-around gap-3">
         <motion.button
           onClick={() => "#"}
-          whileHover={status === "disabled" ? { scale: 0.95 } : undefined} // Aplicando animação somente no estado "disabled"
+          whileHover={status === "disabled" ? { scale: 0.95 } : undefined}
           transition={{
             duration: 0.2,
           }}

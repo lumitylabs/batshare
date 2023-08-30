@@ -18,8 +18,8 @@ const HeaderDetailsComponent: React.FC<HeaderDetailsComponentProps> = (
   props
 ) => {
   return (
-    <div className="flex ">
-      <div className="flex flex-col w-[55%]">
+    <div className="flex">
+      <div className="flex flex-col w-[63%]">
         <div className="flex mb-3 justify-center items-center h-[28px] w-[80px] bg-[#C4FFB5] rounded-full select-none">
           <span className="font-BeVietnamPro font-regular text-[15px] text-[#0F170E] tracking-[-0.05em]">
             {props.status}
@@ -40,10 +40,10 @@ const HeaderDetailsComponent: React.FC<HeaderDetailsComponentProps> = (
       </div>
 
       <div className="flex items-center">
-        <div className="border-l h-[100px] border-gray-300" />
+        <div className="border-l h-[60px] border-gray-300" />
       </div>
 
-      <div className="flex flex-col justify-center pl-16">
+      <div className="flex flex-col justify-end pb-2 pl-14">
         <div className="flex gap-2">
           {props.avatar === "" ? (
             <Skeleton height={60} width={60} borderRadius={300}></Skeleton>
@@ -63,7 +63,7 @@ const HeaderDetailsComponent: React.FC<HeaderDetailsComponentProps> = (
           </div>
         </div>
 
-        <div className="flex mt-8 space-x-2">
+        <div className="flex mt-5 space-x-2">
           <WalletChip wallet={props.wallet}></WalletChip>
           <SocialButton icon={"x_ic"}></SocialButton>
           <SocialButton icon={"instagram_ic"}></SocialButton>

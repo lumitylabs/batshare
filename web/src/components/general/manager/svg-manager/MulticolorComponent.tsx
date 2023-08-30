@@ -22,11 +22,7 @@ const MulticolorComponent: React.FC<MulticolorComponentProps> = ({
   }
   const fillColor = isSelected ? selectedColor : baseColor;
 
-  return (
-    <div>
-      <IconComponent fill={fillColor} classParameters={classParameters} />
-    </div>
-  );
+  return <IconComponent fill={fillColor} classParameters={classParameters} />;
 };
 
 export default MulticolorComponent;

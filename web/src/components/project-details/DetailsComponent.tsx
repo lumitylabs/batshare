@@ -34,7 +34,7 @@ const DetailsComponent: React.FC<DetailsComponentProps> = (props) => {
         ) : (
           <img
             src={props.img}
-            className="w-[1080px] h-[300px] rounded-[12px] object-cover"
+            className="w-full h-[300px] rounded-[12px] object-cover"
           ></img>
         )}
       </div>

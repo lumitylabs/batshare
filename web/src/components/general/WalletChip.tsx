@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import MulticolorComponent from "../../components/general/manager/svg-manager/MulticolorComponent";
 
 function truncateWallet(wallet: string, startLength = 6, endLength = 4) {
@@ -25,11 +26,11 @@ function copyToClipboard(text: string) {
 
 export function WalletChip(props: { wallet: string }) {
   return (
-    <div
+    <motion.button
       onClick={() => copyToClipboard(props.wallet)}
-      className="inline-flex gap-2 py-[2px] px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer"
+      className="inline-flex gap-2 py-[2px]  px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer"
     >
-      <span className="flex items-center font-BalooDa2 font-medium text-[16px] text-[#2F7DCD]">
+      <span className="flex font-BalooDa2 font-medium text-[16px] text-[#2F7DCD]">
         {truncateWallet(props.wallet, 6, 4)}
       </span>
       <MulticolorComponent
@@ -39,6 +40,6 @@ export function WalletChip(props: { wallet: string }) {
         isSelected={false}
         classParameters={"w-[20px] h-[20px]"}
       ></MulticolorComponent>
-    </div>
+    </motion.button>
   );
 }

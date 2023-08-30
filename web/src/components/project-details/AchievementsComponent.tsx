@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { formatBalance } from "../../model/utils";
 
-
 export function AchievementsComponent(props: {
   dailyRaised: any;
   nft_image: string;
@@ -19,8 +18,7 @@ export function AchievementsComponent(props: {
         (props.dailyRaised.projectQuadratic / props.dailyRaised.amount) *
           props.dailyRaised.bat_value
       );
-    }
-    else{
+    } else {
       setRaised(0);
     }
   }, [props.dailyRaised]);
@@ -32,7 +30,7 @@ export function AchievementsComponent(props: {
         setModalIsOpen={setModalIsOpen}
       ></DonateModal>
 
-      <div className="flex flex-col border w-[30%] h-[310px] border-gray-300 px-10 py-5 rounded-[12px]">
+      <div className="flex flex-col border w-full h-[310px] border-gray-300 px-10 py-5 rounded-[12px]">
         <div className="flex justify-between">
           <span className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.05em]">
             Achievements
@@ -75,7 +73,22 @@ export function AchievementsComponent(props: {
               className=""
             >
               <div className="flex justify-center items-center bg-gradient-to-tl  from-[#71BDFF] via-[#f8f6f6] to-[#C98AFF] rounded-[12px] w-[170px] h-[170px]">
-              {props.nft_image === "" ? (<Skeleton height={160} width={160} borderRadius={12} style={{zIndex:10, position:"relative"}}></Skeleton>) : ( <><div className="absolute inset-0 rounded-[12px] bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl"></div><img src={props.nft_image} className="w-[160px] h-[160px] rounded-[12px] object-cover z-10 relative"></img></>)}
+                {props.nft_image === "" ? (
+                  <Skeleton
+                    height={160}
+                    width={160}
+                    borderRadius={12}
+                    style={{ zIndex: 10, position: "relative" }}
+                  ></Skeleton>
+                ) : (
+                  <>
+                    <div className="absolute inset-0 rounded-[12px] bg-gradient-to-r from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] shadow-2xl"></div>
+                    <img
+                      src={props.nft_image}
+                      className="w-[160px] h-[160px] rounded-[12px] object-cover relative"
+                    ></img>
+                  </>
+                )}
               </div>
             </motion.div>
           </div>

@@ -106,7 +106,7 @@ const MyProjectCard: React.FC<MyProjectCardProps> = () => {
 
           <MyProjectStatusFragmentCard
             status={"active"}
-            activeDays={"10"}
+            activeDays={"15"}
           ></MyProjectStatusFragmentCard>
         </div>
       </div>

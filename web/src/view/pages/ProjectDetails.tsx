@@ -6,6 +6,10 @@ import DetailsComponent from "../../components/project-details/DetailsComponent"
 import { AchievementsComponent } from "../../components/project-details/AchievementsComponent";
 import { useParams } from "react-router-dom";
 import { getProject, getProjectRaised, getUser } from "../../model/calls";
+import { UpdateSection } from "../../components/project-details/UpdateSection";
+import { CommunityInputText } from "../../components/project-details/CommunityInputText";
+import { CommunityComment } from "../../components/project-details/CommunityComment";
+import { LatestDonor } from "../../components/project-details/LatestDonor";
 
 function ProjectDetails() {
   const projectDefault = {
@@ -85,14 +89,51 @@ function ProjectDetails() {
             link={project.link}
           ></DetailsComponent>
 
-          {/*new section*/}
+          {/*section - Updates*/}
+
+          <div className="flex flex-col mt-10">
+            <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.05em]">
+              Updates
+            </h1>
+            <UpdateSection></UpdateSection>
+          </div>
+
+          {/*section - Community*/}
+
+          <div className="flex flex-col mt-10">
+            <div className="flex flex-col">
+              <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.05em]">
+                Community
+              </h1>
+              <div className="flex mt-5 flex-col border border-gray-300 rounded-[12px]">
+                <CommunityInputText></CommunityInputText>
+                <CommunityComment></CommunityComment>
+                <CommunityComment></CommunityComment>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <AchievementsComponent
-          dailyRaised={dailyRaised}
-          nft_image={project.nft_image}
-          donations={project.donations}
-        ></AchievementsComponent>
+        <div className="flex flex-col">
+          <AchievementsComponent
+            dailyRaised={dailyRaised}
+            nft_image={project.nft_image}
+            donations={project.donations}
+          ></AchievementsComponent>
+
+          {/*section - Latest Donations*/}
+          <div className="flex flex-col border w-full border-gray-300 px-10 mt-10 py-5 rounded-[12px]">
+            <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.05em]">
+              Latest Donations
+            </h1>
+
+            <LatestDonor></LatestDonor>
+
+            <LatestDonor></LatestDonor>
+
+            <LatestDonor></LatestDonor>
+          </div>
+        </div>
       </div>
     </>
   );
