@@ -49,6 +49,22 @@ function NewProject() {
   //};
 
   async function sendForm() {
+    if (window.ethereum) {
+        const provider = new Web3Provider(window.ethereum);
+        const network = await provider.getNetwork();
+        if (network.chainId !== 11155111) {
+          alert(
+            "Please switch to the correct testnet, Sepolia."
+          );
+          return;
+        }
+      }
+      else{
+        alert(
+          "Please install a web3 wallet like, Brave Wallet or Metamask."
+        );
+        return;
+      }
     const requiredFields = [
       "category",
       "wallet",

@@ -45,59 +45,122 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const { project_id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [isRedeeming, setIsRedeeming] = useState(false);
   const [message, setMessage] = useState("Send");
 
   useEffect(() => {
     setMessage("Send");
   }, [props.modalIsOpen]);
 
-  async function handleDonate() {
-    if (window.ethereum) {
-      const provider = new Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new Contract(contractAddress, contractJSON.abi, signer);
-      const tokenContract = new Contract(
-        tokenContractAddress,
-        tokenContractJSON.abi,
-        signer
-      );
-
-      try {
-        setIsLoading(true);
-        const approvedAmount = await tokenContract.allowance(
-          await signer.getAddress(),
-          contractAddress
-        );
-        console.log("approvedAmount:", approvedAmount.toString());
-
-        const requiredAmount = etherStringToWei(donationValue);
-
-        if (approvedAmount.lt(requiredAmount)) {
-          setMessage("Setting approval...");
-          const approveTx = await tokenContract.approve(
-            contractAddress,
-            requiredAmount
+  async function handleRedeem() {
+    try {
+      if (window.ethereum) {
+        const provider = new Web3Provider(window.ethereum);
+        const network = await provider.getNetwork();
+        if (network.chainId !== 11155111) {
+          alert(
+            "Please switch to the correct testnet, Sepolia."
           );
-          setMessage("Pending...");
-          await approveTx.wait();
+          return;
         }
-        setMessage("Waiting transaction...");
-        const transaction = await contract.donate(project_id, requiredAmount);
-        setMessage("Pending...");
-        await transaction.wait();
-
-        await donate({ transactionHash: transaction.hash });
-        setMessage("Finalizing...");
-
-        props.setModalIsOpen(false);
-        window.location.reload();
-      } catch (error) {
-        console.error("Error:", error);
-        setMessage("Error :(");
-        setIsLoading(false);
+        setIsRedeeming(true);
+        
+        const signer = provider.getSigner();
+        const tokenContract = new Contract(
+          tokenContractAddress,
+          tokenContractJSON.abi,
+          signer
+        );
+        await tokenContract.autoMint();
+        setIsRedeeming(false);
       }
-    } else {
-      alert("Web3 provider not found");
+      else{
+        alert(
+          "Please install a web3 wallet like, Brave Wallet or Metamask."
+        );
+        return;
+      }
+    } catch (error: any) {
+      console.log(error);
+      // Transação falhou; manipular o erro aqui
+      if (
+        error.toString().includes("You have already received auto-mint tokens.")
+      ) {
+        alert("You have already minted tokens.");
+      } else {
+        alert("An error occurred.");
+        console.error(error);
+      }
+    } finally {
+      // Esconder indicador de carregamento
+      setIsLoading(false);
+    }
+  }
+
+  async function handleDonate() {
+    if (!isRedeeming && !isLoading) {
+      if (window.ethereum) {
+        const provider = new Web3Provider(window.ethereum);
+        const network = await provider.getNetwork();
+        if (network.chainId !== 11155111) {
+          alert(
+            "Please switch to the correct testnet, Sepolia."
+          );
+          return;
+        }
+        
+        const signer = provider.getSigner();
+        const contract = new Contract(
+          contractAddress,
+          contractJSON.abi,
+          signer
+        );
+        const tokenContract = new Contract(
+          tokenContractAddress,
+          tokenContractJSON.abi,
+          signer
+        );
+
+        try {
+          setIsLoading(true);
+          const approvedAmount = await tokenContract.allowance(
+            await signer.getAddress(),
+            contractAddress
+          );
+          console.log("approvedAmount:", approvedAmount.toString());
+
+          const requiredAmount = etherStringToWei(donationValue);
+
+          if (approvedAmount.lt(requiredAmount)) {
+            setMessage("Setting approval...");
+            const approveTx = await tokenContract.approve(
+              contractAddress,
+              requiredAmount
+            );
+            setMessage("Pending...");
+            await approveTx.wait();
+          }
+          setMessage("Waiting transaction...");
+          const transaction = await contract.donate(project_id, requiredAmount);
+          setMessage("Pending...");
+          await transaction.wait();
+
+          await donate({ transactionHash: transaction.hash });
+          setMessage("Finalizing...");
+
+          props.setModalIsOpen(false);
+          window.location.reload();
+        } catch (error) {
+          console.error("Error:", error);
+          setMessage("Error :(");
+          setIsLoading(false);
+        }
+      } else{
+        alert(
+          "Please install a web3 wallet like, Brave Wallet or Metamask."
+        );
+        return;
+      }
     }
   }
 
@@ -205,13 +268,16 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
             <motion.button
               onClick={
                 //props.setModalIsOpen(false);
+
                 handleDonate
               }
               className={`flex py-3 items-center justify-center gap-2 border rounded-full ${
+                isRedeeming ? "opacity-50" : ""
+              } ${
                 isLoading
                   ? "bg-[#d4d4d4]"
                   : "bg-[#636BC1] hover:bg-[#7f87df] hover:border-[#878e9b]"
-              }`}
+              } `}
             >
               <span className="font-BeVietnamPro font-medium  text-[#fff] text-[16px]">
                 {message}
@@ -225,8 +291,16 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
                 Need BAT?{" "}
               </p>
               <button className="flex items-center justify-center">
-                <span className="font-BeVietnamPro text-center items-center justify-center font-regular text-[15px] text-[#2F7DCD]">
-                  Redeem Now
+                <span
+                  className={`font-BeVietnamPro text-center items-center justify-center font-regular text-[15px] text-[#2F7DCD] ${
+                    isRedeeming ? "opacity-50" : ""
+                  }`}
+                  onClick={() => {
+                    !isRedeeming && handleRedeem();
+                  }}
+                >
+                  {isRedeeming ? "Redeeming..." : "Redeem Now"}
+                  {isRedeeming && <SpinAnimation />}
                 </span>
               </button>
             </div>
