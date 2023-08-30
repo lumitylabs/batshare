@@ -65,7 +65,7 @@ const MyAchievementsFragment: React.FC<MyAchievementsFragmentProps> = (
         {Object.keys(inventory).length === 0
                   ? 
                     Array.from({ length: 3 }, (_, index) => (
-                      <Skeleton height={360} width={360} borderRadius={12}></Skeleton>
+                      <Skeleton height={360} width={360} borderRadius={12} key={index}></Skeleton>
                     ))
                   : Object.keys(inventory).map((key) => (
                     <BorderNFT type={"Mint"} img_nft={inventory[key].image} category={inventory[key].category} title={inventory[key].title} round={inventory[key].round}></BorderNFT>

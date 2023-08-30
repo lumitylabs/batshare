@@ -16,7 +16,7 @@ function Projects() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [projects, setProjects] = useState<MiniProjectModel>({});
-  const projectKeys = Object.keys(projects);
+
 
   useEffect(() => {
     getProjects({}).then((res: any) => {

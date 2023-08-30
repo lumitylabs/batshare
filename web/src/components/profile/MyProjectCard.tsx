@@ -1,4 +1,3 @@
-import { ProjectData } from "../../model/MiniProjectModel";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import MyProjectStatusFragmentCard from "./MyProjectStatusFragmentCard";
 

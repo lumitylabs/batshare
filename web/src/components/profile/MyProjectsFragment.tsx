@@ -73,7 +73,7 @@ const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
         <div className="grid grid-cols-2 gap-20 w-full mx-auto place-items-center">
           {Object.keys(projects).length === 0
             ? Array.from({ length: 2 }, (_, index) => (
-                <Skeleton height={320} width={640} borderRadius={12}></Skeleton>
+                <Skeleton height={320} width={640} borderRadius={12} key={index}></Skeleton>
               ))
             : Object.keys(projects).map((key) => (
                 <MyProjectCard title={projects[key].title}

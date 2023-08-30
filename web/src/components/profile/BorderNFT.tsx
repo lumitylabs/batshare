@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import { useState } from "react";
 
 interface BorderNFTProps {
