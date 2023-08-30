@@ -27,8 +27,8 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
           </div>
 
           <div className="font-BeVietnamPro font-regular text-[16px] text-[#5E5A5A] tracking-[-0.04em] w-[300px] h-[300px]">
-            {props.project.description!.length > 200
-              ? `${props.project.description!.slice(0, 200)}...`
+            {props.project.description!.length > 190
+              ? `${props.project.description!.slice(0, 190)}...`
               : props.project.description}
           </div>
 

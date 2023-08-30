@@ -51,7 +51,7 @@ const EditProfileFragment: React.FC<EditProfileFragmentProps> = () => {
                 placeholder={"Name or nickname"}
                 name={"@user"}
                 onChange={function (
-                  e: React.ChangeEvent<HTMLInputElement>
+                  _: React.ChangeEvent<HTMLInputElement>
                 ): void {
                   throw new Error("Function not implemented.");
                 }}
@@ -64,7 +64,7 @@ const EditProfileFragment: React.FC<EditProfileFragmentProps> = () => {
           <InputLink
             icon={"email_ic"}
             placeholder={"e-mail"}
-            onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
+            onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
               throw new Error("Function not implemented.");
             }}
             name={""}
@@ -73,7 +73,7 @@ const EditProfileFragment: React.FC<EditProfileFragmentProps> = () => {
           <InputLink
             icon={"x_ic"}
             placeholder={"@user"}
-            onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
+            onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
               throw new Error("Function not implemented.");
             }}
             name={""}
@@ -82,7 +82,7 @@ const EditProfileFragment: React.FC<EditProfileFragmentProps> = () => {
           <InputLink
             icon={"instagram_ic"}
             placeholder={"@user"}
-            onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
+            onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
               throw new Error("Function not implemented.");
             }}
             name={""}
@@ -91,7 +91,7 @@ const EditProfileFragment: React.FC<EditProfileFragmentProps> = () => {
           <InputLink
             icon={"discord_ic"}
             placeholder={"@user"}
-            onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
+            onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
               throw new Error("Function not implemented.");
             }}
             name={""}

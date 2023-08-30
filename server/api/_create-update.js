@@ -1,7 +1,7 @@
 const { db } = require("../config/firebase"); // Adjust the path for Firebase initialization
 
 module.exports = async (req, res) => {
-  var creator = req.body.wallet;
+  var creator = req.body.wallet.toLowerCase();
   var url = req.body.url;
   var images = req.body.images;
   var timestamp = Date.now();

@@ -14,7 +14,7 @@ const Return: React.FC<ReturnProps> = (props) => {
   switch (props.currencyPage) {
     case "project-details": {
       title = "Back";
-      backLocation = "/";
+      backLocation = "/projects";
       break;
     }
 

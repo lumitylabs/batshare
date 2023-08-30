@@ -11,7 +11,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #f3c729;
+  background: #0ea4e9;
   border-radius: 50px;
   height: 30px;
   max-height: 30px;
@@ -45,3 +45,4 @@
   border-image-slice: 1;
   border-radius: 12px;
 }
+

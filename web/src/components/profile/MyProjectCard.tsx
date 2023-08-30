@@ -1,34 +1,94 @@
-import { ProjectData } from "../../model/MiniProjectModel";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
 import MyProjectStatusFragmentCard from "./MyProjectStatusFragmentCard";
+import { Web3Provider } from "@ethersproject/providers";
+import { Contract } from "@ethersproject/contracts";
+import { contractAddress } from "../../model/ContractData";
+import contractJSON from "../../model/QuadraticFunding.json";
+import { useState } from "react";
 
 type MyProjectCardProps = {
-  project: ProjectData;
-  url: string;
+  title: string;
+  category: string;
+  round: string;
+  raised: string;
+  total: string;
+  nft_img: string;
+  donations: string;
+  wallet: string;
 };
 
-const MyProjectCard: React.FC<MyProjectCardProps> = () => {
+const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
+
+  async function handleWithdraw() {
+    try {
+      if (window.ethereum) {
+        const provider = new Web3Provider(window.ethereum);
+        const network = await provider.getNetwork();
+        if (network.chainId !== 11155111) {
+          alert("Please switch to the correct testnet, Sepolia.");
+          return;
+        }
+        setIsWithdrawing(true);
+
+        const signer = provider.getSigner();
+        const contract = new Contract(
+          contractAddress,
+          contractJSON.abi,
+          signer
+        );
+        const project_id =
+          props.title
+            .replace(/\s+/g, "-")
+            .replace(/[^a-zA-Z0-9-]/g, "")
+            .toLowerCase() +
+          "-" +
+          props.wallet.substring(0, 5);
+        console.log(project_id);
+        console.log(props.wallet);
+        await contract.callStatic.withdraw(project_id);
+        const back = await contract.withdraw(project_id);
+        console.log(back);
+        setIsWithdrawing(false);
+      } else {
+        alert("Please install a web3 wallet like, Brave Wallet or Metamask.");
+        return;
+      }
+    } catch (error: any) {
+      console.log(error);
+      // Transação falhou; manipular o erro aqui
+      if (error.toString().includes("No funds to withdraw")) {
+        alert("No funds to withdraw.");
+      } else {
+        alert("An error occurred.");
+        console.error(error);
+      }
+    } finally {
+      // Esconder indicador de carregamento
+    }
+  }
+
   return (
     <div className="relative flex h-[320px] w-[640px] rounded-[15px] bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)]">
       <div className="flex h-full w-full">
         <img
-          src={
-            "https://firebasestorage.googleapis.com/v0/b/batshare-a7917.appspot.com/o/nfts%2Fnft1.webp?alt=media&token=f0cc526e-51e4-4bfc-941f-f1f278587ca5"
-          }
+          src={props.nft_img}
           className="w-[200px] rounded-l-[12px] object-cover"
         />
+        <div className="absolute inset-0 bg-black bg-opacity-25 rounded-l-[12px] w-[200px]"></div>
+
         <div className="absolute bottom-0 left-0 p-5 w-[200px]">
           <div className="flex items-center gap-2">
             <p className="flex font-BeVietnamPro text-white/70 font-medium text[13px]">
-              Environment
+              {props.category}
             </p>
             <p className="flex font-BeVietnamPro text-white/70 font-medium text[13px]">
-              #12
+              #{props.round}
             </p>
           </div>
 
           <h2 className="font-BeVietnamPro text-white font-bold text-[17px]">
-            Blockchain & CO2
+            {props.title}
           </h2>
         </div>
 
@@ -44,7 +104,7 @@ const MyProjectCard: React.FC<MyProjectCardProps> = () => {
                 type={"icon-buttons"}
               ></ImgComponent>
               <span className="font-BeVietnamPro font-bold text-[16px] tracking-[-0.05em]">
-                10K
+                {props.donations}
               </span>
             </div>
           </div>
@@ -107,6 +167,8 @@ const MyProjectCard: React.FC<MyProjectCardProps> = () => {
           <MyProjectStatusFragmentCard
             status={"active"}
             activeDays={"15"}
+            onClick={() => handleWithdraw()}
+            isWithdrawing={isWithdrawing}
           ></MyProjectStatusFragmentCard>
         </div>
       </div>

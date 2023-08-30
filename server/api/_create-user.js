@@ -9,7 +9,7 @@ module.exports = (req, res) => {
       "https://firebasestorage.googleapis.com/v0/b/batshare-a7917.appspot.com/o/6.webp?alt=media&token=915a674b-ac0d-4b9a-81b4-cbc8d45586ef",
     ];
     var rank = 0;
-    var wallet = req.body.wallet;
+    var wallet = req.body.wallet.toLowerCase();
     var avatarSort = Math.floor(Math.random() * avatars.length);
     var avatar = avatars[avatarSort];
     var ref = db.ref("/users/" + wallet);
