@@ -1,11 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Divider from "../general/Divider";
 import MulticolorComponent from "../general/manager/svg-manager/MulticolorComponent";
 import MyProjectCard from "./MyProjectCard";
+import { getUserProjects } from "../../model/calls";
+import { useMetaMask } from "../../model/useMetaMask";
+import Skeleton from "react-loading-skeleton";
 
 interface MyProjectsFragmentProps {}
 
 const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
+  const { wallet } = useMetaMask();
+  const [projects, setProjects] = useState<any>({});
+  const [userWallet, setUserWallet] = useState(
+    "0x0000000000000000000000000000000000000000"
+  );
+
+  useEffect(() => {
+    if (wallet.accounts.length > 0) {
+      setUserWallet(wallet.accounts[0]);
+    }
+  }, [wallet]);
+
+  useEffect(() => {
+    if (userWallet != "0x0000000000000000000000000000000000000000") {
+      getUserProjects({ wallet: userWallet }).then((data: any) => {
+        setProjects(data);
+      });
+    }
+  }, [userWallet]);
+
   return (
     <div className="flex flex-col border w-full border-gray-300 rounded-[12px] ">
       <div className="flex items-center justify-between px-16 py-10">
@@ -48,44 +71,21 @@ const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
 
       <div className="flex justify-center p-10">
         <div className="grid grid-cols-2 gap-20 w-full mx-auto place-items-center">
-          <MyProjectCard
-            project={{
-              category: "TESTE",
-              creator: "teste",
-              description: "teste",
-              nft_id: "nft_donate",
-              nft_image: "nft_donate",
-              status: "teste",
-              title: "teste",
-            }}
-            url={""}
-          ></MyProjectCard>
-
-          <MyProjectCard
-            project={{
-              category: "TESTE",
-              creator: "teste",
-              description: "teste",
-              nft_id: "nft_donate",
-              nft_image: "nft_donate",
-              status: "teste",
-              title: "teste",
-            }}
-            url={""}
-          ></MyProjectCard>
-
-          <MyProjectCard
-            project={{
-              category: "TESTE",
-              creator: "teste",
-              description: "teste",
-              nft_id: "nft_donate",
-              nft_image: "nft_donate",
-              status: "teste",
-              title: "teste",
-            }}
-            url={""}
-          ></MyProjectCard>
+          {Object.keys(projects).length === 0
+            ? Array.from({ length: 2 }, (_, index) => (
+                <Skeleton height={320} width={640} borderRadius={12}></Skeleton>
+              ))
+            : Object.keys(projects).map((key) => (
+                <MyProjectCard title={projects[key].title}
+                category={projects[key].category} 
+                round={projects[key].round}
+                donations={projects[key].donations}
+                raised={projects[key].raised}
+                total={projects[key].total}
+                nft_img={projects[key].nft_image}
+                  
+                ></MyProjectCard>
+              ))}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import ImgComponent from "../manager/img-manager/ImgComponent";
 import NavDropDownButton from "./NavDropDownButton";
 import { useMetaMask } from "../../../model/useMetaMask";
@@ -58,6 +58,13 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
   const [username, setUsername] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isConnectHovered, setIsConnectHovered] = useState(false);
+  const [startLoading, setStartLoading] = useState(false);
+
+  const fade = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
 
   useEffect(() => {
     if (wallet.accounts.length > 0) {
@@ -67,8 +74,11 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
 
   useEffect(() => {
     const isLogged: any = localStorage.getItem("batshare_logged");
+    setStartLoading(true);
+    
     if (isLogged !== null) {
       setIsLoading(true);
+      
     }
   }, []);
 
@@ -103,7 +113,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
               : "bg-gradient-to-r from-[#903DA4] to-[#EA6846]"
           }`}
         >
-          Connect Wallet
+          {startLoading ? "Connect Wallet" : ""}
         </span>
       </p>
     </motion.button>
@@ -116,21 +126,67 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
       <button className="flex gap-1 rounded-[12px] px-2 h-[50px] w-[200px] bg-white hover:shadow-lg">
         <div className="flex w-full h-full items-center">
           <div className="flex mr-1.5">
-            {isLoading ? (
-              <Skeleton height={40} width={40} borderRadius={100}></Skeleton>
-            ) : (
-              <ImgComponent name={"avatar"} type={"avatar-button"} />
-            )}
+            <AnimatePresence mode="wait">
+              {isLoading ? (
+                <motion.div
+                  key="loader"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={fade}
+                  transition={{ duration: 0.25 }}
+                >
+                  <Skeleton
+                    height={40}
+                    width={40}
+                    borderRadius={100}
+                  ></Skeleton>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="avatar"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={fade}
+                  
+                >
+                  <ImgComponent name={"avatar"} type={"avatar-button"} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
+
           <div className="flex flex-col">
             <span className="flex font-BeVietnamPro font-regular text-[12px] leading-[12px] text-[#828282] tracking-[-0.02em]">
-              {isLoading ? (
-                <Skeleton height={12} width={50}></Skeleton>
-              ) : (
-                "Collaborator"
-              )}
+              <AnimatePresence mode="wait">
+                {isLoading ? (
+                  <motion.div
+                    key="loader"
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{ duration: 1 }}
+                    variants={fade}
+                  >
+                    <Skeleton height={12} width={50}></Skeleton>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="loader"
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={fade}
+                    transition={{ duration: 1 }}
+                  >
+                    Collaborator
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </span>
             <p className="font-BalooDa2 font-medium text-[18px] leading-[18px] tracking-[-0.02em] ">
+            <AnimatePresence mode="wait">
               <span
                 className={`bg-clip-text text-transparent line-clamp-1 ${
                   isHovered
@@ -138,14 +194,44 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
                     : "bg-gradient-to-r from-[#903DA4] to-[#EA6846]"
                 }`}
               >
-                {isLoading ? (
-                  <Skeleton height={12} width={90}></Skeleton>
-                ) : username!.length > 13 ? (
-                  `${username!.slice(0, 13)}...`
-                ) : (
-                  username
-                )}
+                
+                  {isLoading ? (
+                    <motion.div
+                      key="loader"
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      variants={fade}
+                      transition={{ duration: 0.1 }}
+                    >
+                      {" "}
+                    </motion.div>
+                  ) : username!.length > 13 ? (
+                    <motion.div
+                      key="loader"
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      variants={fade}
+                      transition={{ duration: 0.5 }}
+                    >
+                      `${username!.slice(0, 13)}...`
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="loader"
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      variants={fade}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {username}
+                    </motion.div>
+                  )}
+                
               </span>
+              </AnimatePresence>
             </p>
           </div>
         </div>
