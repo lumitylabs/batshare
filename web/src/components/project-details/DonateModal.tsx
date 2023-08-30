@@ -58,13 +58,11 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
         const provider = new Web3Provider(window.ethereum);
         const network = await provider.getNetwork();
         if (network.chainId !== 11155111) {
-          alert(
-            "Please switch to the correct testnet, Sepolia."
-          );
+          alert("Please switch to the correct testnet, Sepolia.");
           return;
         }
         setIsRedeeming(true);
-        
+
         const signer = provider.getSigner();
         const tokenContract = new Contract(
           tokenContractAddress,
@@ -73,11 +71,8 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
         );
         await tokenContract.autoMint();
         setIsRedeeming(false);
-      }
-      else{
-        alert(
-          "Please install a web3 wallet like, Brave Wallet or Metamask."
-        );
+      } else {
+        alert("Please install a web3 wallet like, Brave Wallet or Metamask.");
         return;
       }
     } catch (error: any) {
@@ -103,12 +98,10 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
         const provider = new Web3Provider(window.ethereum);
         const network = await provider.getNetwork();
         if (network.chainId !== 11155111) {
-          alert(
-            "Please switch to the correct testnet, Sepolia."
-          );
+          alert("Please switch to the correct testnet, Sepolia.");
           return;
         }
-        
+
         const signer = provider.getSigner();
         const contract = new Contract(
           contractAddress,
@@ -155,10 +148,8 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
           setMessage("Error :(");
           setIsLoading(false);
         }
-      } else{
-        alert(
-          "Please install a web3 wallet like, Brave Wallet or Metamask."
-        );
+      } else {
+        alert("Please install a web3 wallet like, Brave Wallet or Metamask.");
         return;
       }
     }
@@ -167,7 +158,7 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
   return props.modalIsOpen ? (
     <div
       onClick={() => (isLoading ? null : props.setModalIsOpen(false))}
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20"
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}

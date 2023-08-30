@@ -25,7 +25,7 @@ export function CommunityInputText() {
                   "Share your comment or question about the project..."
                 }
                 name={""}
-                onChange={function (e: ChangeEvent<HTMLTextAreaElement>): void {
+                onChange={function (_: ChangeEvent<HTMLTextAreaElement>): void {
                   throw new Error("Function not implemented.");
                 }}
               ></InputTextArea>
@@ -33,9 +33,11 @@ export function CommunityInputText() {
                 <motion.button
                   whileHover={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center shadow-md justify-center w-[100px] border rounded-full py-2 px-6 border-gray-300 hover:bg-blue-50 hover:shadow-sm"
+                  className="flex items-center  justify-center w-[100px] border rounded-full py-2 px-6 border-gray-300 hover:bg-blue-50 "
                 >
-                  Comment
+                  <span className="font-BeVietnamPro text-[15px] font-regular">
+                    Comment
+                  </span>
                 </motion.button>
               </div>
             </div>

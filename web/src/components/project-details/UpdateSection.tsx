@@ -1,5 +1,4 @@
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
-import { BorderNFT } from "../profile/BorderNFT";
 
 export function UpdateSection() {
   return (

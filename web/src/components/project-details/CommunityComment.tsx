@@ -1,6 +1,4 @@
-import { ChangeEvent } from "react";
 import ImgComponent from "../general/manager/img-manager/ImgComponent";
-import InputTextArea from "../new-project/InputTextArea";
 import { motion } from "framer-motion";
 import Divider from "../general/Divider";
 
@@ -41,7 +39,9 @@ export function CommunityComment() {
                     transition={{ duration: 0.2 }}
                     className="flex items-center justify-center w-[100px] border rounded-full py-2 px-6 border-gray-300 hover:bg-gray-50"
                   >
-                    <span className="text-[#E15050]">Delete</span>
+                    <span className="font-BeVietnamPro text-[15px] font-regular text-[#E15050]">
+                      Delete
+                    </span>
                   </motion.button>
                 </div>
               </div>
