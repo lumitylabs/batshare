@@ -41,7 +41,7 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
       break;
 
     case "icons-footer":
-      className = " h-[24px] w-[24px] cursor-pointer";
+      className = " h-[24px] w-[24px] cursor-pointer select-none";
       break;
 
     case "avatar-button":
@@ -66,7 +66,7 @@ const ImgComponent: React.FC<ImgComponentProps> = (props) => {
 
     case "info-cards":
       className =
-        "h-[320px] w-[320px] rounded-[40px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)] object-contain";
+        "h-[320px] w-[320px] rounded-[40px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)] object-contain select-none";
       break;
 
     case "nft-cards":

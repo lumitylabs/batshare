@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { ProjectData } from "../../model/MiniProjectModel";
 
 import MulticolorComponent from "../general/manager/svg-manager/MulticolorComponent";
@@ -34,7 +35,8 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
 
           <div className="flex justify-end mt-10">
             <div className="flex">
-              <button
+              <motion.button
+                whileTap={{ scale: 0.9 }}
                 onClick={() =>
                   (window.location.href = "/project-details/" + props.url)
                 }
@@ -53,7 +55,7 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
                     classParameters="w-[20px] h-[20px]"
                   />
                 </div>
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>

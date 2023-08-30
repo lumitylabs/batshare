@@ -33,8 +33,9 @@ export function CommunityComment() {
                   project aims to create a verifiable and secure system to
                   foster accountability and sustainability.
                 </p>
-                <div className="flex justify-end">
+                <div className="flex justify-end select-none">
                   <motion.button
+                    whileTap={{ scale: 0.9 }}
                     whileHover={{ scale: 0.95 }}
                     transition={{ duration: 0.2 }}
                     className="flex items-center justify-center w-[100px] border rounded-full py-2 px-6 border-gray-300 hover:bg-gray-50"

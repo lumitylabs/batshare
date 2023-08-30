@@ -48,7 +48,8 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <button
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => {
                 connectMetaMask();
                 props.setIsConnected(true);
@@ -65,9 +66,10 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
               <span className="font-BeVietnamPro font-medium  text-[#000000] text-[16px]">
                 Brave Wallet
               </span>
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => {
                 connectMetaMask();
                 props.setIsConnected(true);
@@ -83,7 +85,7 @@ const ConnectWalletModal: React.FC<ConnectWalletModalProps> = (props) => {
               <span className="font-BeVietnamPro font-medium  text-[#000000] text-[16px]">
                 MetaMask
               </span>
-            </button>
+            </motion.button>
           </div>
         </div>
 

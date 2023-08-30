@@ -25,10 +25,15 @@ function copyToClipboard(text: string) {
 }
 
 export function WalletChip(props: { wallet: string }) {
+  const handleCopyClick = () => {
+    copyToClipboard(props.wallet);
+  };
+
   return (
     <motion.button
-      onClick={() => copyToClipboard(props.wallet)}
-      className="inline-flex gap-2 py-[2px]  px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer"
+      onClick={handleCopyClick}
+      className="inline-flex gap-2 py-[2px] px-3 border border-[#DFDFDF] rounded-full hover:bg-blue-50 cursor-pointer"
+      whileTap={{ scale: 0.95 }}
     >
       <span className="flex font-BalooDa2 font-medium text-[16px] text-[#2F7DCD]">
         {truncateWallet(props.wallet, 6, 4)}

@@ -59,7 +59,7 @@ function Profile() {
         <ImgComponent name={"avatar"} type={"profile-avatar"}></ImgComponent>
       </div>
 
-      <div className="absolute top-1/1 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute top-1/1 left-1/2 transform -translate-x-1/2 -translate-y-1/2 select-none">
         <div className="flex bg-white h-[72px] pt-[6px] w-[780px] rounded-[12px] shadow-2xl">
           <div className="flex items-center w-full justify-around ">
             <div

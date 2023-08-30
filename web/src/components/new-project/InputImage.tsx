@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { ChangeEvent, DragEvent, useState } from "react";
 
 interface InputImageProps {
@@ -5,18 +6,19 @@ interface InputImageProps {
   setProjectImage: (image: File) => void;
 }
 
-export function InputImage({ onImageSelect, setProjectImage }: InputImageProps) {
+export function InputImage({
+  onImageSelect,
+  setProjectImage,
+}: InputImageProps) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
 
   const handleImageSelect = async (file: File | null) => {
     if (file && file.size <= 300 * 1024) {
       setSelectedImage(file);
       onImageSelect?.(file);
       setProjectImage(file);
-
     } else {
-      alert("Image size must be less than 300kb!")
+      alert("Image size must be less than 300kb!");
     }
   };
 
@@ -60,16 +62,18 @@ export function InputImage({ onImageSelect, setProjectImage }: InputImageProps) 
             </div>
           ) : (
             <>
-              <div className="inline-flex rounded-full p-1 px-3 border boder-gray-200  hover:bg-gray-50">
+              <motion.div
+                whileTap={{ scale: 0.9 }}
+                className="inline-flex rounded-full p-1 px-3 border boder-gray-200  hover:bg-gray-50"
+              >
                 <span className="font-BeVietnamPro font-regular text-[14px] tracking-[-0.05em]">
                   Add Image
                 </span>
-              </div>
+              </motion.div>
             </>
           )}
         </div>
       </label>
-
     </>
   );
 }

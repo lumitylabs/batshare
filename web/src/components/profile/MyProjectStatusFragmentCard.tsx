@@ -90,6 +90,7 @@ const MyProjectStatusFragmentCard: React.FC<
         </motion.button>
         {status === "active" ? (
           <motion.button
+            whileTap={{ scale: 0.9 }}
             onClick={onClick}
             whileHover={{
               scale: 0.95,

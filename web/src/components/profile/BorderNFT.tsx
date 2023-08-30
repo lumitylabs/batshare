@@ -9,7 +9,13 @@ interface BorderNFTProps {
   round: string;
 }
 
-export function BorderNFT({ type, img_nft, category, title, round}: BorderNFTProps) {
+export function BorderNFT({
+  type,
+  img_nft,
+  category,
+  title,
+  round,
+}: BorderNFTProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -32,18 +38,16 @@ export function BorderNFT({ type, img_nft, category, title, round}: BorderNFTPro
         className={`absolute inset-0 bg-gradient-to-tl ${gradientColors}`}
       ></div>
       <div className="absolute inset-0 flex items-center justify-center">
-        <img src={img_nft} className="w-[350px] h-[350px] rounded-[12px] object-cover" />
+        <img
+          src={img_nft}
+          className="w-[350px] h-[350px] rounded-[12px] object-cover"
+        />
         <div className="absolute bottom-0 left-0 right-0 h-1/5 bg-black opacity-40 rounded-b-[12px] m-1"></div>
       </div>
 
-      
-      
       <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-        
         <div className="flex flex-col justify-center pb-[2px]">
-          
           <div className="flex gap-1">
-            
             <span className="font-BeVietnamPro font-regular text-[14px] text-[#F0F0F0]">
               {category}
             </span>
@@ -62,6 +66,7 @@ export function BorderNFT({ type, img_nft, category, title, round}: BorderNFTPro
       {showMintButton && (
         <div className="absolute bottom-1 right-0 p-4">
           <motion.button
+            whileTap={{ scale: 0.9 }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             whileHover={{ scale: 0.95 }}
@@ -69,7 +74,9 @@ export function BorderNFT({ type, img_nft, category, title, round}: BorderNFTPro
             className="flex items-center justify-center bg-white px-6 py-2 rounded-full"
           >
             <span
-            onClick={() => {alert("This functionality is currently not available.")}}
+              onClick={() => {
+                alert("This functionality is currently not available.");
+              }}
               className={`font-BalooDa2 font-semibold text-[18px] leading-[18px] tracking-[-0.03em] bg-clip-text text-transparent ${
                 isHovered
                   ? "bg-gradient-to-r to-[#7E49AB] from-[#626CC2]"

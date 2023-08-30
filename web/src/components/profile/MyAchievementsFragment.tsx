@@ -5,7 +5,7 @@ import SwitchButton from "./SwitchButton";
 import { getInventory } from "../../model/calls";
 import { useMetaMask } from "../../model/useMetaMask";
 import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css'
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface MyAchievementsFragmentProps {
   isOn: boolean;
@@ -27,17 +27,13 @@ const MyAchievementsFragment: React.FC<MyAchievementsFragmentProps> = (
     }
   }, [wallet]);
 
-
-
   useEffect(() => {
-    if(userWallet != "0x0000000000000000000000000000000000000000"){
-      getInventory({wallet:userWallet}).then((data:any) => {
+    if (userWallet != "0x0000000000000000000000000000000000000000") {
+      getInventory({ wallet: userWallet }).then((data: any) => {
         setInventory(data);
       });
     }
-    
-  }
-  , [userWallet]);
+  }, [userWallet]);
 
   return (
     <div className="flex flex-col border w-full border-gray-300 rounded-[12px] ">
@@ -61,17 +57,26 @@ const MyAchievementsFragment: React.FC<MyAchievementsFragmentProps> = (
       <Divider classParameters={"border-gray-200"}></Divider>
 
       <div className="flex justify-center p-16">
-        <div className="grid grid-cols-3 gap-10 w-full mx-auto place-items-center">
-        {inventory != null && Object.keys(inventory).length === 0
-                  ? 
-                    Array.from({ length: 3 }, (_, index) => (
-                      <Skeleton height={360} width={360} borderRadius={12} key={index}></Skeleton>
-                    ))
-                  : inventory != null && Object.keys(inventory).map((key) => (
-                    <BorderNFT type={"Mint"} img_nft={inventory[key].image} category={inventory[key].category} title={inventory[key].title} round={inventory[key].round}></BorderNFT>
-                    ))}
-          
-          
+        <div className="grid grid-cols-3 w-full mx-auto place-items-center">
+          {inventory != null && Object.keys(inventory).length === 0
+            ? Array.from({ length: 3 }, (_, index) => (
+                <Skeleton
+                  height={360}
+                  width={360}
+                  borderRadius={12}
+                  key={index}
+                ></Skeleton>
+              ))
+            : inventory != null &&
+              Object.keys(inventory).map((key) => (
+                <BorderNFT
+                  type={"Mint"}
+                  img_nft={inventory[key].image}
+                  category={inventory[key].category}
+                  title={inventory[key].title}
+                  round={inventory[key].round}
+                ></BorderNFT>
+              ))}
         </div>
       </div>
     </div>

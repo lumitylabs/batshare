@@ -60,7 +60,7 @@ function ProjectDetails() {
         isConnected={isConnected}
         setIsConnected={setIsConnected}
       ></ConnectWalletModal>
-      <div className="flex justify-center select-none sticky top-0 z-20">
+      <div className="flex justify-center select-none">
         <NavBar
           setModalIsOpen={setModalIsOpen}
           modalIsOpen={modalIsOpen}

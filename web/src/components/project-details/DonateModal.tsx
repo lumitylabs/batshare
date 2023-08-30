@@ -219,32 +219,40 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
                   Donation Value
                 </span>
               </div>
-              <div className="flex items-center justify-start border-2 bg-[#FCFCFF] hover:border-[#C98AFF] focus-within:border-[#C98AFF] rounded-[8px] cursor-pointer">
+              <div
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="flex items-center justify-start border-2 bg-[#FCFCFF] hover:border-[#C98AFF] focus-within:border-[#C98AFF] rounded-[8px] cursor-pointer"
+              >
                 <div className="flex px-2 items-center justify-center">
                   <ImgComponent
                     name={"batlogo"}
                     type={"bat-icon"}
                   ></ImgComponent>
                 </div>
-
-                <div
-                  className={`border w-px h-[40px] ${
-                    isFocused ? "border-[#C98AFF]" : "border-[#DFDFDF]"
-                  } ${
-                    isHovered ? "border-[#C98AFF]" : "border-[#DFDFDF]"
-                  } hover:border-[#C98AFF]`}
-                ></div>
-
+                <div className="flex items-center justify-center border w-[1px] h-[40px]">
+                  <div
+                    className={`border w-[1px] h-[40px] ${
+                      isFocused || isHovered
+                        ? "border-[#C98AFF]"
+                        : "border-[#DFDFDF]"
+                    } hover:border-[#C98AFF]`}
+                  ></div>
+                </div>
                 <input
-                  onFocus={() => setIsFocused(true)} // Definir foco quando o input está focado
-                  onBlur={() => setIsFocused(false)} // Remover foco quando o input perde o foco
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   placeholder="0.00"
                   type="number"
                   value={donationValue}
                   onChange={(e) => setDonationValue(e.target.value)}
-                  className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em] bg-transparent border-none outline-none w-full max-w-[80%]" // Adicione max-w-[80%] aqui
+                  className={`pl-1 flex h-full w-full font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em] bg-transparent border-none outline-none max-w-[80%] ${
+                    isFocused ? "border-[#C98AFF]" : "border-[#DFDFDF]"
+                  }`}
                 />
               </div>
               <div className="flex justify-center">
@@ -257,6 +265,7 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
 
           <div className="flex w-[70%] flex-col gap-2">
             <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={
                 //props.setModalIsOpen(false);
 
