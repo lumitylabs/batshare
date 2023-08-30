@@ -60,7 +60,7 @@ function ProjectDetails() {
         isConnected={isConnected}
         setIsConnected={setIsConnected}
       ></ConnectWalletModal>
-      <div className="flex justify-center select-none">
+      <div className="flex justify-center select-none sticky top-0 z-20">
         <NavBar
           setModalIsOpen={setModalIsOpen}
           modalIsOpen={modalIsOpen}
@@ -68,13 +68,17 @@ function ProjectDetails() {
           setIsConnected={setIsConnected}
         />
       </div>
+      {/*section - top gradient*/}
+      {/* <div className="sticky top-0 z-10"> */}
       <div className="h-[140px] bg-gradient-to-l from-[#626CC2] to-[#7E49AB]"></div>
-      <div className="flex pl-20 pt-12 pb-7">
+      {/* </div> */}
+
+      <div className="flex pl-[130px] pt-10">
         <Return currencyPage="project-details"></Return>
       </div>
 
-      <div className="flex justify-center bg-white h-full gap-6 pb-14">
-        <div className="flex flex-col w-[60%] h-full">
+      <div className="flex justify-center bg-white h-full gap-6 pl-[130px] pb-14">
+        <div className="flex flex-col w-[60%] mt-6 h-full">
           <DetailsComponent
             status={"Active"}
             username={user.username}
@@ -114,24 +118,24 @@ function ProjectDetails() {
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <AchievementsComponent
-            dailyRaised={dailyRaised}
-            nft_image={project.nft_image}
-            donations={project.donations}
-          ></AchievementsComponent>
+        {/*section - Achievements*/}
+        <div className="flex flex-col w-[40%] sticky top-0 h-screen pr-[130px]">
+          <div className="flex flex-col mt-6">
+            <AchievementsComponent
+              dailyRaised={dailyRaised}
+              nft_image={project.nft_image}
+              donations={project.donations}
+            ></AchievementsComponent>
 
-          {/*section - Latest Donations*/}
-          <div className="flex flex-col border w-full border-gray-300 px-10 mt-10 py-5 rounded-[12px]">
-            <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.05em]">
-              Latest Donations
-            </h1>
-
-            <LatestDonor></LatestDonor>
-
-            <LatestDonor></LatestDonor>
-
-            <LatestDonor></LatestDonor>
+            {/*section - Latest Donations*/}
+            <div className="flex flex-col border w-full border-gray-300 px-10 mt-10 py-5 rounded-[12px]">
+              <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.05em]">
+                Latest Donations
+              </h1>
+              <LatestDonor></LatestDonor>
+              <LatestDonor></LatestDonor>
+              <LatestDonor></LatestDonor>
+            </div>
           </div>
         </div>
       </div>
