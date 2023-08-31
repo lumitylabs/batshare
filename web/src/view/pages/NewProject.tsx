@@ -204,14 +204,25 @@ function NewProject() {
                   <option selected disabled value="Select Category">
                     Select Category
                   </option>
-                  <option value="Art">Art</option>
-                  <option value="Music">Music</option>
-                  <option value="Gaming">Gaming</option>
-                  <option value="Social">Social</option>
                   <option value="Education">Education</option>
                   <option value="Science">Science</option>
+                  <option value="Technology and Innovation">
+                    Technology and Innovation
+                  </option>
+                  <option value="Infrastructure">Infrastructure</option>
                   <option value="Environment">Environment</option>
+                  <option value="Security">Security</option>
+                  <option value="Justice and Legal System">
+                    Justice and Legal System
+                  </option>
+                  <option value="Human Rights">Human Rights</option>
                   <option value="Web3">Web 3</option>
+                  <option value="Culture and Arts">Culture and Arts</option>
+                  <option value="Communication">Communication</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Social">Social</option>
+                  <option value="Others">Others</option>
+                  
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
                   <ImgComponent name={"chevrondown_ic"} type={"icons-button"} />
