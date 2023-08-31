@@ -1,7 +1,7 @@
 [![N|Solid](https://i.imgur.com/0M6fLzp.png)](https://batshare.lumitylabs.com)
 # Batshare
-### _Be brave, Be generous_
-Funding the Commons | Hackathon - 2023   
+### _Be brave, Be generous_ | [visit the website](https://batshare.lumitylabs.com/)
+Funding the Commons, Hackathon - 2023  
 <br>"Batshare is a web3 platform that provides a more practical, accessible, and innovative way to support public goods projects, ensuring that everyone has the opportunity to contribute to and engage with initiatives they believe in."
 
 ## 📖 Quick Index
