@@ -17,7 +17,8 @@ interface ConnectWalletButtonProps {
 const connectWallet = async (
   wallet: any,
   setUsername: any,
-  setIsLoading: any
+  setIsLoading: any,
+  setAvatar: any
 ) => {
   const isLogged: any = localStorage.getItem("batshare_logged");
   if (isLogged !== null) {
@@ -26,6 +27,7 @@ const connectWallet = async (
 
     try {
       const username: any = localStorage.getItem("batshare_username" + wallet);
+      const avatar: any = localStorage.getItem("batshare_avatar" + wallet);
       if (username === null) {
         const user: any = await getUser({ wallet: wallet });
 
@@ -34,10 +36,14 @@ const connectWallet = async (
         }
 
         const unnamedUser = user ? user["username"] : "unnamed";
+        const unnamedAvatar = user ? user["avatar"] : "https://firebasestorage.googleapis.com/v0/b/batshare-a7917.appspot.com/o/4.webp?alt=media&token=5ffa5283-b0a7-4ccd-b47a-d8f565ce370c";
         localStorage.setItem("batshare_username" + wallet, unnamedUser);
+        localStorage.setItem("batshare_avatar" + wallet, unnamedAvatar);
         setUsername(unnamedUser);
+        setAvatar(unnamedAvatar);
       } else {
         setUsername(username);
+        setAvatar(avatar);
       }
     } finally {
       setIsLoading(false);
@@ -48,6 +54,7 @@ const connectWallet = async (
 const disconnectWallet = async (wallet: any, setUsername: any) => {
   // Remover o usuário da localStorage
   localStorage.removeItem("batshare_username" + wallet);
+  localStorage.removeItem("batshare_avatar" + wallet);
   localStorage.removeItem("batshare_logged");
   setUsername(null);
 };
@@ -56,6 +63,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
   const { wallet } = useMetaMask();
   const [isHovered, setIsHovered] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
+  const [avatar, setAvatar] = useState<string>("https://firebasestorage.googleapis.com/v0/b/batshare-a7917.appspot.com/o/4.webp?alt=media&token=5ffa5283-b0a7-4ccd-b47a-d8f565ce370c");
   const [isLoading, setIsLoading] = useState(false);
   const [isConnectHovered, setIsConnectHovered] = useState(false);
   const [startLoading, setStartLoading] = useState(false);
@@ -68,7 +76,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
 
   useEffect(() => {
     if (wallet.accounts.length > 0) {
-      connectWallet(wallet.accounts[0], setUsername, setIsLoading);
+      connectWallet(wallet.accounts[0], setUsername, setIsLoading, setAvatar);
     }
   }, [wallet, props.isConnected]);
 
@@ -149,7 +157,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
                   exit="exit"
                   variants={fade}
                 >
-                  <ImgComponent name={"avatar"} type={"avatar-button"} />
+                  <img src={avatar} className="h-[40px] w-[40px] rounded-full" />
                 </motion.div>
               )}
             </AnimatePresence>

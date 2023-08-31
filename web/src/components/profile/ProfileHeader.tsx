@@ -8,12 +8,16 @@ export function ProfileHeader() {
   const [userWallet, setUserWallet] = useState(
     "0x0000000000000000000000000000000000000000"
   );
+  const [username, setUsername] = useState("unnamed");
 
   useEffect(() => {
     if (wallet.accounts.length > 0) {
       setUserWallet(wallet.accounts[0]);
+      setUsername(localStorage.getItem("batshare_username" + wallet.accounts[0])!);
     }
   }, [wallet]);
+
+
 
   return (
     <div className="flex flex-col">
@@ -21,7 +25,7 @@ export function ProfileHeader() {
         Collaborator
       </span>
       <span className="font-BeVietnamPro font-semibold text-[24px] leading-[28px] text[#090808]">
-        lucianofbn
+        {username}
       </span>
 
       <div className="flex mt-2 gap-2">

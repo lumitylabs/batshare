@@ -1,5 +1,5 @@
 import ConnectWalletModal from "../../components/home/ConnectWalletModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../../components/general/navbar/NavBar";
 import ImgComponent from "../../components/general/manager/img-manager/ImgComponent";
 import MulticolorComponent from "../../components/general/manager/svg-manager/MulticolorComponent";
@@ -7,13 +7,32 @@ import { ProfileHeader } from "../../components/profile/ProfileHeader";
 import MyAchievementsFragment from "../../components/profile/MyAchievementsFragment";
 import MyProjectsFragment from "../../components/profile/MyProjectsFragment";
 import EditProfileFragment from "../../components/profile/EditProfileFragment";
+import { useMetaMask } from "../../model/useMetaMask";
 
 function Profile() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [selectedTab, setSelectedTab] = useState(1);
   const [isOn, setIsOn] = useState(false); // <- switch
+  const { wallet } = useMetaMask();
+  const [avatar, setAvatar] = useState("https://firebasestorage.googleapis.com/v0/b/batshare-a7917.appspot.com/o/4.webp?alt=media&token=5ffa5283-b0a7-4ccd-b47a-d8f565ce370c");
 
+  const [userWallet, setUserWallet] = useState(
+    "0x0000000000000000000000000000000000000000"
+  );
+
+  useEffect(() => {
+    if (wallet.accounts.length > 0) {
+      setUserWallet(wallet.accounts[0]);
+    }
+  }, [wallet]);
+
+  useEffect(() => {
+    if (userWallet != "0x0000000000000000000000000000000000000000") {
+      setAvatar(localStorage.getItem("batshare_avatar" + wallet.accounts[0])!);
+    }
+  }, [userWallet]);
+  
   const handleToggle = () => {
     setIsOn(!isOn);
   };
@@ -56,7 +75,7 @@ function Profile() {
       </div>
       <div className="h-[350px] bg-gradient-to-l from-[#626CC2] to-[#7E49AB]"></div>
       <div className="absolute top-[300px] left-[250px] transform -translate-x-1/2 -translate-y-1/2">
-        <ImgComponent name={"avatar"} type={"profile-avatar"}></ImgComponent>
+        <img src={avatar} className="h-[190px] w-[190px] rounded-[12px] shadow-2xl"></img>
       </div>
 
       <div className="absolute top-1/1 left-1/2 transform -translate-x-1/2 -translate-y-1/2 select-none">
