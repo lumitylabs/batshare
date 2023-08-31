@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
   var instagram = req.body.instagram;
   var discord = req.body.discord;
   var email = req.body.email;
+  const currentDate = new Date().toISOString().split("T")[0];
   var url =
     title
       .replace(/\s+/g, "-")
@@ -58,6 +59,11 @@ module.exports = async (req, res) => {
           email: email,
           round: round,
           donations: 0,
+          totalRaised: 0,
+          lastWithdraw: currentDate,
+          lastUpdate: currentDate,
+          availableBalance: currentDate,
+
         });
         var ProjectsSmallRef = db.ref("/projects-small/" + url);
         ProjectsSmallRef.set({

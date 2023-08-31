@@ -23,6 +23,7 @@ function ProjectDetails() {
     nft_image: "",
     image: "",
     donations: 0,
+    totalRaised: -1,
   };
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
@@ -123,6 +124,7 @@ function ProjectDetails() {
           <div className="flex flex-col mt-6">
             <AchievementsComponent
               dailyRaised={dailyRaised}
+              totalRaised={project.totalRaised}
               nft_image={project.nft_image}
               donations={project.donations}
             ></AchievementsComponent>

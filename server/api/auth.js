@@ -4,6 +4,8 @@ const createUpdate = require("./_create-update");
 const createUser = require("./_create-user");
 const donate = require("./_donate");
 const upload = require("./_upload");
+const updateProjects = require("./_updateProjects");
+const withdrawNotification = require("./_withdraw-notification");
 const cors = require("../config/cors").default;
 
 module.exports = cors( async (req, res) =>{
@@ -26,5 +28,11 @@ module.exports = cors( async (req, res) =>{
   }
   if (action === "upload") {
     await upload(req, res);
+  }
+  if (action === "update-projects") {
+    await updateProjects(req, res);
+  }
+  if (action === "withdraw-notification") {
+    await withdrawNotification(req, res);
   }
 });

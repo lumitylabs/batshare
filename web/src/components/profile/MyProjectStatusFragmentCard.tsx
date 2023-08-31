@@ -6,6 +6,8 @@ interface MyProjectStatusFragmentCardProps {
   activeDays?: string;
   onClick: () => void;
   isWithdrawing?: boolean;
+  canWithdraw: boolean;
+
 }
 
 const MyProjectStatusFragmentCard: React.FC<
@@ -82,7 +84,7 @@ const MyProjectStatusFragmentCard: React.FC<
         >
           <span
             className={`font-BalooDa2 font-medium text-[18px] ${
-              status === "disabled" ? "text-gray-600" : "text-black"
+              status === "disabled" ? "text-gray-600" : "text-[#656565]"
             }`}
           >
             {buttonText}
@@ -90,17 +92,17 @@ const MyProjectStatusFragmentCard: React.FC<
         </motion.button>
         {status === "active" ? (
           <motion.button
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: props.canWithdraw ? 0.9 : 1 }}
             onClick={onClick}
             whileHover={{
-              scale: 0.95,
+              scale: props.canWithdraw ? 0.95 : 1,
             }}
             transition={{
               duration: 0.2,
             }}
-            className="flex gap-2 w-[50%] py-[10px] px-4 items-center justify-center rounded-full bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg"
+            className={`flex gap-2 w-[50%] py-[10px] px-4 items-center justify-center rounded-full bg-gradient-to-r shadow-xl ${props.canWithdraw ? "from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg text-white" : "bg-gray-200 text-[#656565]"}`}
           >
-            <span className="font-BalooDa2 font-medium text-[18px] text-white">
+            <span className="font-BalooDa2 font-medium text-[18px] ">
               Withdraw
             </span>
             {isWithdrawing && <SpinAnimation></SpinAnimation>}
@@ -109,14 +111,14 @@ const MyProjectStatusFragmentCard: React.FC<
           <motion.button
             onClick={() => "#"}
             whileHover={{
-              scale: 0.95,
+              scale: props.canWithdraw ? 0.95 : 1,
             }}
             transition={{
               duration: 0.2,
             }}
-            className="flex w-[50%] py-[10px] px-4 items-center justify-center rounded-full bg-gradient-to-r shadow-xl from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg"
+            className={`flex w-[50%] py-[10px] px-4 items-center justify-center rounded-full bg-gradient-to-r shadow-xl ${props.canWithdraw ? "from-[#C98AFF] to-[#71BDFF] hover:from-[#71BDFF] hover:to-[#C98AFF] hover:shadow-lg text-white" : "bg-gray-200 text-[#656565]"} `}
           >
-            <span className="font-BalooDa2 font-medium text-[18px] text-white">
+            <span className="font-BalooDa2 font-medium text-[18px]">
               Withdraw
             </span>
           </motion.button>

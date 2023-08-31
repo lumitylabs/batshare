@@ -5,20 +5,25 @@ import { Contract } from "@ethersproject/contracts";
 import { contractAddress } from "../../model/ContractData";
 import contractJSON from "../../model/QuadraticFunding.json";
 import { useState } from "react";
+import { formatBalance } from "../../model/utils";
+import { withdrawNotification } from "../../model/calls";
 
 type MyProjectCardProps = {
   title: string;
   category: string;
   round: string;
   raised: string;
+  totalRaised: string;
   total: string;
   nft_img: string;
   donations: string;
   wallet: string;
+  availableBalance: string;
 };
 
 const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
   const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [withdrawed, setWithdrawed] = useState(false);
 
   async function handleWithdraw() {
     try {
@@ -48,6 +53,11 @@ const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
         console.log(props.wallet);
         await contract.callStatic.withdraw(project_id);
         const back = await contract.withdraw(project_id);
+        await withdrawNotification({
+          wallet: props.wallet,
+          project_id: project_id,
+        });
+        setWithdrawed(true);
         console.log(back);
         setIsWithdrawing(false);
       } else {
@@ -113,7 +123,7 @@ const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
             <div className="flex flex-col w-[44%]">
               <div className="flex flex-start">
                 <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
-                  15-Day Raised
+                  Total Raised
                 </span>
               </div>
 
@@ -128,7 +138,9 @@ const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
                 <div className="border w-px h-[40px] border-[#C98AFF]"></div>
 
                 <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                  0
+                  {parseFloat(
+                    formatBalance(props.totalRaised.toString())
+                  ).toFixed(2)}
                 </span>
               </div>
             </div>
@@ -143,11 +155,11 @@ const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
             <div className="flex flex-col  w-[44%]">
               <div className="flex flex-start">
                 <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
-                  Total
+                  Available Balance
                 </span>
               </div>
 
-              <div className="flex items-center justify-start border-2 bg-[#FFFDDA] border-[#FFE662] rounded-[8px]  ">
+              <div className="flex items-center justify-start border-2 bg-[#e3eeff] border-[#8bbaff] rounded-[8px]  ">
                 <div className="flex px-2 items-center justify-center">
                   <ImgComponent
                     name={"batlogo"}
@@ -155,10 +167,14 @@ const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
                   ></ImgComponent>
                 </div>
 
-                <div className="border w-px h-[40px] border-[#FFE662]"></div>
+                <div className="border w-px h-[40px] border-[#8bbaff]"></div>
 
                 <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                  0.00
+                  {withdrawed
+                    ? 0.00
+                    : parseFloat(
+                        formatBalance(props.availableBalance.toString())
+                      ).toFixed(2)}
                 </span>
               </div>
             </div>
@@ -167,8 +183,17 @@ const MyProjectCard: React.FC<MyProjectCardProps> = (props) => {
           <MyProjectStatusFragmentCard
             status={"active"}
             activeDays={"15"}
-            onClick={() => handleWithdraw()}
+            onClick={() =>
+              parseFloat(formatBalance(props.availableBalance.toString())) >
+                0 &&
+              withdrawed==false &&
+              handleWithdraw()
+            }
             isWithdrawing={isWithdrawing}
+            canWithdraw={
+              parseFloat(formatBalance(props.availableBalance.toString())) >
+                0 && withdrawed==false
+            }
           ></MyProjectStatusFragmentCard>
         </div>
       </div>

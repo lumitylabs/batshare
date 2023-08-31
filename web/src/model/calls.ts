@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { endpoint_create_project, endpoint_create_user, endpoint_donate, endpoint_get_inventory, endpoint_get_project, endpoint_get_project_raised, endpoint_get_projects, endpoint_get_user, endpoint_get_user_projects, endpoint_upload, server } from './repository';
+import { endpoint_create_project, endpoint_create_user, endpoint_donate, endpoint_get_inventory, endpoint_get_project, endpoint_get_project_raised, endpoint_get_projects, endpoint_get_user, endpoint_get_user_projects, endpoint_upload, endpoint_withdraw_notification, server } from './repository';
 
 export async function endpointCall(data:any, endpoint:string) {
 	const requestOptions = {
@@ -53,6 +53,10 @@ export async function getUserProjects(data:any) {
 
 export async function getInventory(data:any) {
 	return endpointCall(data, endpoint_get_inventory)
+}
+
+export async function withdrawNotification(data:any) {
+	return endpointCall(data, endpoint_withdraw_notification)
 }
 
 

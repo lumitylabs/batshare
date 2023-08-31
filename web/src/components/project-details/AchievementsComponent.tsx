@@ -9,9 +9,11 @@ export function AchievementsComponent(props: {
   dailyRaised: any;
   nft_image: string;
   donations: any;
+  totalRaised: any;
 }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [raised, setRaised] = useState(-1);
+
   useEffect(() => {
     if (props.dailyRaised.amount > 0) {
       setRaised(
@@ -102,7 +104,7 @@ export function AchievementsComponent(props: {
               <div className="flex flex-col w-[48%]">
                 <div className="flex flex-start">
                   <span className="font-BeVietnamPro font-medium text-[#828282] text-[15px] tracking-[-0.04em]">
-                    15-Day Raised
+                    Raised Today
                   </span>
                 </div>
 
@@ -133,7 +135,7 @@ export function AchievementsComponent(props: {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-start border-2 bg-[#FFFDDA] border-[#FFE662] rounded-[8px]  ">
+                <div className="flex items-center justify-start border-2 bg-[#e3eeff] border-[#8bbaff] rounded-[8px]  ">
                   <div className="flex px-2 items-center justify-center">
                     <ImgComponent
                       name={"batlogo"}
@@ -141,10 +143,14 @@ export function AchievementsComponent(props: {
                     ></ImgComponent>
                   </div>
 
-                  <div className="border w-px h-[40px] border-[#FFE662]"></div>
+                  <div className="border w-px h-[40px] border-[#8bbaff]"></div>
 
                   <span className="ml-1 font-BeVietnamPro text-black font-bold text-[20px] tracking-[-0.05em]">
-                    0.00
+                  { props.totalRaised === -1 ? (
+                      <Skeleton width={60} height={22}></Skeleton>
+                    ) : (
+                      parseFloat(formatBalance(props.totalRaised.toString())).toFixed(2)
+                    )}
                   </span>
                 </div>
               </div>

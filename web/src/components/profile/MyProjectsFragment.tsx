@@ -87,6 +87,8 @@ const MyProjectsFragment: React.FC<MyProjectsFragmentProps> = () => {
                 raised={projects[key].raised}
                 total={projects[key].total}
                 nft_img={projects[key].nft_image}
+                totalRaised={projects[key].totalRaised}
+                availableBalance={projects[key].availableBalance}
                 wallet={userWallet}
                   
                 ></MyProjectCard>

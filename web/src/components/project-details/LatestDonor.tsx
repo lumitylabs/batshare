@@ -17,7 +17,7 @@ export function LatestDonor() {
           </div>
 
           <div className="flex">
-            <LatestDonorChip wallet={"00x000x"}></LatestDonorChip>
+            <LatestDonorChip wallet={"0x0000"}></LatestDonorChip>
             <ImgComponent name={"lineball_ic"} type={""}></ImgComponent>
             <div className=" border py-2 px-3 rounded-[12px] border-gray-200">
               <div className="flex items-center gap-2">
