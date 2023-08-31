@@ -25,7 +25,32 @@ Every 15 days, the creators update their donors, adding a new exclusive NFT with
 ```commandline
 git clone https://github.com/lumitylabs/batshare.git
 ```
-**2 - Install and run the project**
+**2 - Smart contract setup**  
+In the blockchain folder, rename 'hardhat.config.js.exemple' to 'hardhat.config.js'  
+and add your wallet private key to 'SEPOLIA_PRIVATE_KEY' and add your 'INFURA_API_KEY'
+  
+**2.1 - Deploy**  
+```npx hardhat run --network localhost scripts/deploy.js```  
+Store the addresses for both contracts  
+
+**2.2 - Contract ABI setup**  
+In the path 'blockchain\artifacts\contracts' copy the files 'BatToken.json' and 'QuadraticFunding.json'  
+Paste on the folders 'server\config' and 'web\src\model'  
+
+**2.2 - Contract Addresses setup**  
+On the file 'web\src\model\ContractData.ts' replace the contract addresses for the deployed ones  
+  
+**3 - Server setup**  
+In the server folder rename the file 'exemple.env' to '.env' and fill the fields with your firebase and infura data  
+  
+**3 - Run server**
+ ```commandline
+npm install
+vercel dev
+```
+
+**4 - Front end setup**
+Set your server url on 'web\src\model\repository.ts' then run
  ```commandline
 npm install
 npm run dev
@@ -47,10 +72,11 @@ npm run dev
 ## 📁 Public Repository
 
 - [Public Repository](https://github.com/lumitylabs/batshare)
+- [Live Preview](https://batshare.lumitylabs.com/)
 
 ## 📧 Contact
 Questions or suggestions, please feel free to contact us :)
-| Contact | Luciano Ferreira |
+| Contact | Luciano Ferreira | Rafael Souza
 | ------ | ------ |
-| Email | lucianofbn@lumitylabs.com |
-| Discord | @lucianofbn |
+| Email | lucianofbn@lumitylabs.com | rafaelsouza@lumitylabs.com
+| Discord | @lucianofbn | @rafaelsouza
