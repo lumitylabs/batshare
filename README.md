@@ -5,13 +5,13 @@ Funding the Commons | Hackathon - 2023
 <br>"Batshare is a web3 platform that provides a more practical, accessible, and innovative way to support public goods projects, ensuring that everyone has the opportunity to contribute to and engage with initiatives they believe in."
 
 ## 📖 Quick Index
-- [ 💡 How does it Work?](#how-does-it-work)
-- [ 🎥 Demo](#demo)
-- [ 💻 Installation](#installation)
-- [ 🚀 Innovation](#innovation)
-- [ 🔧 Technologies](#technologies)
-- [ 📁 Public Repository](#public-repository)
-- [ 📧 Contact](#contact)
+- [💡 How does it Work?](#-how-does-it-work)
+- [🎥 Demo](#-demo)
+- [💻 Installation](-#installation)
+- [🚀 Innovation](-#innovation)
+- [🔧 Technologies](-#technologies)
+- [📁 Public Repository](-#public-repository)
+- [📧 Contact](-#contact)
  
 ## 💡 How does it Work?  
 Every 15 days, the creators update their donors, adding a new exclusive NFT with each update. This keeps the project eligible to receive donations. Donors receive an NFT, and creators can redeem the donated funds through a quadratic voting process held every 24 hours
