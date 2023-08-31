@@ -43,13 +43,13 @@ On the file 'web\src\model\ContractData.ts' replace the contract addresses for t
 **3 - Server setup**  
 In the server folder rename the file 'exemple.env' to '.env' and fill the fields with your firebase and infura data  
   
-**3.1 - Run server**
+**3.1 - Run server**  
  ```commandline
 npm install
 vercel dev
 ```
 
-**4 - Front end setup**
+**4 - Front end setup**  
 Set your server url on 'web\src\model\repository.ts' then run
  ```commandline
 npm install
