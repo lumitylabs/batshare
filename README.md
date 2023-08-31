@@ -30,7 +30,9 @@ In the blockchain folder, rename 'hardhat.config.js.exemple' to 'hardhat.config.
 and add your wallet private key to 'SEPOLIA_PRIVATE_KEY' and add your 'INFURA_API_KEY'
   
 **2.1 - Deploy**  
-```npx hardhat run --network localhost scripts/deploy.js```  
+```commandline
+npx hardhat run --network localhost scripts/deploy.js
+```  
 Store the addresses for both contracts  
 
 **2.2 - Contract ABI setup**  
@@ -75,8 +77,8 @@ npm run dev
 - [Live Preview](https://batshare.lumitylabs.com/)
 
 ## 📧 Contact
-Questions or suggestions, please feel free to contact us :)
-| Contact | Luciano Ferreira | Rafael Souza
-| ------ | ------ |
-| Email | lucianofbn@lumitylabs.com | rafaelsouza@lumitylabs.com
-| Discord | @lucianofbn | @rafaelsouza
+Questions or suggestions, please feel free to contact us :)  
+| Contact | Luciano Ferreira | Rafael Souza  
+| ------ | ------ |  
+| Email | lucianofbn@lumitylabs.com | rafaelsouza@lumitylabs.com  
+| Discord | @lucianofbn | @rafaelsouza  
