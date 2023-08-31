@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import bgProjects from "../../assets/bg_projects.webp";
 import ConnectWalletModal from "../../components/home/ConnectWalletModal";
 import NavBar from "../../components/general/navbar/NavBar";

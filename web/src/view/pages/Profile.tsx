@@ -1,7 +1,6 @@
 import ConnectWalletModal from "../../components/home/ConnectWalletModal";
 import { useEffect, useState } from "react";
 import NavBar from "../../components/general/navbar/NavBar";
-import ImgComponent from "../../components/general/manager/img-manager/ImgComponent";
 import MulticolorComponent from "../../components/general/manager/svg-manager/MulticolorComponent";
 import { ProfileHeader } from "../../components/profile/ProfileHeader";
 import MyAchievementsFragment from "../../components/profile/MyAchievementsFragment";
