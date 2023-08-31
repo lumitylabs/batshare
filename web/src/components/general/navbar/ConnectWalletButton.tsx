@@ -75,10 +75,9 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
   useEffect(() => {
     const isLogged: any = localStorage.getItem("batshare_logged");
     setStartLoading(true);
-    
+
     if (isLogged !== null) {
       setIsLoading(true);
-      
     }
   }, []);
 
@@ -149,7 +148,6 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
                   animate="visible"
                   exit="exit"
                   variants={fade}
-                  
                 >
                   <ImgComponent name={"avatar"} type={"avatar-button"} />
                 </motion.div>
@@ -168,9 +166,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
                     exit="exit"
                     transition={{ duration: 1 }}
                     variants={fade}
-                  >
-                    <Skeleton height={12} width={50}></Skeleton>
-                  </motion.div>
+                  ></motion.div>
                 ) : (
                   <motion.div
                     key="loader"
@@ -186,15 +182,14 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
               </AnimatePresence>
             </span>
             <p className="font-BalooDa2 font-medium text-[18px] leading-[18px] tracking-[-0.02em] ">
-            <AnimatePresence mode="wait">
-              <span
-                className={`bg-clip-text text-transparent line-clamp-1 ${
-                  isHovered
-                    ? "bg-gradient-to-r from-[#EA6846] to-[#903DA4]"
-                    : "bg-gradient-to-r from-[#903DA4] to-[#EA6846]"
-                }`}
-              >
-                
+              <AnimatePresence mode="wait">
+                <span
+                  className={`bg-clip-text text-transparent line-clamp-1 ${
+                    isHovered
+                      ? "bg-gradient-to-r from-[#EA6846] to-[#903DA4]"
+                      : "bg-gradient-to-r from-[#903DA4] to-[#EA6846]"
+                  }`}
+                >
                   {isLoading ? (
                     <motion.div
                       key="loader"
@@ -204,7 +199,9 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
                       variants={fade}
                       transition={{ duration: 0.1 }}
                     >
-                      {" "}
+                      <div className="flex items-center justify-center">
+                        <Skeleton height={14} width={90}></Skeleton>
+                      </div>
                     </motion.div>
                   ) : username!.length > 13 ? (
                     <motion.div
@@ -229,8 +226,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = (props) => {
                       {username}
                     </motion.div>
                   )}
-                
-              </span>
+                </span>
               </AnimatePresence>
             </p>
           </div>

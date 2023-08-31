@@ -36,11 +36,11 @@ export function InputNFTImage({ onImageSelect, setNftImage }: InputNFTProps) {
   };
 
   return (
-    <>
+    <div className="flex">
       <label
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className="flex justify-center items-center h-[300px] w-[300px] text-center rounded-xl cursor-pointer overflow-hidden  gradient-border custom-border"
+        className="relative w-[180px] h-[180px] rounded-[12px] overflow-hidden shadow-lg"
       >
         <input
           type="file"
@@ -48,29 +48,32 @@ export function InputNFTImage({ onImageSelect, setNftImage }: InputNFTProps) {
           className="hidden"
           onChange={handleFileInputChange}
         />
-        <div className="flex gap-2 flex-col items-center justify-center">
-          {selectedImage ? (
-            <div className="">
-              <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="Add NFT"
-                className={`object-contain max-w-[600px] max-h-[300px]`}
-              />
-            </div>
-          ) : (
-            <>
-              <motion.div
-                whileTap={{ scale: 0.9 }}
-                className="inline-flex rounded-full p-1 px-3 border boder-gray-200  hover:bg-gray-50"
-              >
-                <span className="font-BeVietnamPro font-regular text-[14px] tracking-[-0.05em]">
-                  Add NFT
-                </span>
-              </motion.div>
-            </>
-          )}
+        <div className="absolute inset-[-6px] bg-gradient-to-tl from-[#C98AFF] via-[rgb(212,242,255)] to-[#71BDFF] rounded-[22px]"></div>
+        <div className="absolute inset-[6px] bg-white rounded-[10px] flex items-center justify-center">
+          <div className="flex gap-2 flex-col items-center justify-center relative z-10">
+            {selectedImage ? (
+              <div className="w-[168px] h-[168px] overflow-hidden rounded-[10px]">
+                <img
+                  src={URL.createObjectURL(selectedImage)}
+                  alt="Add NFT"
+                  className={`w-full h-full object-cover`}
+                />
+              </div>
+            ) : (
+              <>
+                <motion.div
+                  whileTap={{ scale: 0.9 }}
+                  className="inline-flex rounded-full p-1 px-3 border border-gray-200 hover:bg-gray-50"
+                >
+                  <span className="font-BeVietnamPro font-regular text-[14px] tracking-[-0.05em]">
+                    Add NFT
+                  </span>
+                </motion.div>
+              </>
+            )}
+          </div>
         </div>
       </label>
-    </>
+    </div>
   );
 }
