@@ -286,7 +286,7 @@ function NewProject() {
               Socials
             </h1>
             <h2 className="font-BeVietnamPro font-regular text-[16px] leading-[14px] text-[#828282] tracking-[-0.04em]">
-              Add your contact information.
+              Add your project's social media
             </h2>
 
             <div className="flex flex-col mt-8 gap-8">
