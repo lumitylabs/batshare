@@ -43,7 +43,7 @@ export function Footer({ style }: { style: "dark" | "light" }) {
           </div>
 
           <div className={`flex gap-8 ${styleClasses.text}`}>
-            <a href="#">
+            <a href="https://github.com/lumitylabs/batshare" target="_blank">
               <ImgComponent
                 name={"github_ic"}
                 type={"icons-footer"}
@@ -56,7 +56,7 @@ export function Footer({ style }: { style: "dark" | "light" }) {
               ></ImgComponent>
             </a>
 
-            <a href="#">
+            <a href="https://www.instagram.com/lumitylabs/" target="_blank">
               <ImgComponent
                 name={"instagramw_ic"}
                 type={"icons-footer"}
@@ -104,17 +104,19 @@ export function Footer({ style }: { style: "dark" | "light" }) {
             covered on our website, then please get in <br></br> touch.
           </p>
           <div className="flex pt-4">
-            <motion.button
-              whileHover={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className={`flex py-4 px-12 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)] ${styleClasses.button}`}
-            >
-              <span
-                className={`font-BalooDa2 font-regular text-white text-[26px] leading-[26px] tracking-[-0.04em] ${styleClasses.text}`}
+            <a href="mailto:contact@lumitylabs.com" target="_blank">
+              <motion.button
+                whileHover={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className={`flex py-4 px-12 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)] ${styleClasses.button}`}
               >
-                Get in Touch
-              </span>
-            </motion.button>
+                <span
+                  className={`font-BalooDa2 font-regular text-white text-[26px] leading-[26px] tracking-[-0.04em] ${styleClasses.text}`}
+                >
+                  Get in Touch
+                </span>
+              </motion.button>
+            </a>
           </div>
         </div>
       </div>
