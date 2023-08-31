@@ -127,6 +127,8 @@ function ProjectDetails() {
               totalRaised={project.totalRaised}
               nft_image={project.nft_image}
               donations={project.donations}
+              title={project.title}
+              category={project.category}
             ></AchievementsComponent>
 
             {/*section - Latest Donations*/}

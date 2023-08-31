@@ -14,10 +14,13 @@ import { useParams } from "react-router-dom";
 import { Web3Provider } from "@ethersproject/providers";
 import { donate } from "../../model/calls";
 import { SpinAnimation } from "../general/SpinAnimation";
+import { formatBalance } from "../../model/utils";
 
 interface DonateModalProps {
   modalIsOpen: any;
   setModalIsOpen: any;
+  title: string;
+  category: string;
 }
 
 function etherStringToWei(etherString: string) {
@@ -47,10 +50,44 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRedeeming, setIsRedeeming] = useState(false);
   const [message, setMessage] = useState("Send");
+  const [userBalance, setUserBalance] = useState("0");
+
 
   useEffect(() => {
     setMessage("Send");
   }, [props.modalIsOpen]);
+
+  useEffect(() => {
+    fetchUserBalance();
+  }, []);
+
+
+  async function fetchUserBalance() {
+    try {
+      if (window.ethereum) {
+        const provider = new Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        
+        // Pega o endereço da conta atual
+        const userAddress = await signer.getAddress();
+        
+        const tokenContract = new Contract(
+          tokenContractAddress,
+          tokenContractJSON.abi,
+          signer
+        );
+  
+        // Consulta o saldo
+        const balance = await tokenContract.balanceOf(userAddress);
+  
+        // Atualiza o estado com o saldo
+        setUserBalance(balance.toString());
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching the user balance: ", error);
+    }
+  }
+
 
   async function handleRedeem() {
     try {
@@ -70,6 +107,7 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
           signer
         );
         await tokenContract.autoMint();
+        await fetchUserBalance();
         setIsRedeeming(false);
       } else {
         alert("Please install a web3 wallet like, Brave Wallet or Metamask.");
@@ -195,14 +233,14 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
             <p className="text-center font-BeVietnamPro font-regular text-[#5E5A5A] text-[14px]">
               You are contributing to{" "}
               <span className="font-BeVietnamPro text-[#151A52] font-bold">
-                Environment
+                {props.category}
               </span>{" "}
               by donating to
             </p>
 
             <div className="flex justify-center mt-2 p-3 w-[60%] border border-[#5A90E2] bg-[#F3F4FF] rounded-[12px]">
               <span className="font-BeVietnamPro text-[#151A52] font-bold">
-                Blockchain & CO2
+                {props.title}
               </span>
             </div>
 
@@ -257,7 +295,7 @@ const DonateModal: React.FC<DonateModalProps> = (props) => {
               </div>
               <div className="flex justify-center">
                 <p>
-                  Available: <span className="font-bold">52.07 BAT</span>
+                  Available: <span className="font-bold">{parseFloat(formatBalance(userBalance.toString())) } BAT</span>
                 </p>
               </div>
             </div>

@@ -10,6 +10,8 @@ export function AchievementsComponent(props: {
   nft_image: string;
   donations: any;
   totalRaised: any;
+  title: string;
+  category: string;
 }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [raised, setRaised] = useState(-1);
@@ -30,6 +32,8 @@ export function AchievementsComponent(props: {
       <DonateModal
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
+        title={props.title}
+        category={props.category}
       ></DonateModal>
 
       <div className="flex flex-col border w-full h-[310px] border-gray-300 px-10 py-5 rounded-[12px]">
