@@ -8,10 +8,10 @@ Funding the Commons | Hackathon - 2023
 - [💡 How does it Work?](#-how-does-it-work)
 - [🎥 Demo](#-demo)
 - [💻 Installation](-#installation)
-- [🚀 Innovation](-#innovation)
-- [🔧 Technologies](-#technologies)
-- [📁 Public Repository](-#public-repository)
-- [📧 Contact](-#contact)
+- [🚀 Innovation](#-innovation)
+- [🔧 Technologies](#-technologies)
+- [📁 Public Repository](#-public-repository)
+- [📧 Contact](#-contact)
  
 ## 💡 How does it Work?  
 Every 15 days, the creators update their donors, adding a new exclusive NFT with each update. This keeps the project eligible to receive donations. Donors receive an NFT, and creators can redeem the donated funds through a quadratic voting process held every 24 hours
