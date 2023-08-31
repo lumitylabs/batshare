@@ -14,7 +14,7 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
       <div className="flex h-full w-full">
         <img
           src={props.project.nft_image}
-          className="w-[200px] rounded-l-[12px] object-cover"
+          className="w-[200px] rounded-l-[12px] object-cover select-none"
         />
 
         <div className="flex flex-col py-8 px-6 gap-2">

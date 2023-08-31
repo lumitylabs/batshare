@@ -50,21 +50,16 @@ function NewProject() {
 
   async function sendForm() {
     if (window.ethereum) {
-        const provider = new Web3Provider(window.ethereum);
-        const network = await provider.getNetwork();
-        if (network.chainId !== 11155111) {
-          alert(
-            "Please switch to the correct testnet, Sepolia."
-          );
-          return;
-        }
-      }
-      else{
-        alert(
-          "Please install a web3 wallet like, Brave Wallet or Metamask."
-        );
+      const provider = new Web3Provider(window.ethereum);
+      const network = await provider.getNetwork();
+      if (network.chainId !== 11155111) {
+        alert("Please switch to the correct testnet, Sepolia.");
         return;
       }
+    } else {
+      alert("Please install a web3 wallet like, Brave Wallet or Metamask.");
+      return;
+    }
     const requiredFields = [
       "category",
       "wallet",
@@ -142,7 +137,10 @@ function NewProject() {
     const link: any = await upload({});
     await uploadFile(file, link.url);
     console.log(link.fileName, link.uuid);
-    return `https://firebasestorage.googleapis.com/v0/b/batshare-a7917.appspot.com/o/${link.fileName.replace("/i","%2Fi")}?alt=media&token=${link.uuid}`;
+    return `https://firebasestorage.googleapis.com/v0/b/batshare-a7917.appspot.com/o/${link.fileName.replace(
+      "/i",
+      "%2Fi"
+    )}?alt=media&token=${link.uuid}`;
   }
 
   const handleInputChange = (e: any) => {
@@ -168,14 +166,18 @@ function NewProject() {
         />
       </div>
       <div className="h-[140px] bg-gradient-to-l from-[#626CC2] to-[#7E49AB]"></div>
-      <div className="flex justify-between pl-20 pr-20 pt-12 pb-7">
+      <div className="flex px-[130px] justify-between pt-[27px] mb-[24px]">
         <Return currencyPage="new-project"></Return>
-        <PublishButton onClick={sendForm} isLoading={isLoading} status={status}></PublishButton>
+        <PublishButton
+          onClick={sendForm}
+          isLoading={isLoading}
+          status={status}
+        ></PublishButton>
       </div>
 
-      <div className="flex justify-center bg-white h-full gap-6 pb-14">
+      <div className="flex justify-center  bg-white h-full gap-6 pb-14">
         {/*form New Project col1*/}
-        <div className="flex flex-col w-[45%] gap-5">
+        <div className="flex flex-col w-[62%] pl-[130px] gap-5">
           <div className="flex flex-col border w-full border-gray-300 p-10 rounded-[12px]">
             <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.04em]">
               New Project
@@ -265,7 +267,7 @@ function NewProject() {
           </div>
         </div>
         {/*form New Project col2*/}
-        <div className="flex flex-col w-[45%] gap-5">
+        <div className="flex flex-col w-[37%] pr-[130px] gap-6">
           <div className="flex flex-col border  border-gray-300 p-7 rounded-[12px]">
             <h1 className="font-BeVietnamPro font-bold text-[26px] tracking-[-0.04em]">
               Achievement

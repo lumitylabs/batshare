@@ -103,14 +103,15 @@ function Home() {
 
           <InfoCard
             title="How does it Work?"
-            paragraph="On the platform, you establish direct communication with donors and the project leaders, staying informed about the progress of each initiative. Every two weeks, a cycle is completed, and the contributions are transferred to the responsible parties, who need to update their donors through the platform to ensure their project continues in the next cycle. The amounts to be received from donations are determined through a quadratic funding process."
+            paragraph="Every 15 days, the creators update their donors, adding a new exclusive NFT with each update. This keeps the project eligible to receive donations. Donors receive an NFT, and creators can redeem the donated funds through a quadratic voting process held every 24 hours"
             nameImg="infocardwork"
             position="right"
           />
 
           <InfoCard
             title="Be a Part!"
-            paragraph="We want donors to feel like they are part of the projects and the accomplishments of a collaborative proposal. To make donations even more enjoyable, donors will receive supporter titles for each round they participate in, as well as unique NFTs for each supported project."
+            paragraph="
+            On Batshare, you establish direct communication with donors and project leaders, becoming part of the achievements and staying informed about each initiative. Join us and collaborate!"
             nameImg="infocardpart"
             position="left"
           />

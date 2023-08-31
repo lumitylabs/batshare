@@ -79,7 +79,7 @@ function ProjectDetails() {
       </div>
 
       <div className="flex justify-center bg-white h-full gap-6 pl-[130px] pb-14">
-        <div className="flex flex-col w-[60%] mt-6 h-full">
+        <div className="flex flex-col w-[60%] mt-[38px] h-full">
           <DetailsComponent
             status={"Active"}
             username={user.username}
@@ -121,7 +121,7 @@ function ProjectDetails() {
 
         {/*section - Achievements*/}
         <div className="flex flex-col w-[40%] sticky top-0 h-screen pr-[130px]">
-          <div className="flex flex-col mt-6">
+          <div className="flex flex-col mt-[38px]">
             <AchievementsComponent
               dailyRaised={dailyRaised}
               totalRaised={project.totalRaised}
