@@ -43,7 +43,7 @@ export function InputImage({
       <label
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className="flex justify-center items-center h-[300px] w-full border-gray-300 border-dashed border-[2px] p-4 text-center rounded-xl cursor-pointer overflow-hidden"
+        className="flex justify-center items-center h-[300px] w-full border-gray-300 border-dashed border-[2px] text-center rounded-xl cursor-pointer overflow-hidden"
       >
         <input
           type="file"
@@ -57,7 +57,7 @@ export function InputImage({
               <img
                 src={URL.createObjectURL(selectedImage)}
                 alt="Add Image"
-                className={`object-contain max-w-[600px] max-h-[300px]`}
+                className={`min-h-[300px]`}
               />
             </div>
           ) : (
