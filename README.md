@@ -7,7 +7,7 @@ Funding the Commons | Hackathon - 2023
 ## 📖 Quick Index
 - [💡 How does it Work?](#-how-does-it-work)
 - [🎥 Demo](#-demo)
-- [💻 Installation](-#installation)
+- [💻 Installation](#-installation)
 - [🚀 Innovation](#-innovation)
 - [🔧 Technologies](#-technologies)
 - [📁 Public Repository](#-public-repository)
