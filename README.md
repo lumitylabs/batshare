@@ -78,7 +78,13 @@ npm run dev
 
 ## 📧 Contact
 Questions or suggestions, please feel free to contact us :)  
-| Contact | Luciano Ferreira | Rafael Souza  
-| ------ | ------ |  
-| Email | lucianofbn@lumitylabs.com | rafaelsouza@lumitylabs.com  
-| Discord | @lucianofbn | @rafaelsouza  
+
+| Contact | Luciano Ferreira |
+| ------ | ------ |
+| Discord | @lucianofbn |
+| Contact Email | lucianofbn@lumitylabs.com |
+
+| Contact | Rafael Souza | 
+| ------ | ------ |
+| Discord | @rafaelsouza |
+| Contact Email | rafaelsouza@lumitylabs.com |
