@@ -70,6 +70,8 @@ npm run dev
 ## 🔧 Technologies
 - TypeScript
 - React
+- Node.js
+- Solidity
 
 ## 📁 Public Repository
 
