@@ -17,7 +17,7 @@ Funding the Commons, 2023
 Every 15 days, the creators update their donors, adding a new exclusive NFT with each update. This keeps the project eligible to receive donations. Donors receive an NFT, and creators can redeem the donated funds through a quadratic voting process held every 24 hours
 
 ## 🎥 Demo
-[![Vídeo de demonstração](https://i.imgur.com/hEpxqgG.png)](https://www.youtube.com/watch?v=uPV6Z2Am6X8)
+[![Vídeo de demonstração](https://i.imgur.com/hEpxqgG.png)](https://www.youtube.com/watch?v=8WhNTIc2Rvo)
 
 ## 💻 Installation
 
